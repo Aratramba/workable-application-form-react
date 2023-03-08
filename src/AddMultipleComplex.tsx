@@ -1,6 +1,7 @@
-import { useReducer, useRef, useState } from "react";
+import { useContext, useReducer, useRef, useState } from "react";
 import { Field } from "./Field";
 import { Row } from "./Row";
+import { ConfigContext } from "./ConfigContext";
 
 type AddMultipleComplexProps = {
   name: string;
@@ -22,6 +23,8 @@ type FieldValueType = {
 export const AddMultipleComplex: React.ComponentType<
   AddMultipleComplexProps
 > = ({ name, field }) => {
+  const config = useContext(ConfigContext);
+
   const hiddenValueFieldRef = useRef<HTMLInputElement>(null);
   const [state, setState] = useState<"form" | "display">("display");
   const [editingEntryId, setEditingEntryId] = useState<string | null>(null);
@@ -84,7 +87,7 @@ export const AddMultipleComplex: React.ComponentType<
                       setState("form");
                     }}
                   >
-                    Edit
+                    {config.labelEdit}
                   </button>
                   <button
                     type="button"
@@ -95,7 +98,7 @@ export const AddMultipleComplex: React.ComponentType<
                       })
                     }
                   >
-                    Delete
+                    {config.labelDelete}
                   </button>
                 </div>
               );
@@ -109,7 +112,7 @@ export const AddMultipleComplex: React.ComponentType<
             className="button button-save"
             onClick={() => setState("form")}
           >
-            Add
+            {config.labelAdd}
           </button>
         </div>
       </div>
@@ -210,7 +213,7 @@ export const AddMultipleComplex: React.ComponentType<
             className="button button-save"
             onClick={() => onSave()}
           >
-            Save
+            {config.labelSave}
           </button>
 
           <button
@@ -221,7 +224,7 @@ export const AddMultipleComplex: React.ComponentType<
               setEditingEntryId(null);
             }}
           >
-            Cancel
+            {config.labelCancel}
           </button>
         </div>
       </div>

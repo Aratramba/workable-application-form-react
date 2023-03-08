@@ -156,5 +156,17 @@ export default {
       required: true,
       id: "536a78",
     },
+    {
+      body: "Can you answer this question?",
+      type: "string",
+      required: true,
+      id: "536a78a",
+    },
+    {
+      body: "Can you answer this question?",
+      type: "free_text",
+      required: true,
+      id: "536a78x",
+    },
   ],
 };

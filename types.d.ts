@@ -416,4 +416,10 @@ type FormConfigType = {
     | "VOICEMAIL"
     | "UNKNOWN";
   telephoneSeparateDialCode?: boolean;
+  labelSubmit?: string;
+  labelAdd?: string;
+  labelSave?: string;
+  labelCancel?: string;
+  labelEdit?: string;
+  labelDelete?: string;
 };

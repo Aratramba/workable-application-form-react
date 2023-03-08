@@ -1,3 +1,4 @@
+import React = require("react");
 import { ConfigContext, DEFAULT_FORM_CONFIG } from "./ConfigContext";
 import { Field } from "./Field";
 import { Fieldset } from "./Fieldset";
@@ -126,38 +127,40 @@ export const ApplicationForm: React.ComponentType<ApplicationFormProps> = ({
         {layout.map((fieldset) => (
           <Fieldset key={fieldset.name} name={fieldset.name}>
             {fieldset.fields.map((field) => (
-              <Row key={field.toString()}>
+              <React.Fragment key={field.toString()}>
                 {Array.isArray(field) ? (
-                  field.map((field) => (
-                    <>
+                  <Row key={field.toString()}>
+                    {field.map((field) => (
                       <Field
                         key={field}
                         name={field}
                         field={allFormFields.find(({ name }) => name === field)}
                       />
-                    </>
-                  ))
+                    ))}
+                  </Row>
                 ) : field !== REST_OF_FIELDS ? (
-                  <Field
-                    name={field}
-                    field={allFormFields.find(({ name }) => name === field)}
-                  />
+                  <Row key={field}>
+                    <Field
+                      name={field}
+                      field={allFormFields.find(({ name }) => name === field)}
+                    />
+                  </Row>
                 ) : (
-                  <Fieldset key={field}>
+                  <>
                     {restFields.map((field) => (
                       <Row key={field.name}>
                         <Field name={field.name} field={field} />
                       </Row>
                     ))}
-                  </Fieldset>
+                  </>
                 )}
-              </Row>
+              </React.Fragment>
             ))}
           </Fieldset>
         ))}
 
         <button type="submit" className="button button-submit">
-          Submit
+          {config.labelSubmit || DEFAULT_FORM_CONFIG.labelSubmit}
         </button>
       </form>
     </ConfigContext.Provider>

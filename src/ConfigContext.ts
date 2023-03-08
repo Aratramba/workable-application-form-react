@@ -18,6 +18,12 @@ export const DEFAULT_FORM_CONFIG: FormConfigType = {
   telephoneOnlyCountries: [],
   telephonePlaceholderNumberType: "MOBILE",
   telephoneSeparateDialCode: true,
+  labelSubmit: "Submit",
+  labelAdd: "Add",
+  labelSave: "Save",
+  labelCancel: "Cancel",
+  labelEdit: "Edit",
+  labelDelete: "Delete",
 };
 
 export const ConfigContext = React.createContext(DEFAULT_FORM_CONFIG);
