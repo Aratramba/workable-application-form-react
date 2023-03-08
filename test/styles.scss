@@ -50,7 +50,8 @@
     width: 100%;
   }
 
-  .input-wrapper input:not([type="checkbox"]):not([type="file"]),
+  .input-wrapper
+    input:not([type="checkbox"]):not([type="file"]):not([type="tel"]),
   .input-wrapper textarea {
     width: 100%;
     border: 1px solid #ddd;
@@ -111,5 +112,19 @@
     padding: 10px;
     text-align: center;
     background-color: #fcfcfc;
+  }
+
+  .iti {
+    width: 100%;
+
+    input {
+      width: 100%;
+      border: 1px solid #ddd;
+      background-color: #fcfcfc;
+      border-radius: 3px;
+      padding-top: 12px;
+      padding-bottom: 12px;
+      font-size: 1rem;
+    }
   }
 }

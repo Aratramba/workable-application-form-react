@@ -38,6 +38,7 @@
     "react-dom": "^18.2.0"
   },
   "dependencies": {
+    "intl-tel-input": "^17.0.19",
     "react-dropzone": "^14.2.3"
   }
 }

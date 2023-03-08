@@ -2,6 +2,7 @@ import { AddMultipleComplex } from "./AddMultipleComplex";
 import { Fieldset } from "./Fieldset";
 import Dropzone from "react-dropzone";
 import { UploadField } from "./UploadField";
+import { TelephoneField } from "./TelephoneField";
 
 type FieldProps = {
   name: string;
@@ -77,7 +78,9 @@ export const Field: React.ComponentType<FieldProps> = ({ name, field }) => {
       />
     );
   } else if (field.name === "phone") {
-    Component = () => <input type="tel" {...inputProps} />;
+    Component = () => (
+      <TelephoneField name={field.slug} field={field as WorkableFormField} />
+    );
   } else if (field.type === "multiple_choice") {
     Component = () => <div>multiple choice</div>;
   } else if (field.type === "dropdown") {
