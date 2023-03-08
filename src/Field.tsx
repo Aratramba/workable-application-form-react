@@ -35,12 +35,25 @@ export const Field: React.ComponentType<FieldProps> = ({ name, field }) => {
     );
   }
 
-  const inputProps = {
+  const inputProps: {
+    name: string;
+    required: boolean;
+    id: string;
+    defaultValue?: string;
+    defaultChecked?: boolean;
+  } = {
     name: field.name,
     required: field.required,
     id: `field-${field.slug}`,
-    defaultValue: field.value,
   };
+
+  if (field.type !== "boolean") {
+    inputProps.defaultValue = field.value;
+  }
+
+  if (field.type !== "boolean") {
+    inputProps.defaultChecked = Boolean(field.value);
+  }
 
   let Component = () => <input type="text" {...inputProps} />;
 
