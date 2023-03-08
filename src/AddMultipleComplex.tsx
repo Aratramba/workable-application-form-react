@@ -139,9 +139,7 @@ export const AddMultipleComplex: React.ComponentType<
 
     Object.entries(data).forEach(([key, value]: [string, string]) => {
       if (key.startsWith(`${name}:`)) {
-        if (!value.trim().length) return;
         const subkey = key.replace(`${name}:`, "");
-
         const matchingField = field.fields.find((f) => f.key === subkey);
         action.data[subkey] = {
           key: subkey,
@@ -161,29 +159,49 @@ export const AddMultipleComplex: React.ComponentType<
       <div className="field-label">{name}</div>
       <HiddenValueField />
       <div className="add-multiple-complex">
-        {field.fields.map((subfield) => {
+        {field.fields.map(({ key }) => {
           const editingEntry = structuredClone(
             entries.find(({ id }) => id === editingEntryId),
           );
 
-          return (
-            <Row key={subfield.key}>
-              <Field
-                key={subfield.key}
-                name={`${name}:${subfield.key}`}
-                field={{
-                  ...subfield,
-                  name: `${name}:${subfield.key}`,
-                  label: subfield.label,
-                  slug: subfield.key,
-                  value:
-                    editingEntryId && editingEntry
-                      ? editingEntry.data[subfield.key]?.value
-                      : null,
-                }}
-              />
-            </Row>
-          );
+          function getSubFieldProps(key) {
+            const subfield = field.fields.find(
+              (subfield) => subfield.key === key,
+            );
+            return {
+              key: subfield.key,
+              name: `${name}:${subfield.key}`,
+              field: {
+                ...subfield,
+                name: `${name}:${subfield.key}`,
+                label: subfield.label,
+                slug: subfield.key,
+                value:
+                  editingEntryId && editingEntry
+                    ? editingEntry.data[subfield.key]?.value
+                    : null,
+              },
+            };
+          }
+
+          if (!["start_date", "end_date"].includes(key)) {
+            return (
+              <Row key={key}>
+                <Field {...getSubFieldProps(key)} />
+              </Row>
+            );
+          }
+
+          if (key === "start_date") {
+            return (
+              <Row key={key}>
+                <Field {...getSubFieldProps("start_date")} />
+                <Field {...getSubFieldProps("end_date")} />
+              </Row>
+            );
+          }
+
+          return null;
         })}
 
         <div className="button-row">
