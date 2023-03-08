@@ -49,76 +49,6 @@ export const AddMultipleComplex: React.ComponentType<
     }
   }, []);
 
-  const HiddenValueField = () => (
-    <input
-      type="hidden"
-      name={name}
-      value={JSON.stringify(entries)}
-      ref={hiddenValueFieldRef}
-      onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-        updateEntries(JSON.parse(e.target.value))
-      }
-    />
-  );
-
-  if (state === "display") {
-    return (
-      <div>
-        <div className="field-label">{name}</div>
-
-        <HiddenValueField />
-
-        {Boolean(entries.length) && (
-          <div className="add-multiple-complex">
-            {(entries as ActionType[]).map((entry) => {
-              return (
-                <div key={entry.id}>
-                  {Object.entries(entry.data).map(
-                    ([key, value]: [string, FieldValueType]) => (
-                      <div key={key}>
-                        {value.label}: {value.value}
-                      </div>
-                    ),
-                  )}
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setEditingEntryId(entry.id);
-                      setState("form");
-                    }}
-                  >
-                    {config.labelEdit}
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() =>
-                      updateEntries({
-                        id: entry.id,
-                        type: "remove",
-                      })
-                    }
-                  >
-                    {config.labelDelete}
-                  </button>
-                </div>
-              );
-            })}
-          </div>
-        )}
-
-        <div>
-          <button
-            type="button"
-            className="button button-save"
-            onClick={() => setState("form")}
-          >
-            {config.labelAdd}
-          </button>
-        </div>
-      </div>
-    );
-  }
-
   const onSave = () => {
     if (!hiddenValueFieldRef.current) return;
 
@@ -159,75 +89,142 @@ export const AddMultipleComplex: React.ComponentType<
 
   return (
     <div>
-      <div className="field-label">{name}</div>
-      <HiddenValueField />
-      <div className="add-multiple-complex">
-        {field.fields.map(({ key }) => {
-          const editingEntry = structuredClone(
-            entries.find(({ id }) => id === editingEntryId),
-          );
+      <div className="field-label">{field.label}</div>
 
-          function getSubFieldProps(key) {
-            const subfield = field.fields.find(
-              (subfield) => subfield.key === key,
-            );
-            return {
-              key: subfield.key,
-              name: `${name}:${subfield.key}`,
-              field: {
-                ...subfield,
-                name: `${name}:${subfield.key}`,
-                label: subfield.label,
-                slug: subfield.key,
-                value:
-                  editingEntryId && editingEntry
-                    ? editingEntry.data[subfield.key]?.value
-                    : null,
-              },
-            };
-          }
+      <input
+        type="hidden"
+        name={name}
+        value={JSON.stringify(entries)}
+        ref={hiddenValueFieldRef}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          updateEntries(JSON.parse(e.target.value))
+        }
+      />
 
-          if (!["start_date", "end_date"].includes(key)) {
+      {Boolean(entries.length) && (
+        <div className="add-multiple-complex">
+          {(entries as ActionType[]).map((entry) => {
             return (
-              <Row key={key}>
-                <Field {...getSubFieldProps(key)} />
-              </Row>
+              <div key={entry.id}>
+                {Object.entries(entry.data).map(
+                  ([key, value]: [string, FieldValueType]) => (
+                    <div key={key}>
+                      {value.label}: {value.value}
+                    </div>
+                  ),
+                )}
+
+                <div className="add-multiple-complex-buttons">
+                  <button
+                    type="button"
+                    className="button button-edit"
+                    onClick={() => {
+                      setEditingEntryId(entry.id);
+                      setState("form");
+                    }}
+                  >
+                    {config.labelEdit}
+                  </button>
+                  <button
+                    type="button"
+                    className="button button-delete"
+                    onClick={() =>
+                      updateEntries({
+                        id: entry.id,
+                        type: "remove",
+                      })
+                    }
+                  >
+                    {config.labelDelete}
+                  </button>
+                </div>
+              </div>
             );
-          }
+          })}
+        </div>
+      )}
 
-          if (key === "start_date") {
-            return (
-              <Row key={key}>
-                <Field {...getSubFieldProps("start_date")} />
-                <Field {...getSubFieldProps("end_date")} />
-              </Row>
-            );
-          }
-
-          return null;
-        })}
-
-        <div className="button-row">
+      {state === "display" && (
+        <div className="add-multiple-complex-add">
           <button
             type="button"
             className="button button-save"
-            onClick={() => onSave()}
+            onClick={() => setState("form")}
           >
-            {config.labelSave}
-          </button>
-
-          <button
-            type="button"
-            className="button button-cancel"
-            onClick={() => {
-              setState("display");
-              setEditingEntryId(null);
-            }}
-          >
-            {config.labelCancel}
+            {config.labelAdd}
           </button>
         </div>
-      </div>
+      )}
+
+      {state === "form" && (
+        <div className="add-multiple-complex">
+          {field.fields.map(({ key }) => {
+            const editingEntry = structuredClone(
+              entries.find(({ id }) => id === editingEntryId),
+            );
+
+            function getSubFieldProps(key) {
+              const subfield = field.fields.find(
+                (subfield) => subfield.key === key,
+              );
+              return {
+                key: subfield.key,
+                name: `${name}:${subfield.key}`,
+                field: {
+                  ...subfield,
+                  name: `${name}:${subfield.key}`,
+                  label: subfield.label,
+                  slug: subfield.key,
+                  value:
+                    editingEntryId && editingEntry
+                      ? editingEntry.data[subfield.key]?.value
+                      : null,
+                },
+              };
+            }
+
+            if (!["start_date", "end_date"].includes(key)) {
+              return (
+                <Row key={key}>
+                  <Field {...getSubFieldProps(key)} />
+                </Row>
+              );
+            }
+
+            if (key === "start_date") {
+              return (
+                <Row key={key}>
+                  <Field {...getSubFieldProps("start_date")} />
+                  <Field {...getSubFieldProps("end_date")} />
+                </Row>
+              );
+            }
+
+            return null;
+          })}
+
+          <div className="button-row">
+            <button
+              type="button"
+              className="button button-save"
+              onClick={() => onSave()}
+            >
+              {config.labelSave}
+            </button>
+
+            <button
+              type="button"
+              className="button button-cancel"
+              onClick={() => {
+                setState("display");
+                setEditingEntryId(null);
+              }}
+            >
+              {config.labelCancel}
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
