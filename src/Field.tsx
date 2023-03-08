@@ -1,5 +1,7 @@
 import { AddMultipleComplex } from "./AddMultipleComplex";
 import { Fieldset } from "./Fieldset";
+import Dropzone from "react-dropzone";
+import { UploadField } from "./UploadField";
 
 type FieldProps = {
   name: string;
@@ -60,7 +62,9 @@ export const Field: React.ComponentType<FieldProps> = ({ name, field }) => {
   if (field.type === "free_text") {
     Component = () => <textarea rows={5} {...inputProps} />;
   } else if (field.type === "file") {
-    Component = () => <input type="file" {...inputProps} />;
+    Component = () => (
+      <UploadField name={field.slug} field={field as WorkableFormField} />
+    );
   } else if (field.type === "boolean") {
     Component = () => <input type="checkbox" {...inputProps} />;
   } else if (field.type === "date") {
