@@ -228,3 +228,5 @@ export const AddMultipleComplex: React.ComponentType<
     </div>
   );
 };
+
+export default AddMultipleComplex;

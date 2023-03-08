@@ -81,3 +81,5 @@ export const UploadField: React.ComponentType<UploadFieldProps> = ({
     </div>
   );
 };
+
+export default UploadField;

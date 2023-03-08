@@ -45,3 +45,5 @@ export const TelephoneField: React.ComponentType<TelephoneFieldProps> = ({
 
   return <input type="tel" ref={inputRef} name={name} />;
 };
+
+export default TelephoneField;

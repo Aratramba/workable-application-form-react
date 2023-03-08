@@ -1,8 +1,9 @@
-import { AddMultipleComplex } from "./AddMultipleComplex";
 import { Fieldset } from "./Fieldset";
-import Dropzone from "react-dropzone";
-import { UploadField } from "./UploadField";
-import { TelephoneField } from "./TelephoneField";
+import React = require("react");
+
+const TelephoneField = React.lazy(() => import("./TelephoneField"));
+const UploadField = React.lazy(() => import("./UploadField"));
+const AddMultipleComplex = React.lazy(() => import("./AddMultipleComplex"));
 
 type FieldProps = {
   name: string;
