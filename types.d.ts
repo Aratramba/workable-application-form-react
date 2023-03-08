@@ -374,7 +374,46 @@ Form layout
     fields: ["cover_letter", REST_OF_FIELDS],
   },
 */
-type FormLayout = {
+type FormLayoutType = {
   name: string;
   fields: (string | string[])[];
 }[];
+
+/**
+ * Configuration
+ */
+
+type FormConfigType = {
+  telephoneInitialCountry?: string;
+  telephonePreferredCountries?: string[];
+  telephoneAllowDropdown?: boolean;
+  telephoneAutoHideDialCode?: boolean;
+  telephoneAutoPlaceholder?: "polite" | "aggressive" | "off";
+  telephoneCustomContainer?: string;
+  telephoneCustomPlaceholder?: (
+    selectedCountryPlaceholder,
+    selectedCountryData,
+  ) => string | null;
+  telephoneDropdownContainer?: HTMLElement | null;
+  telephoneExcludeCountries?: string[];
+  telephoneFormatOnDisplay?: boolean;
+  telephoneGeoIpLookup?: (success, failure) => string;
+  telephoneHiddenInput?: string;
+  telephoneLocalizedCountries?: { [key: string]: string };
+  telephoneNationalMode?: boolean;
+  telephoneOnlyCountries?: string[];
+  telephonePlaceholderNumberType?:
+    | "FIXED_LINE"
+    | "MOBILE"
+    | "FIXED_LINE_OR_MOBILE"
+    | "TOLL_FREE"
+    | "PREMIUM_RATE"
+    | "SHARED_COST"
+    | "VOIP"
+    | "PERSONAL_NUMBER"
+    | "PAGER"
+    | "UAN"
+    | "VOICEMAIL"
+    | "UNKNOWN";
+  telephoneSeparateDialCode?: boolean;
+};

@@ -1,3 +1,4 @@
+import { ConfigContext, DEFAULT_FORM_CONFIG } from "./ConfigContext";
 import { Field } from "./Field";
 import { Fieldset } from "./Fieldset";
 import { Row } from "./Row";
@@ -7,6 +8,7 @@ type ApplicationFormProps = {
   questions: WorkableQuestion[];
   action?: string;
   layout?: FormLayout;
+  config?: FormConfigType;
 };
 
 type FormLayout = {
@@ -16,7 +18,7 @@ type FormLayout = {
 
 const REST_OF_FIELDS = "...";
 
-export const DEFAULT_FORM_LAYOUT: FormLayout = [
+export const DEFAULT_FORM_LAYOUT: FormLayoutType = [
   {
     name: "Personal Information",
     fields: [
@@ -64,6 +66,7 @@ export const ApplicationForm: React.ComponentType<ApplicationFormProps> = ({
   questions,
   action = "",
   layout = DEFAULT_FORM_LAYOUT,
+  config = {},
 }) => {
   // for some reason the API does not return first_name, last_name and email fields
   if (!formFields.find((field) => field.key === "first_name")) {
@@ -118,43 +121,45 @@ export const ApplicationForm: React.ComponentType<ApplicationFormProps> = ({
   };
 
   return (
-    <form action={action} className="application-form" onSubmit={onSubmit}>
-      {layout.map((fieldset) => (
-        <Fieldset key={fieldset.name} name={fieldset.name}>
-          {fieldset.fields.map((field) => (
-            <Row key={field.toString()}>
-              {Array.isArray(field) ? (
-                field.map((field) => (
-                  <>
-                    <Field
-                      key={field}
-                      name={field}
-                      field={allFormFields.find(({ name }) => name === field)}
-                    />
-                  </>
-                ))
-              ) : field !== REST_OF_FIELDS ? (
-                <Field
-                  name={field}
-                  field={allFormFields.find(({ name }) => name === field)}
-                />
-              ) : (
-                <Fieldset key={field}>
-                  {restFields.map((field) => (
-                    <Row key={field.name}>
-                      <Field name={field.name} field={field} />
-                    </Row>
-                  ))}
-                </Fieldset>
-              )}
-            </Row>
-          ))}
-        </Fieldset>
-      ))}
+    <ConfigContext.Provider value={{ ...DEFAULT_FORM_CONFIG, ...config }}>
+      <form action={action} className="application-form" onSubmit={onSubmit}>
+        {layout.map((fieldset) => (
+          <Fieldset key={fieldset.name} name={fieldset.name}>
+            {fieldset.fields.map((field) => (
+              <Row key={field.toString()}>
+                {Array.isArray(field) ? (
+                  field.map((field) => (
+                    <>
+                      <Field
+                        key={field}
+                        name={field}
+                        field={allFormFields.find(({ name }) => name === field)}
+                      />
+                    </>
+                  ))
+                ) : field !== REST_OF_FIELDS ? (
+                  <Field
+                    name={field}
+                    field={allFormFields.find(({ name }) => name === field)}
+                  />
+                ) : (
+                  <Fieldset key={field}>
+                    {restFields.map((field) => (
+                      <Row key={field.name}>
+                        <Field name={field.name} field={field} />
+                      </Row>
+                    ))}
+                  </Fieldset>
+                )}
+              </Row>
+            ))}
+          </Fieldset>
+        ))}
 
-      <button type="submit" className="button button-submit">
-        Submit
-      </button>
-    </form>
+        <button type="submit" className="button button-submit">
+          Submit
+        </button>
+      </form>
+    </ConfigContext.Provider>
   );
 };
