@@ -2,6 +2,8 @@ import { useContext, useReducer, useRef, useState } from "react";
 import { Field } from "./Field";
 import { Row } from "./Row";
 import { ConfigContext } from "./ConfigContext";
+import * as Dialog from "@radix-ui/react-dialog";
+import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 
 type AddMultipleComplexProps = {
   name: string;
@@ -24,9 +26,11 @@ export const AddMultipleComplex: React.ComponentType<
   AddMultipleComplexProps
 > = ({ name, field }) => {
   const config = useContext(ConfigContext);
+  const [state, setState] = useState<"initial" | "dialog">("initial");
+
+  const formRef = useRef<HTMLFormElement>(null);
 
   const hiddenValueFieldRef = useRef<HTMLInputElement>(null);
-  const [state, setState] = useState<"form" | "display">("display");
   const [editingEntryId, setEditingEntryId] = useState<string | null>(null);
 
   const entryId = useRef<number>(0);
@@ -52,10 +56,9 @@ export const AddMultipleComplex: React.ComponentType<
   const onSave = () => {
     if (!hiddenValueFieldRef.current) return;
 
-    const formRef = hiddenValueFieldRef.current.form;
     if (!formRef) return;
 
-    const formData = new FormData(formRef);
+    const formData = new FormData(formRef.current);
     const data = Object.fromEntries(formData.entries());
 
     const action: ActionType = !editingEntryId
@@ -74,6 +77,8 @@ export const AddMultipleComplex: React.ComponentType<
       if (key.startsWith(`${name}:`)) {
         const subkey = key.replace(`${name}:`, "");
         const matchingField = field.fields.find((f) => f.key === subkey);
+
+        if (!value.trim().length) return;
         action.data[subkey] = {
           key: subkey,
           value,
@@ -82,13 +87,12 @@ export const AddMultipleComplex: React.ComponentType<
       }
     });
     updateEntries(action);
-
+    setState("initial");
     setEditingEntryId(null);
-    setState("display");
   };
 
   return (
-    <div>
+    <Dialog.Root open={state === "dialog"}>
       <div className="field-label">{field.label}</div>
 
       <input
@@ -105,11 +109,19 @@ export const AddMultipleComplex: React.ComponentType<
         <div className="add-multiple-complex">
           {(entries as ActionType[]).map((entry) => {
             return (
-              <div key={entry.id}>
+              <div key={entry.id} className="add-multiple-complex-entry">
                 {Object.entries(entry.data).map(
                   ([key, value]: [string, FieldValueType]) => (
                     <div key={key}>
-                      {value.label}: {value.value}
+                      {value.value === "on" ? (
+                        <>
+                          {config.iconCheck} {value.label}
+                        </>
+                      ) : (
+                        <>
+                          {value.label}: {value.value}
+                        </>
+                      )}
                     </div>
                   ),
                 )}
@@ -120,11 +132,15 @@ export const AddMultipleComplex: React.ComponentType<
                     className="button button-edit"
                     onClick={() => {
                       setEditingEntryId(entry.id);
-                      setState("form");
+                      setState("dialog");
                     }}
                   >
-                    {config.labelEdit}
+                    {config.iconEdit()}
+                    <VisuallyHidden.Root>
+                      {config.labelEdit}
+                    </VisuallyHidden.Root>
                   </button>
+
                   <button
                     type="button"
                     className="button button-delete"
@@ -135,7 +151,10 @@ export const AddMultipleComplex: React.ComponentType<
                       })
                     }
                   >
-                    {config.labelDelete}
+                    {config.iconDelete()}
+                    <VisuallyHidden.Root>
+                      {config.labelDelete}
+                    </VisuallyHidden.Root>
                   </button>
                 </div>
               </div>
@@ -144,88 +163,103 @@ export const AddMultipleComplex: React.ComponentType<
         </div>
       )}
 
-      {state === "display" && (
-        <div className="add-multiple-complex-add">
+      <div className="add-multiple-complex-add">
+        <button
+          type="button"
+          className="button button-save"
+          onClick={() => setState("dialog")}
+        >
+          {config.labelAdd}
+        </button>
+      </div>
+
+      <Dialog.Portal>
+        <Dialog.Overlay className="DialogOverlay" />
+        <Dialog.Content className="DialogContent application-form">
+          <VisuallyHidden.Root asChild>
+            <Dialog.Title className="DialogTitle">
+              {editingEntryId ? config.labelEdit : config.labelAdd}
+            </Dialog.Title>
+          </VisuallyHidden.Root>
+
           <button
-            type="button"
-            className="button button-save"
-            onClick={() => setState("form")}
+            className="DialogClose"
+            aria-label={config.labelClose}
+            onClick={() => setState("initial")}
           >
-            {config.labelAdd}
+            {config.iconCancel()}
           </button>
-        </div>
-      )}
 
-      {state === "form" && (
-        <div className="add-multiple-complex">
-          {field.fields.map(({ key }) => {
-            const editingEntry = structuredClone(
-              entries.find(({ id }) => id === editingEntryId),
-            );
-
-            function getSubFieldProps(key) {
-              const subfield = field.fields.find(
-                (subfield) => subfield.key === key,
+          <form className="add-multiple-complex-form" ref={formRef}>
+            {field.fields.map(({ key }) => {
+              const editingEntry = structuredClone(
+                entries.find(({ id }) => id === editingEntryId),
               );
-              return {
-                key: subfield.key,
-                name: `${name}:${subfield.key}`,
-                field: {
-                  ...subfield,
+
+              function getSubFieldProps(key) {
+                const subfield = field.fields.find(
+                  (subfield) => subfield.key === key,
+                );
+                return {
+                  key: subfield.key,
                   name: `${name}:${subfield.key}`,
-                  label: subfield.label,
-                  slug: subfield.key,
-                  value:
-                    editingEntryId && editingEntry
-                      ? editingEntry.data[subfield.key]?.value
-                      : null,
-                },
-              };
-            }
+                  field: {
+                    ...subfield,
+                    name: `${name}:${subfield.key}`,
+                    label: subfield.label,
+                    slug: subfield.key,
+                    value:
+                      editingEntryId && editingEntry
+                        ? editingEntry.data[subfield.key]?.value
+                        : null,
+                  },
+                };
+              }
 
-            if (!["start_date", "end_date"].includes(key)) {
-              return (
-                <Row key={key}>
-                  <Field {...getSubFieldProps(key)} />
-                </Row>
-              );
-            }
+              if (!["start_date", "end_date"].includes(key)) {
+                return (
+                  <Row key={key}>
+                    <Field {...getSubFieldProps(key)} />
+                  </Row>
+                );
+              }
 
-            if (key === "start_date") {
-              return (
-                <Row key={key}>
-                  <Field {...getSubFieldProps("start_date")} />
-                  <Field {...getSubFieldProps("end_date")} />
-                </Row>
-              );
-            }
+              if (key === "start_date") {
+                return (
+                  <Row key={key}>
+                    <Field {...getSubFieldProps("start_date")} />
+                    <Field {...getSubFieldProps("end_date")} />
+                  </Row>
+                );
+              }
 
-            return null;
-          })}
+              return null;
+            })}
 
-          <div className="button-row">
-            <button
-              type="button"
-              className="button button-save"
-              onClick={() => onSave()}
-            >
-              {config.labelSave}
-            </button>
+            <div className="button-row">
+              <button
+                type="button"
+                className="button button-save"
+                onClick={() => onSave()}
+              >
+                {config.labelSave}
+              </button>
 
-            <button
-              type="button"
-              className="button button-cancel"
-              onClick={() => {
-                setState("display");
-                setEditingEntryId(null);
-              }}
-            >
-              {config.labelCancel}
-            </button>
-          </div>
-        </div>
-      )}
-    </div>
+              <button
+                type="button"
+                className="button button-cancel"
+                onClick={() => {
+                  setEditingEntryId(null);
+                  setState("initial");
+                }}
+              >
+                {config.labelCancel}
+              </button>
+            </div>
+          </form>
+        </Dialog.Content>
+      </Dialog.Portal>
+    </Dialog.Root>
   );
 };
 

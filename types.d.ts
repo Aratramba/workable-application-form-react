@@ -416,10 +416,19 @@ type FormConfigType = {
     | "VOICEMAIL"
     | "UNKNOWN";
   telephoneSeparateDialCode?: boolean;
+
+  // labels
   labelSubmit?: string;
   labelAdd?: string;
   labelSave?: string;
   labelCancel?: string;
   labelEdit?: string;
   labelDelete?: string;
+  labelClose?: string;
+
+  // icons
+  iconCancel?: () => JSX.Element;
+  iconCheck?: () => JSX.Element;
+  iconDelete?: () => JSX.Element;
+  iconEdit?: () => JSX.Element;
 };
