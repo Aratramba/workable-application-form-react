@@ -5,6 +5,7 @@ import { Heading } from "./Heading";
 import { Fieldset } from "./Fieldset";
 import { Button } from "./Button";
 import { ButtonRow } from "./ButtonRow";
+import { Form } from "./Form";
 
 type ApplicationFormProps = {
   formFields: WorkableFormField[];
@@ -44,7 +45,10 @@ export const ApplicationForm: React.ComponentType<ApplicationFormProps> = ({
 
   const allFormFields = [...allFields, ...allQuestions];
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (
+    event: React.FormEvent<HTMLFormElement>,
+    cb: (error?: string | null) => void,
+  ) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const entries: any = Object.fromEntries(formData.entries());
@@ -67,9 +71,9 @@ export const ApplicationForm: React.ComponentType<ApplicationFormProps> = ({
     //   recruiter_key: "", //string;
     onSave(candidate, (error) => {
       if (error) {
-        console.log(error);
+        cb(error);
       } else {
-        console.log("saved");
+        cb();
       }
     });
 
@@ -116,32 +120,34 @@ export const ApplicationForm: React.ComponentType<ApplicationFormProps> = ({
   }[];
 
   return (
-    <ConfigContext.Provider value={{ ...DEFAULT_FORM_CONFIG, ...config }}>
-      <form className="application-form" onSubmit={handleSubmit}>
-        <Heading as="h1">
-          {{ ...DEFAULT_FORM_CONFIG, ...config }.labelForm}
-        </Heading>
+    <div className="application-form">
+      <ConfigContext.Provider value={{ ...DEFAULT_FORM_CONFIG, ...config }}>
+        <Form onSubmit={handleSubmit}>
+          <Heading as="h1">
+            {{ ...DEFAULT_FORM_CONFIG, ...config }.labelForm}
+          </Heading>
 
-        {allFieldsets.map((fieldset) => (
-          <Fieldset name={fieldset.name}>
-            {fieldset.fields.map((field) => (
-              <Field
-                key={field.name}
-                name={field.name}
-                field={field as unknown as FieldProps["field"]}
-              />
-            ))}
+          {allFieldsets.map((fieldset) => (
+            <Fieldset name={fieldset.name}>
+              {fieldset.fields.map((field) => (
+                <Field
+                  key={field.name}
+                  name={field.name}
+                  field={field as unknown as FieldProps["field"]}
+                />
+              ))}
+            </Fieldset>
+          ))}
+
+          <Fieldset>
+            <ButtonRow>
+              <Button type="submit" size="lg" style={{ width: "100%" }}>
+                {config.labelSubmit || DEFAULT_FORM_CONFIG.labelSubmit}
+              </Button>
+            </ButtonRow>
           </Fieldset>
-        ))}
-
-        <Fieldset>
-          <ButtonRow>
-            <Button type="submit" size="lg" style={{ width: "100%" }}>
-              {config.labelSubmit || DEFAULT_FORM_CONFIG.labelSubmit}
-            </Button>
-          </ButtonRow>
-        </Fieldset>
-      </form>
-    </ConfigContext.Provider>
+        </Form>
+      </ConfigContext.Provider>
+    </div>
   );
 };

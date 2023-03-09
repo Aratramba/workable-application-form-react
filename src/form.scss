@@ -1,0 +1,20 @@
+.form--initial {
+}
+
+.form--saving {
+  * {
+    pointer-events: none;
+  }
+
+  .button {
+    opacity: 0.5;
+  }
+}
+
+.form--error {
+  border: 10px solid red;
+}
+
+.form--complete {
+  display: none;
+}
