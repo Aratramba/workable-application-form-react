@@ -1,6 +1,12 @@
-import { ConfigContext } from "./ConfigContext";
 import { Fieldset } from "./Fieldset";
 import React = require("react");
+import { Label } from "./Label";
+import { Toggle } from "./Toggle";
+import { TextField } from "./TextField";
+import { TextAreaField } from "./TextAreaField";
+import { FormItem } from "./FormItem";
+import { DateField } from "./DateField";
+import { NumberField } from "./NumberField";
 
 const TelephoneField = React.lazy(() => import("./TelephoneField"));
 const UploadField = React.lazy(() => import("./UploadField"));
@@ -17,28 +23,9 @@ type FieldProps = {
 };
 
 export const Field: React.ComponentType<FieldProps> = ({ name, field }) => {
-  const config = React.useContext(ConfigContext);
   if (!field) {
     console.log(`Missing field: ${name}`);
     return null;
-  }
-
-  if (field.type === "complex") {
-    if (field.multiple) {
-      return <AddMultipleComplex name={name} field={field} />;
-    }
-
-    return (
-      <Fieldset name={field.label}>
-        {field.fields.map((subfield) => (
-          <Field
-            key={subfield.key}
-            name={subfield.key}
-            field={{ ...subfield, name: subfield.key, slug: subfield.key }}
-          />
-        ))}
-      </Fieldset>
-    );
   }
 
   const inputProps: {
@@ -46,80 +33,72 @@ export const Field: React.ComponentType<FieldProps> = ({ name, field }) => {
     required: boolean;
     id: string;
     defaultValue?: string;
-    defaultChecked?: boolean;
   } = {
     name: field.name,
     required: field.required,
     id: `field-${field.slug}`,
+    defaultValue: field.value,
   };
 
-  if (field.type !== "boolean") {
-    inputProps.defaultValue = field.value;
+  let Component;
+
+  switch (field.type) {
+    case "free_text":
+      Component = () => <TextAreaField {...inputProps} />;
+      break;
+
+    case "file":
+      Component = () => (
+        <UploadField name={field.slug} field={field as WorkableFormField} />
+      );
+      break;
+
+    case "boolean":
+      Component = () => (
+        <Toggle {...inputProps} label={field.label} slug={field.slug} />
+      );
+      break;
+
+    case "date":
+      Component = () => <DateField {...inputProps} />;
+      break;
+
+    case "multiple_choice":
+      Component = () => <div>multiple choice (not implemented)</div>;
+      break;
+
+    case "dropdown":
+      Component = () => <div>dropdown (not implemented)</div>;
+      break;
+
+    case "numeric":
+      Component = () => <NumberField {...inputProps} />;
+      break;
+
+    case "complex":
+      if (field.multiple) {
+        Component = () => <AddMultipleComplex name={name} field={field} />;
+      } else {
+        Component = () => <div>complex simple (not implemented)</div>;
+      }
+      break;
+
+    default:
+      Component = () => <TextField {...inputProps} />;
   }
 
-  if (field.type !== "boolean") {
-    inputProps.defaultChecked = Boolean(field.value);
-  }
-
-  let Component = () => <input type="text" {...inputProps} />;
-
-  if (field.type === "free_text") {
-    Component = () => <textarea rows={5} {...inputProps} />;
-  } else if (field.type === "file") {
-    Component = () => (
-      <UploadField name={field.slug} field={field as WorkableFormField} />
-    );
-  } else if (field.type === "boolean") {
-    Component = () => <input type="checkbox" {...inputProps} />;
-  } else if (field.type === "date") {
-    Component = () => (
-      <input
-        type="date"
-        name={field.name}
-        required={field.required}
-        id={`field-${field.slug}`}
-      />
-    );
-  } else if (field.name === "phone") {
-    Component = () => (
-      <TelephoneField name={field.slug} field={field as WorkableFormField} />
-    );
-  } else if (field.type === "multiple_choice") {
-    Component = () => <div>multiple choice</div>;
-  } else if (field.type === "dropdown") {
-    Component = () => <div>dropdown</div>;
-  } else if (field.type === "numeric") {
-    Component = () => <input type="number" {...inputProps} />;
+  if (field.name === "phone") {
+    Component = () => <TelephoneField {...inputProps} />;
   }
 
   if (field.type === "boolean") {
-    return (
-      <div className="field field-boolean">
-        {Component && <Component />}
-        <label className="field-label" htmlFor={`field-${field.slug}`}>
-          {field.label}
-          {field.required ? (
-            <span className="required">*</span>
-          ) : (
-            <span className="optional">{config.labelOptional}</span>
-          )}
-        </label>
-      </div>
-    );
+    return <FormItem>{Component && <Component />}</FormItem>;
   }
 
   return (
-    <div className="field">
-      <label className="field-label" htmlFor={`field-${field.slug}`}>
-        {field.label}
-        {field.required ? (
-          <span className="required">*</span>
-        ) : (
-          <span className="optional">{config.labelOptional}</span>
-        )}
-      </label>
-
-      <div className="input-wrapper">{Component && <Component />}</div>
-    </div>
+    <FormItem>
+      <Label label={field.label} slug={field.slug} required={field.required} />
+      {Component && <Component />}
+    </FormItem>
   );
 };

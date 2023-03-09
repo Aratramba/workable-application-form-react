@@ -379,6 +379,13 @@ type FormLayoutType = {
   fields: (string | string[])[];
 }[];
 
+type FormFieldType = {
+  name: string;
+  required: boolean;
+  id: string;
+  defaultValue?: string;
+};
+
 /**
  * Configuration
  */

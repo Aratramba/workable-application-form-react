@@ -8,8 +8,12 @@ export const Fieldset: React.ComponentType<FieldsetProps> = ({
   children,
 }) => {
   return (
-    <fieldset className="fieldset">
-      {name && <legend className="legend">{name}</legend>}
+    <fieldset className="form-fieldset">
+      {name && (
+        <legend className="form-legend">
+          <span className="form-legend__title">{name}</span>
+        </legend>
+      )}
       {children}
     </fieldset>
   );

@@ -1,0 +1,12 @@
+.form-field__textarea {
+  font-weight: 400;
+  font-size: 0.875rem;
+  line-height: 1.375rem;
+  display: block;
+  flex: 1 1;
+  margin: 0 0.25rem 0.25rem 0;
+  min-height: 250px;
+  padding: 0.75rem 1rem 0;
+  resize: vertical;
+  width: calc(100% - 0.25rem);
+}

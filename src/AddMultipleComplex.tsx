@@ -93,8 +93,6 @@ export const AddMultipleComplex: React.ComponentType<
 
   return (
     <Dialog.Root open={state === "dialog"}>
-      <div className="field-label">{field.label}</div>
-
       <input
         type="hidden"
         name={name}
@@ -174,16 +172,16 @@ export const AddMultipleComplex: React.ComponentType<
       </div>
 
       <Dialog.Portal>
-        <Dialog.Overlay className="DialogOverlay" />
-        <Dialog.Content className="DialogContent application-form">
+        <Dialog.Overlay className="dialog-overlay" />
+        <Dialog.Content className="dialog-content">
           <VisuallyHidden.Root asChild>
-            <Dialog.Title className="DialogTitle">
+            <Dialog.Title className="dialog-title">
               {editingEntryId ? config.labelEdit : config.labelAdd}
             </Dialog.Title>
           </VisuallyHidden.Root>
 
           <button
-            className="DialogClose"
+            className="dialog-close"
             aria-label={config.labelClose}
             onClick={() => setState("initial")}
           >
