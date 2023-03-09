@@ -1,3 +1,41 @@
+.complex-multiple__add {
+}
+
+.complex-multiple__entries {
+}
+
+.complex-multiple__entry {
+  position: relative;
+  padding: 16px;
+  border: 1px solid #ddd;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  border-radius: 3px;
+  margin-top: 16px;
+}
+
+.complex-multiple__entry-actions {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  display: flex;
+  gap: 16px;
+}
+
+.complex-multiple__entry-table {
+  table-layout: fixed;
+  border: 0;
+  border-collapse: collapse;
+  width: 100%;
+  max-width: 500px;
+
+  & td,
+  & th {
+    padding: 4px 0;
+    text-align: left;
+  }
+}
 /* Radix Dialog */
 
 .dialog-overlay {

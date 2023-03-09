@@ -10,7 +10,7 @@ import { NumberField } from "./NumberField";
 
 const TelephoneField = React.lazy(() => import("./TelephoneField"));
 const UploadField = React.lazy(() => import("./UploadField"));
-const AddMultipleComplex = React.lazy(() => import("./AddMultipleComplex"));
+const ComplexMultiple = React.lazy(() => import("./ComplexMultipleField"));
 
 type FieldProps = {
   name: string;
@@ -77,7 +77,7 @@ export const Field: React.ComponentType<FieldProps> = ({ name, field }) => {
 
     case "complex":
       if (field.multiple) {
-        Component = () => <AddMultipleComplex name={name} field={field} />;
+        Component = () => <ComplexMultiple name={name} field={field} />;
       } else {
         Component = () => <div>complex simple (not implemented)</div>;
       }

@@ -5,6 +5,10 @@
   gap: 32px;
 }
 
+.form-fieldset + .form-fieldset {
+  margin-top: 64px;
+}
+
 .form-legend {
   display: grid;
   justify-items: start;

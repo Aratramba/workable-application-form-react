@@ -132,7 +132,7 @@ export const ApplicationForm: React.ComponentType<ApplicationFormProps> = ({
         {layout.map((fieldset) => (
           <Fieldset key={fieldset.name} name={fieldset.name}>
             {fieldset.fields.map((field) => (
-              <React.Fragment key={field.toString()}>
+              <React.Fragment key={field}>
                 {field !== REST_OF_FIELDS ? (
                   <Field
                     name={field}
