@@ -37,6 +37,7 @@ root.render(
       onClick={() => {
         Object.entries(TEST_VALUES).forEach(([key, value]) => {
           const input: any = document.querySelector(`[name="${key}"]`);
+          if (!input) return;
           if (
             input.nodeName === "INPUT" &&
             ["text", "tel", "number", "date"].includes(input.type)
