@@ -123,7 +123,12 @@ export const ApplicationForm: React.ComponentType<ApplicationFormProps> = ({
 
   return (
     <ConfigContext.Provider value={{ ...DEFAULT_FORM_CONFIG, ...config }}>
-      <form action={action} className="application-form" onSubmit={onSubmit}>
+      <form
+        action={action}
+        className="application-form"
+        onSubmit={onSubmit}
+        method="POST"
+      >
         {layout.map((fieldset) => (
           <Fieldset key={fieldset.name} name={fieldset.name}>
             {fieldset.fields.map((field) => (
