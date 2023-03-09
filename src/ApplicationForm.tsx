@@ -12,6 +12,10 @@ type ApplicationFormProps = {
   action?: string;
   config?: FormConfigType;
   fieldsets?: FormFieldsetsType;
+  onSave?: (
+    data: WorkableCandidate,
+    cb: (error: string | null) => void,
+  ) => void;
 };
 
 export const REST_OF_FIELDS_FLAG = "...";
@@ -22,7 +26,12 @@ export const ApplicationForm: React.ComponentType<ApplicationFormProps> = ({
   action = "",
   config = {},
   fieldsets = [],
+  onSave = () => {},
 }) => {
+  const [state, setState] = React.useState<
+    "initial" | "saving" | "error" | "complete"
+  >("initial");
+
   // get all fields from the form
   const allFields = formFields.map((field) => ({
     ...field,
@@ -41,11 +50,39 @@ export const ApplicationForm: React.ComponentType<ApplicationFormProps> = ({
   const allFormFields = [...allFields, ...allQuestions];
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    setState("saving");
+
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
-    const data = Object.fromEntries(formData.entries());
+    const entries: any = Object.fromEntries(formData.entries());
 
-    console.log(data);
+    const candidate: WorkableCandidate = {
+      ...entries,
+    };
+
+    // TODO: manually treat lists
+    // education_entries: [], //WorkableEducationEntry[];
+    //   experience_entries: [], //WorkableExperienceEntry[];
+    //   answers: [], //WorkableAnswer[];
+    //   skills: [], //string[];
+    //   tags: [], //string[];
+    //   disqualified: false, //boolean;
+    //   disqualification_reason: "", //string;
+    //   disqualified_at: "", //string;
+    //   social_profiles: [], //WorkableSocialProfile[];
+    //   domain: "", //string;
+    //   recruiter_key: "", //string;
+    onSave(candidate, (error) => {
+      if (error) {
+        console.log(error);
+        setState("error");
+      } else {
+        console.log("saved");
+        setState("complete");
+      }
+    });
+
+    return false;
   };
 
   const definedFieldsets = fieldsets.map((fieldset) => {
@@ -113,8 +150,13 @@ export const ApplicationForm: React.ComponentType<ApplicationFormProps> = ({
 
         <Fieldset>
           <ButtonRow>
-            <Button type="submit" size="lg" style={{ width: "100%" }}>
-              {config.labelSubmit || DEFAULT_FORM_CONFIG.labelSubmit}
+            <Button
+              type="submit"
+              size="lg"
+              style={{ width: "100%" }}
+              disabled={state !== "initial"}
+            >
+              {config.labelSubmit || DEFAULT_FORM_CONFIG.labelSubmit}({state})
             </Button>
           </ButtonRow>
         </Fieldset>

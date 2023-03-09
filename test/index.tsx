@@ -8,6 +8,19 @@ import { REST_OF_FIELDS_FLAG } from "../src/ApplicationForm";
 const domNode = document.getElementById("app");
 const root = createRoot(domNode);
 
+const onSave = (
+  data: WorkableCandidate,
+  cb: (error: string | null) => void,
+) => {
+  console.log("saving");
+  console.log(data);
+
+  setTimeout(() => {
+    cb(null);
+    console.log("redirect");
+  }, 5000);
+};
+
 root.render(
   <>
     <button
@@ -40,6 +53,7 @@ root.render(
       fill
     </button>
     <ApplicationForm
+      onSave={onSave}
       formFields={[
         // for some reason the API does not return first_name, last_name and email fields
         {
@@ -113,6 +127,5 @@ root.render(
         },
       ]}
     />
-    ,
   </>,
 );

@@ -82,7 +82,7 @@ recruiter_key	string	Explained below
 */
 
 type WorkableCandidate = {
-  name: string;
+  name?: string;
   firstname: string;
   lastname: string;
   email: string;
@@ -96,12 +96,12 @@ type WorkableCandidate = {
   answers: WorkableAnswer[];
   skills: string[];
   tags: string[];
-  disqualified: boolean;
-  disqualification_reason: string;
-  disqualified_at: string;
+  disqualified?: boolean;
+  disqualification_reason?: string;
+  disqualified_at?: string;
   social_profiles: WorkableSocialProfile[];
   domain: string;
-  recruiter_key: string;
+  recruiter_key?: string;
 };
 
 /* 
