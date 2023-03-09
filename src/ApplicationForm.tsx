@@ -1,87 +1,29 @@
 import React = require("react");
 import { ConfigContext, DEFAULT_FORM_CONFIG } from "./ConfigContext";
 import { Field } from "./Field";
+import { Heading } from "./Heading";
 import { Fieldset } from "./Fieldset";
 
 type ApplicationFormProps = {
   formFields: WorkableFormField[];
   questions: WorkableQuestion[];
   action?: string;
-  layout?: FormLayout;
   config?: FormConfigType;
+  fieldsets: {
+    name: string;
+    fields: string[];
+  }[];
 };
 
-type FormLayout = {
-  name: string;
-  fields: string[];
-}[];
-
-const REST_OF_FIELDS = "...";
-
-export const DEFAULT_FORM_LAYOUT: FormLayoutType = [
-  {
-    name: "Personal Information",
-    fields: [
-      "first_name",
-      "last_name",
-      "email",
-      "headline",
-      "phone",
-      "address",
-      "avatar",
-    ],
-  },
-  {
-    name: "Profile",
-    fields: ["education", "experience", "summary", "resume"],
-  },
-  {
-    name: "Details",
-    fields: ["cover_letter", REST_OF_FIELDS],
-  },
-];
-
-const FIRST_NAME_FIELD: WorkableFormField = {
-  key: "first_name",
-  label: "First Name",
-  type: "string",
-  required: true,
-};
-
-const LAST_NAME_FIELD: WorkableFormField = {
-  key: "last_name",
-  label: "Last Name",
-  type: "string",
-  required: true,
-};
-
-const EMAIL_FIELD: WorkableFormField = {
-  key: "email",
-  label: "Email",
-  type: "string",
-  required: true,
-};
+export const REST_OF_FIELDS_FLAG = "...";
 
 export const ApplicationForm: React.ComponentType<ApplicationFormProps> = ({
   formFields,
   questions,
   action = "",
-  layout = DEFAULT_FORM_LAYOUT,
   config = {},
+  fieldsets = [],
 }) => {
-  // for some reason the API does not return first_name, last_name and email fields
-  if (!formFields.find((field) => field.key === "first_name")) {
-    formFields.push(FIRST_NAME_FIELD);
-  }
-
-  if (!formFields.find((field) => field.key === "last_name")) {
-    formFields.push(LAST_NAME_FIELD);
-  }
-
-  if (!formFields.find((field) => field.key === "email")) {
-    formFields.push(EMAIL_FIELD);
-  }
-
   // get all fields from the form
   const allFields = formFields.map((field) => ({
     ...field,
@@ -99,20 +41,6 @@ export const ApplicationForm: React.ComponentType<ApplicationFormProps> = ({
 
   const allFormFields = [...allFields, ...allQuestions];
 
-  // get all fields used in the layout
-  const allLayoutFields = layout
-    .map((fieldset) => {
-      return fieldset.fields.map((field) => {
-        return field;
-      });
-    })
-    .flat(2);
-
-  // find fields that are not in the layout
-  const restFields = allFormFields.filter(
-    (field) => !allLayoutFields.includes(field.name),
-  );
-
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
@@ -120,6 +48,28 @@ export const ApplicationForm: React.ComponentType<ApplicationFormProps> = ({
 
     console.log(data);
   };
+
+  const allFieldsets = fieldsets.map((fieldset) => {
+    return {
+      name: fieldset.name,
+      fields: fieldset.fields
+        .map((field) => {
+          if (field === REST_OF_FIELDS_FLAG) {
+            return allFormFields;
+          }
+
+          const fieldsetField = allFormFields.find(
+            ({ name }) => name === field,
+          );
+          allFormFields.splice(allFormFields.indexOf(fieldsetField), 1);
+          return fieldsetField;
+        })
+        .flat()
+        .filter(Boolean),
+    };
+  });
+
+  console.log(allFieldsets);
 
   return (
     <ConfigContext.Provider value={{ ...DEFAULT_FORM_CONFIG, ...config }}>
@@ -129,24 +79,25 @@ export const ApplicationForm: React.ComponentType<ApplicationFormProps> = ({
         onSubmit={onSubmit}
         method="POST"
       >
-        {layout.map((fieldset) => (
-          <Fieldset key={fieldset.name} name={fieldset.name}>
+        <Heading as="h1">
+          {{ ...DEFAULT_FORM_CONFIG, ...config }.labelForm}
+        </Heading>
+
+        {allFieldsets.map((fieldset) => (
+          <Fieldset name={fieldset.name}>
             {fieldset.fields.map((field) => (
-              <React.Fragment key={field}>
-                {field !== REST_OF_FIELDS ? (
-                  <Field
-                    name={field}
-                    field={allFormFields.find(({ name }) => name === field)}
-                  />
-                ) : (
-                  restFields.map((field) => (
-                    <Field name={field.name} field={field} />
-                  ))
-                )}
-              </React.Fragment>
+              <Field key={field.name} name={field.name} field={field} />
             ))}
           </Fieldset>
         ))}
+
+        {/* {allFormFields.map((field) => (
+          <Field
+            key={field.name}
+            name={field.name}
+            field={allFormFields.find(({ name }) => name === field.name)}
+          />
+        ))} */}
 
         <button type="submit" className="button button-submit">
           {config.labelSubmit || DEFAULT_FORM_CONFIG.labelSubmit}

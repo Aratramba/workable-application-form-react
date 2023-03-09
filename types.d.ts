@@ -351,34 +351,6 @@ type WorkableAnswerFileData = {
   data?: string;
 } & Required<WorkableAnswerBase>;
 
-/* 
-Form layout
-
- {
-    name: "Personal Information",
-    fields: [
-      ["first_name", "last_name"],
-      "email",
-      "headline",
-      "phone",
-      "address",
-      "photo",
-    ],
-  },
-  {
-    name: "Profile",
-    fields: ["education_entries", "experience_entries", "summary", "resume"],
-  },
-  {
-    name: "Details",
-    fields: ["cover_letter", REST_OF_FIELDS],
-  },
-*/
-type FormLayoutType = {
-  name: string;
-  fields: string[];
-}[];
-
 type FormFieldType = {
   name: string;
   required: boolean;
@@ -425,6 +397,7 @@ type FormConfigType = {
   telephoneSeparateDialCode?: boolean;
 
   // labels
+  labelForm?: string;
   labelSubmit?: string;
   labelAdd?: string;
   labelSave?: string;

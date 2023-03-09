@@ -1,4 +1,3 @@
-import { Fieldset } from "./Fieldset";
 import React = require("react");
 import { Label } from "./Label";
 import { Toggle } from "./Toggle";

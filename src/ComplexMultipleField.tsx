@@ -123,18 +123,20 @@ export const ComplexMultiple: React.ComponentType<ComplexMultipleProps> = ({
             return (
               <div key={entry.id} className="complex-multiple__entry">
                 <table className="complex-multiple__entry-table">
-                  {Object.entries(entry.data).map(
-                    ([key, value]: [string, FieldValueType]) => (
-                      <tr key={key}>
-                        <th>{value.label}</th>
-                        {value.value === "on" ? (
-                          <td>{config.iconCheck()}</td>
-                        ) : (
-                          <td>{value.value}</td>
-                        )}
-                      </tr>
-                    ),
-                  )}
+                  <tbody>
+                    {Object.entries(entry.data).map(
+                      ([key, value]: [string, FieldValueType]) => (
+                        <tr key={key}>
+                          <th>{value.label}</th>
+                          {value.value === "on" ? (
+                            <td>{config.iconCheck()}</td>
+                          ) : (
+                            <td>{value.value}</td>
+                          )}
+                        </tr>
+                      ),
+                    )}
+                  </tbody>
                 </table>
 
                 <div className="complex-multiple__entry-actions">

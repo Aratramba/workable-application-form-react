@@ -2,7 +2,6 @@ type FieldsetProps = {
   name?: string;
   children: React.ReactNode;
 };
-
 export const Fieldset: React.ComponentType<FieldsetProps> = ({
   name,
   children,

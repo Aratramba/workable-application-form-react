@@ -20,6 +20,7 @@ export const DEFAULT_FORM_CONFIG: FormConfigType = {
   telephoneSeparateDialCode: true,
 
   // labels
+  labelForm: "Application",
   labelSubmit: "Submit application",
   labelAdd: "Add",
   labelSave: "Save",
