@@ -104,7 +104,6 @@ export const Field: React.ComponentType<FieldProps> = ({ name, field }) => {
 
   return (
     <div className="field">
-      {field.value}
       <label className="field-label" htmlFor={`field-${field.slug}`}>
         {field.label}
         {field.required && <span className="required">*</span>}
