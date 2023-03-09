@@ -425,6 +425,7 @@ type FormConfigType = {
   labelEdit?: string;
   labelDelete?: string;
   labelClose?: string;
+  labelOptional?: string;
 
   // icons
   iconCancel?: () => JSX.Element;
