@@ -376,7 +376,7 @@ Form layout
 */
 type FormLayoutType = {
   name: string;
-  fields: (string | string[])[];
+  fields: string[];
 }[];
 
 type FormFieldType = {

@@ -4,12 +4,15 @@
   grid-row-gap: 0.5rem;
   row-gap: 0.5rem;
   width: 100%;
+  grid-column: 1 / span 2;
 }
+
 .form-item__wrapper {
   display: grid;
   grid-row-gap: 0.25rem;
   row-gap: 0.25rem;
 }
+
 .form-item__error-message {
   font-weight: 400;
   font-size: 0.875rem;
@@ -22,9 +25,11 @@
   grid-auto-flow: column;
   justify-content: start;
 }
+
 .form-item__error-message .icon {
   padding-top: 0.1875rem;
 }
+
 .form-item__hint {
   font-weight: 400;
   font-size: 0.875rem;

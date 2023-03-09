@@ -2,7 +2,6 @@ import React = require("react");
 import { ConfigContext, DEFAULT_FORM_CONFIG } from "./ConfigContext";
 import { Field } from "./Field";
 import { Fieldset } from "./Fieldset";
-import { Row } from "./Row";
 
 type ApplicationFormProps = {
   formFields: WorkableFormField[];
@@ -14,7 +13,7 @@ type ApplicationFormProps = {
 
 type FormLayout = {
   name: string;
-  fields: (string | [string, string])[];
+  fields: string[];
 }[];
 
 const REST_OF_FIELDS = "...";
@@ -23,7 +22,8 @@ export const DEFAULT_FORM_LAYOUT: FormLayoutType = [
   {
     name: "Personal Information",
     fields: [
-      ["first_name", "last_name"],
+      "first_name",
+      "last_name",
       "email",
       "headline",
       "phone",
@@ -133,31 +133,15 @@ export const ApplicationForm: React.ComponentType<ApplicationFormProps> = ({
           <Fieldset key={fieldset.name} name={fieldset.name}>
             {fieldset.fields.map((field) => (
               <React.Fragment key={field.toString()}>
-                {Array.isArray(field) ? (
-                  <Row key={field.toString()}>
-                    {field.map((field) => (
-                      <Field
-                        key={field}
-                        name={field}
-                        field={allFormFields.find(({ name }) => name === field)}
-                      />
-                    ))}
-                  </Row>
-                ) : field !== REST_OF_FIELDS ? (
-                  <Row key={field}>
-                    <Field
-                      name={field}
-                      field={allFormFields.find(({ name }) => name === field)}
-                    />
-                  </Row>
+                {field !== REST_OF_FIELDS ? (
+                  <Field
+                    name={field}
+                    field={allFormFields.find(({ name }) => name === field)}
+                  />
                 ) : (
-                  <>
-                    {restFields.map((field) => (
-                      <Row key={field.name}>
-                        <Field name={field.name} field={field} />
-                      </Row>
-                    ))}
-                  </>
+                  restFields.map((field) => (
+                    <Field name={field.name} field={field} />
+                  ))
                 )}
               </React.Fragment>
             ))}

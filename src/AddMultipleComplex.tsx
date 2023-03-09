@@ -1,6 +1,5 @@
 import { useContext, useReducer, useRef, useState } from "react";
 import { Field } from "./Field";
-import { Row } from "./Row";
 import { ConfigContext } from "./ConfigContext";
 import * as Dialog from "@radix-ui/react-dialog";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
@@ -214,24 +213,7 @@ export const AddMultipleComplex: React.ComponentType<
                 };
               }
 
-              if (!["start_date", "end_date"].includes(key)) {
-                return (
-                  <Row key={key}>
-                    <Field {...getSubFieldProps(key)} />
-                  </Row>
-                );
-              }
-
-              if (key === "start_date") {
-                return (
-                  <Row key={key}>
-                    <Field {...getSubFieldProps("start_date")} />
-                    <Field {...getSubFieldProps("end_date")} />
-                  </Row>
-                );
-              }
-
-              return null;
+              return <Field {...getSubFieldProps(key)} />;
             })}
 
             <div className="button-row">

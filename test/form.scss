@@ -22,3 +22,10 @@ fieldset {
 @import "../src/telephone-field.scss";
 @import "../src/add-multiple-complex.scss";
 @import "../src/form-item.scss";
+
+.form-item:has(input[name="first_name"]) {
+  grid-column: 1;
+}
+.form-item:has(input[name="last_name"]) {
+  grid-column: 2;
+}
