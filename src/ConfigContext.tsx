@@ -20,13 +20,14 @@ export const DEFAULT_FORM_CONFIG: FormConfigType = {
   telephoneSeparateDialCode: true,
 
   // labels
-  labelSubmit: "Submit",
+  labelSubmit: "Submit application",
   labelAdd: "Add",
   labelSave: "Save",
   labelCancel: "Cancel",
   labelEdit: "Edit",
   labelDelete: "Delete",
   labelClose: "Close",
+  labelOptional: "(optional)",
 
   // icons
   iconCancel: () => (
