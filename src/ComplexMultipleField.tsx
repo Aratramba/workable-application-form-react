@@ -143,6 +143,7 @@ export const ComplexMultiple: React.ComponentType<ComplexMultipleProps> = ({
                 <div className="complex-multiple__entry-actions">
                   <Button
                     type="button"
+                    theme="ghost"
                     onClick={() => {
                       setEditingEntryId(entry.id);
                       setState("dialog");
@@ -156,6 +157,7 @@ export const ComplexMultiple: React.ComponentType<ComplexMultipleProps> = ({
 
                   <Button
                     type="button"
+                    theme="ghost"
                     onClick={() =>
                       updateEntries({
                         id: entry.id,

@@ -1,6 +1,6 @@
 type ButtonProps = {
   onClick?: () => void;
-  theme?: "primary" | "secondary" | "tertiary";
+  theme?: "primary" | "secondary" | "tertiary" | "ghost";
   type?: "button" | "submit" | "reset";
   children?: React.ReactNode;
   style?: React.CSSProperties;

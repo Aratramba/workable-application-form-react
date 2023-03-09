@@ -30,6 +30,21 @@
   line-height: 1.375rem;
 }
 
+.button--ghost {
+  padding-left: 0;
+  padding-right: 0;
+  color: var(--button-color-primary);
+  border: 0.125rem solid transparent;
+}
+
+.button--ghost:hover {
+}
+
+.button--ghost:focus {
+  outline-color: var(--button-outline-secondary);
+  border: 0.125rem solid var(--button-color-primary);
+}
+
 .button--primary {
   outline-color: var(--button-outline-secondary);
   background-image: linear-gradient(
