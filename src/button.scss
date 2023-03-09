@@ -31,8 +31,12 @@
 }
 
 .button--primary {
-  outline-color: rgba(6, 127, 150, 0.2);
-  background-color: linear-gradient(45deg, #067f96 50%, #07a5b6);
+  outline-color: var(--button-outline-secondary);
+  background-image: linear-gradient(
+    45deg,
+    var(--button-color-primary) 50%,
+    var(--button-color-secondary)
+  );
   background-position: 100% 0;
   background-size: 200%;
   color: #fff;
@@ -40,43 +44,43 @@
 
 .button--primary:hover {
   background-position: 0 100%;
-  box-shadow: 0 4px 12px -2px rgb(6 127 150 / 40%);
+  box-shadow: 0 4px 12px -2px rgb(var(--button-outline-shadow-color-rgb) / 40%);
 }
 
 .button--primary:focus {
-  outline: rgba(6, 127, 150, 0.2) solid 0.1875rem;
+  outline: var(--button-outline-secondary) solid 0.1875rem;
   outline-offset: 0.125rem;
 }
 
 .button--secondary {
-  outline-color: rgba(6, 127, 150, 0.2);
-  border: 0.125rem solid #067f96;
-  color: #067f96;
+  outline-color: var(--button-outline-secondary);
+  border: 0.125rem solid var(--button-color-primary);
+  color: var(--button-color-primary);
 }
 
 .button--secondary:hover {
-  box-shadow: 0 4px 12px -2px rgb(6 127 150 / 15%);
-  border-color: #067f96;
+  box-shadow: 0 4px 12px -2px rgb(var(--button-outline-shadow-color-rgb) / 15%);
+  border-color: var(--button-color-primary);
 }
 
 .button--secondary:focus {
-  outline: rgba(6, 127, 150, 0.2) solid 0.1875rem;
+  outline: var(--button-outline-secondary) solid 0.1875rem;
   outline-offset: 0.125rem;
 }
 
 .button--tertiary {
-  outline-color: rgba(6, 127, 150, 0.2);
+  outline-color: var(--button-outline-secondary);
   border: 0.125rem solid #dddee1;
-  color: #067f96;
+  color: var(--button-color-primary);
 }
 
 .button--tertiary:hover {
-  box-shadow: 0 4px 12px -2px rgb(6 127 150 / 15%);
-  border-color: #067f96;
+  box-shadow: 0 4px 12px -2px rgb(var(--button-outline-shadow-color-rgb) / 15%);
+  border-color: var(--button-color-primary);
 }
 
 .button--tertiary:focus {
-  outline: rgba(6, 127, 150, 0.2) solid 0.1875rem;
+  outline: var(--button-outline-secondary) solid 0.1875rem;
   outline-offset: 0.125rem;
 }
 
