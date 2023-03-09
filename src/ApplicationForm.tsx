@@ -23,7 +23,6 @@ export const REST_OF_FIELDS_FLAG = "...";
 export const ApplicationForm: React.ComponentType<ApplicationFormProps> = ({
   formFields,
   questions,
-  action = "",
   config = {},
   fieldsets = [],
   onSave = () => {},
