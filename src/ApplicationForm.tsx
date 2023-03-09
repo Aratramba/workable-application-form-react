@@ -28,19 +28,15 @@ export const ApplicationForm: React.ComponentType<ApplicationFormProps> = ({
   fieldsets = [],
   onSave = () => {},
 }) => {
-  const [state, setState] = React.useState<
-    "initial" | "saving" | "error" | "complete"
-  >("initial");
-
   // get all fields from the form
-  const allFields = formFields.map((field) => ({
+  const allFields = (formFields || []).map((field) => ({
     ...field,
     name: field.key,
     label: field.label,
     slug: field.key,
   }));
 
-  const allQuestions = questions.map((field) => ({
+  const allQuestions = (questions || []).map((field) => ({
     ...field,
     name: field.id,
     label: field.body,
@@ -49,9 +45,7 @@ export const ApplicationForm: React.ComponentType<ApplicationFormProps> = ({
 
   const allFormFields = [...allFields, ...allQuestions];
 
-  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    setState("saving");
-
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const entries: any = Object.fromEntries(formData.entries());
@@ -60,7 +54,7 @@ export const ApplicationForm: React.ComponentType<ApplicationFormProps> = ({
       ...entries,
     };
 
-    // TODO: manually treat lists
+    // TODO: manually treat lists and checkboxes
     // education_entries: [], //WorkableEducationEntry[];
     //   experience_entries: [], //WorkableExperienceEntry[];
     //   answers: [], //WorkableAnswer[];
@@ -75,10 +69,8 @@ export const ApplicationForm: React.ComponentType<ApplicationFormProps> = ({
     onSave(candidate, (error) => {
       if (error) {
         console.log(error);
-        setState("error");
       } else {
         console.log("saved");
-        setState("complete");
       }
     });
 
@@ -126,12 +118,7 @@ export const ApplicationForm: React.ComponentType<ApplicationFormProps> = ({
 
   return (
     <ConfigContext.Provider value={{ ...DEFAULT_FORM_CONFIG, ...config }}>
-      <form
-        action={action}
-        className="application-form"
-        onSubmit={onSubmit}
-        method="POST"
-      >
+      <form className="application-form" onSubmit={handleSubmit}>
         <Heading as="h1">
           {{ ...DEFAULT_FORM_CONFIG, ...config }.labelForm}
         </Heading>
@@ -150,13 +137,8 @@ export const ApplicationForm: React.ComponentType<ApplicationFormProps> = ({
 
         <Fieldset>
           <ButtonRow>
-            <Button
-              type="submit"
-              size="lg"
-              style={{ width: "100%" }}
-              disabled={state !== "initial"}
-            >
-              {config.labelSubmit || DEFAULT_FORM_CONFIG.labelSubmit}({state})
+            <Button type="submit" size="lg" style={{ width: "100%" }}>
+              {config.labelSubmit || DEFAULT_FORM_CONFIG.labelSubmit}
             </Button>
           </ButtonRow>
         </Fieldset>
