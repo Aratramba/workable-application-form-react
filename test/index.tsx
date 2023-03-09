@@ -76,6 +76,9 @@ root.render(
         name: "Details",
         fields: [REST_OF_FIELDS_FLAG],
       },
+      {
+        fields: ["privacy"],
+      },
     ]}
   />,
 );

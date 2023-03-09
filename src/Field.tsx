@@ -11,7 +11,7 @@ const TelephoneField = React.lazy(() => import("./TelephoneField"));
 const UploadField = React.lazy(() => import("./UploadField"));
 const ComplexMultiple = React.lazy(() => import("./ComplexMultipleField"));
 
-type FieldProps = {
+export type FieldProps = {
   name: string;
   field: (WorkableFormField | WorkableQuestion) & {
     name: string;

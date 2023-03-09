@@ -1,0 +1,95 @@
+.button {
+  all: unset;
+  padding: 0 1.5rem;
+  font-weight: bold;
+  max-width: 100%;
+  background-color: white;
+  cursor: pointer;
+  display: inline-flex;
+  grid-auto-flow: column;
+  justify-content: center;
+  place-items: center;
+  position: relative;
+  transition-duration: 200ms;
+  transition-property: background-position, border-color, box-shadow, color,
+    outline, -webkit-transform;
+  transition-property: background-position, border-color, box-shadow, color,
+    outline, transform;
+  transition-property: background-position, border-color, box-shadow, color,
+    outline, transform, -webkit-transform;
+  transition-timing-function: cubic-bezier(0.2, 0.07, 0.38, 1);
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  will-change: background-position, border-color, box-shadow, color, outline,
+    transform;
+  min-height: 1.875rem;
+  padding: 0 1rem;
+  border-radius: 2rem;
+  font-size: 0.875rem;
+  line-height: 1.375rem;
+}
+
+.button--primary {
+  outline-color: rgba(6, 127, 150, 0.2);
+  background-color: linear-gradient(45deg, #067f96 50%, #07a5b6);
+  background-position: 100% 0;
+  background-size: 200%;
+  color: #fff;
+}
+
+.button--primary:hover {
+  background-position: 0 100%;
+  box-shadow: 0 4px 12px -2px rgb(6 127 150 / 40%);
+}
+
+.button--primary:focus {
+  outline: rgba(6, 127, 150, 0.2) solid 0.1875rem;
+  outline-offset: 0.125rem;
+}
+
+.button--secondary {
+  outline-color: rgba(6, 127, 150, 0.2);
+  border: 0.125rem solid #067f96;
+  color: #067f96;
+}
+
+.button--secondary:hover {
+  box-shadow: 0 4px 12px -2px rgb(6 127 150 / 15%);
+  border-color: #067f96;
+}
+
+.button--secondary:focus {
+  outline: rgba(6, 127, 150, 0.2) solid 0.1875rem;
+  outline-offset: 0.125rem;
+}
+
+.button--tertiary {
+  outline-color: rgba(6, 127, 150, 0.2);
+  border: 0.125rem solid #dddee1;
+  color: #067f96;
+}
+
+.button--tertiary:hover {
+  box-shadow: 0 4px 12px -2px rgb(6 127 150 / 15%);
+  border-color: #067f96;
+}
+
+.button--tertiary:focus {
+  outline: rgba(6, 127, 150, 0.2) solid 0.1875rem;
+  outline-offset: 0.125rem;
+}
+
+.button--md {
+  font-weight: 700;
+  font-size: 0.875rem;
+  line-height: 1.375rem;
+  height: 2.25rem;
+}
+
+.button--lg {
+  font-weight: 700;
+  font-size: 1rem;
+  line-height: 1.5625rem;
+  height: 3rem;
+}

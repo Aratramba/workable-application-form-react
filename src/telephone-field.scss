@@ -3,12 +3,14 @@
 
   input {
     width: 100%;
-    border: 1px solid #ddd;
-    background-color: #fcfcfc;
     border-radius: 3px;
     padding-top: 12px;
     padding-bottom: 12px;
     font-size: 1rem;
     font-family: inherit;
+  }
+
+  .iti__selected-flag {
+    border-radius: 5px 0 0 5px;
   }
 }

@@ -1,18 +1,17 @@
 import React = require("react");
 import { ConfigContext, DEFAULT_FORM_CONFIG } from "./ConfigContext";
-import { Field } from "./Field";
+import { Field, FieldProps } from "./Field";
 import { Heading } from "./Heading";
 import { Fieldset } from "./Fieldset";
+import { Button } from "./Button";
+import { ButtonRow } from "./ButtonRow";
 
 type ApplicationFormProps = {
   formFields: WorkableFormField[];
   questions: WorkableQuestion[];
   action?: string;
   config?: FormConfigType;
-  fieldsets: {
-    name: string;
-    fields: string[];
-  }[];
+  fieldsets?: FormFieldsetsType;
 };
 
 export const REST_OF_FIELDS_FLAG = "...";
@@ -49,15 +48,14 @@ export const ApplicationForm: React.ComponentType<ApplicationFormProps> = ({
     console.log(data);
   };
 
-  const allFieldsets = fieldsets.map((fieldset) => {
+  const definedFieldsets = fieldsets.map((fieldset) => {
     return {
       name: fieldset.name,
       fields: fieldset.fields
         .map((field) => {
           if (field === REST_OF_FIELDS_FLAG) {
-            return allFormFields;
+            return REST_OF_FIELDS_FLAG;
           }
-
           const fieldsetField = allFormFields.find(
             ({ name }) => name === field,
           );
@@ -69,7 +67,25 @@ export const ApplicationForm: React.ComponentType<ApplicationFormProps> = ({
     };
   });
 
-  console.log(allFieldsets);
+  // replace fieldset field named "..." with the remaining fields
+  const allFieldsets = definedFieldsets.map((fieldset) => {
+    const restOfFieldsField = fieldset.fields.find(
+      (field) => field === REST_OF_FIELDS_FLAG,
+    );
+
+    if (restOfFieldsField) {
+      fieldset.fields.splice(
+        fieldset.fields.indexOf(restOfFieldsField),
+        1,
+        ...allFormFields,
+      );
+    }
+
+    return fieldset;
+  }) as unknown as {
+    name?: string;
+    fields: FieldProps[];
+  }[];
 
   return (
     <ConfigContext.Provider value={{ ...DEFAULT_FORM_CONFIG, ...config }}>
@@ -86,22 +102,22 @@ export const ApplicationForm: React.ComponentType<ApplicationFormProps> = ({
         {allFieldsets.map((fieldset) => (
           <Fieldset name={fieldset.name}>
             {fieldset.fields.map((field) => (
-              <Field key={field.name} name={field.name} field={field} />
+              <Field
+                key={field.name}
+                name={field.name}
+                field={field as unknown as FieldProps["field"]}
+              />
             ))}
           </Fieldset>
         ))}
 
-        {/* {allFormFields.map((field) => (
-          <Field
-            key={field.name}
-            name={field.name}
-            field={allFormFields.find(({ name }) => name === field.name)}
-          />
-        ))} */}
-
-        <button type="submit" className="button button-submit">
-          {config.labelSubmit || DEFAULT_FORM_CONFIG.labelSubmit}
-        </button>
+        <Fieldset>
+          <ButtonRow>
+            <Button type="submit" size="lg" style={{ width: "100%" }}>
+              {config.labelSubmit || DEFAULT_FORM_CONFIG.labelSubmit}
+            </Button>
+          </ButtonRow>
+        </Fieldset>
       </form>
     </ConfigContext.Provider>
   );

@@ -24,10 +24,21 @@ fieldset {
 @import "../src/upload-field.scss";
 @import "../src/complex-multiple.scss";
 @import "../src/form-item.scss";
+@import "../src/button.scss";
+@import "../src/button-row.scss";
 
 .form-item:has(input[name="first_name"]) {
   grid-column: 1;
 }
+
 .form-item:has(input[name="last_name"]) {
+  grid-column: 2;
+}
+
+.form-item:has(input[name="start_date"]) {
+  grid-column: 1;
+}
+
+.form-item:has(input[name="end_date"]) {
   grid-column: 2;
 }

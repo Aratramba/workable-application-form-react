@@ -358,6 +358,11 @@ type FormFieldType = {
   defaultValue?: string;
 };
 
+type FormFieldsetsType = {
+  name?: string;
+  fields: string[];
+}[];
+
 /**
  * Configuration
  */

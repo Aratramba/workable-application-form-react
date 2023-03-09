@@ -4,6 +4,7 @@ import { ConfigContext } from "./ConfigContext";
 import * as Dialog from "@radix-ui/react-dialog";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 import { Fieldset } from "./Fieldset";
+import { Button } from "./Button";
 
 type ComplexMultipleProps = {
   name: string;
@@ -140,9 +141,8 @@ export const ComplexMultiple: React.ComponentType<ComplexMultipleProps> = ({
                 </table>
 
                 <div className="complex-multiple__entry-actions">
-                  <button
+                  <Button
                     type="button"
-                    className="button button-edit"
                     onClick={() => {
                       setEditingEntryId(entry.id);
                       setState("dialog");
@@ -152,11 +152,10 @@ export const ComplexMultiple: React.ComponentType<ComplexMultipleProps> = ({
                     <VisuallyHidden.Root>
                       {config.labelEdit}
                     </VisuallyHidden.Root>
-                  </button>
+                  </Button>
 
-                  <button
+                  <Button
                     type="button"
-                    className="button button-delete"
                     onClick={() =>
                       updateEntries({
                         id: entry.id,
@@ -168,7 +167,7 @@ export const ComplexMultiple: React.ComponentType<ComplexMultipleProps> = ({
                     <VisuallyHidden.Root>
                       {config.labelDelete}
                     </VisuallyHidden.Root>
-                  </button>
+                  </Button>
                 </div>
               </div>
             );
@@ -177,85 +176,84 @@ export const ComplexMultiple: React.ComponentType<ComplexMultipleProps> = ({
       )}
 
       <div className="complex-multiple__add">
-        <button
-          type="button"
-          className="button button-save"
-          onClick={() => setState("dialog")}
-        >
+        <Button type="button" onClick={() => setState("dialog")}>
           {config.labelAdd}
-        </button>
+        </Button>
       </div>
 
       <Dialog.Root open={state === "dialog"}>
         <Dialog.Portal>
           <Dialog.Overlay className="dialog-overlay" />
           <Dialog.Content
-            className="dialog-content"
+            className="dialog-content application-form-dialog"
             onEscapeKeyDown={() => setState("initial")}
             onPointerDownOutside={() => setState("initial")}
             onInteractOutside={() => setState("initial")}
           >
-            <VisuallyHidden.Root asChild>
-              <Dialog.Title className="dialog-title">
-                {editingEntryId ? config.labelEdit : config.labelAdd}
-              </Dialog.Title>
-            </VisuallyHidden.Root>
+            <div className="dialog-content__form">
+              <VisuallyHidden.Root asChild>
+                <Dialog.Title className="dialog-title">
+                  {editingEntryId ? config.labelEdit : config.labelAdd}
+                </Dialog.Title>
+              </VisuallyHidden.Root>
 
-            <button
-              className="dialog-close"
-              aria-label={config.labelClose}
-              onClick={() => setState("initial")}
-            >
-              {config.iconCancel()}
-            </button>
+              <Button
+                aria-label={config.labelClose}
+                onClick={() => setState("initial")}
+                theme="tertiary"
+                style={{
+                  position: "absolute",
+                  top: 16,
+                  right: 16,
+                }}
+              >
+                {config.iconCancel()}
+              </Button>
 
-            <form className="complex-multiple__form" ref={formRef}>
-              <Fieldset name={field.label}>
-                {field.fields.map((subfield) => {
-                  const editingEntry = structuredClone(
-                    entries.find(({ id }) => id === editingEntryId),
-                  );
+              <form className="complex-multiple__form" ref={formRef}>
+                <Fieldset name={field.label}>
+                  {field.fields.map((subfield) => {
+                    const editingEntry = structuredClone(
+                      entries.find(({ id }) => id === editingEntryId),
+                    );
 
-                  return (
-                    <Field
-                      key={subfield.key}
-                      name={subfield.key}
-                      field={{
-                        ...subfield,
-                        name: subfield.key,
-                        label: subfield.label,
-                        slug: subfield.key,
-                        value:
-                          editingEntryId && editingEntry
-                            ? editingEntry.data[subfield.key]?.value
-                            : null,
+                    return (
+                      <Field
+                        key={subfield.key}
+                        name={subfield.key}
+                        field={{
+                          ...subfield,
+                          name: subfield.key,
+                          label: subfield.label,
+                          slug: subfield.key,
+                          value:
+                            editingEntryId && editingEntry
+                              ? editingEntry.data[subfield.key]?.value
+                              : null,
+                        }}
+                      />
+                    );
+                  })}
+
+                  <div className="button-row">
+                    <Button type="button" onClick={() => onSave()}>
+                      {config.labelSave}
+                    </Button>
+
+                    <Button
+                      type="button"
+                      theme="tertiary"
+                      onClick={() => {
+                        setEditingEntryId(null);
+                        setState("initial");
                       }}
-                    />
-                  );
-                })}
-
-                <div className="button-row">
-                  <button
-                    type="button"
-                    className="button button-save"
-                    onClick={() => onSave()}
-                  >
-                    {config.labelSave}
-                  </button>
-
-                  <button
-                    type="button"
-                    className="button button-cancel"
-                    onClick={() => {
-                      setEditingEntryId(null);
-                      setState("initial");
-                    }}
-                  >
-                    {config.labelCancel}
-                  </button>
-                </div>
-              </Fieldset>
-            </form>
+                    >
+                      {config.labelCancel}
+                    </Button>
+                  </div>
+                </Fieldset>
+              </form>
+            </div>
           </Dialog.Content>
         </Dialog.Portal>
       </Dialog.Root>
