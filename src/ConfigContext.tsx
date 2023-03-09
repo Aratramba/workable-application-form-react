@@ -42,7 +42,7 @@ export const DEFAULT_FORM_CONFIG: FormConfigType = {
       <path
         d="M7.7574 7.7574 12 12.0001m0 0 4.2426 4.2426M12 12.0001l4.2426-4.2427M12 12.0001l-4.2426 4.2426"
         stroke="currentColor"
-        stroke-width="1.5"
+        strokeWidth="1.5"
       />
     </svg>
   ),
@@ -57,7 +57,7 @@ export const DEFAULT_FORM_CONFIG: FormConfigType = {
       <path
         d="M6.5 12.5 10 16l7.5-7.5"
         stroke="currentColor"
-        stroke-width="1.5"
+        strokeWidth="1.5"
       />
     </svg>
   ),
@@ -71,13 +71,13 @@ export const DEFAULT_FORM_CONFIG: FormConfigType = {
       <path
         fill="none"
         stroke="currentColor"
-        stroke-width="1.5"
+        strokeWidth="1.5"
         d="M9 6.75H4.75v12.5h12.5V15"
       ></path>
       <path
         fill="none"
         stroke="currentColor"
-        stroke-width="1.5"
+        strokeWidth="1.5"
         d="M17.5 4.25l-7.25 7.25v2.75H13l7.24-7.26 -2.75-2.75Z"
       ></path>
     </svg>
@@ -92,7 +92,7 @@ export const DEFAULT_FORM_CONFIG: FormConfigType = {
       <path
         fill="none"
         stroke="currentColor"
-        stroke-width="1.5"
+        strokeWidth="1.5"
         d="M7.25 7.75h9.5m-9.5 0v10.5h9.5V7.75m-9.5 0H5m11.75 0H19m-4.75 0v-3h-4.5v3"
       ></path>
     </svg>
