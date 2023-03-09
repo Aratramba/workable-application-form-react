@@ -1,3 +1,4 @@
+import { ConfigContext } from "./ConfigContext";
 import { Fieldset } from "./Fieldset";
 import React = require("react");
 
@@ -10,12 +11,13 @@ type FieldProps = {
   field: (WorkableFormField | WorkableQuestion) & {
     name: string;
     slug: string;
-    label: string;
+    label: React.ReactElement | React.ReactNode;
     value?: string;
   };
 };
 
 export const Field: React.ComponentType<FieldProps> = ({ name, field }) => {
+  const config = React.useContext(ConfigContext);
   if (!field) {
     console.log(`Missing field: ${name}`);
     return null;
@@ -96,7 +98,11 @@ export const Field: React.ComponentType<FieldProps> = ({ name, field }) => {
         {Component && <Component />}
         <label className="field-label" htmlFor={`field-${field.slug}`}>
           {field.label}
-          {field.required && <span className="required">*</span>}
+          {field.required ? (
+            <span className="required">*</span>
+          ) : (
+            <span className="optional">{config.labelOptional}</span>
+          )}
         </label>
       </div>
     );
@@ -106,7 +112,11 @@ export const Field: React.ComponentType<FieldProps> = ({ name, field }) => {
     <div className="field">
       <label className="field-label" htmlFor={`field-${field.slug}`}>
         {field.label}
-        {field.required && <span className="required">*</span>}
+        {field.required ? (
+          <span className="required">*</span>
+        ) : (
+          <span className="optional">{config.labelOptional}</span>
+        )}
       </label>
 
       <div className="input-wrapper">{Component && <Component />}</div>
