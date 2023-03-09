@@ -5,10 +5,19 @@
     <meta name="viewport" content="width=device-width" />
     <style>
       :root {
-        --button-color-primary: #880696;
+        --color-primary: #880696;
+
+        --button-color-primary: var(--color-primary);
         --button-color-secondary: #a943b4;
         --button-outline-secondary: rgba(126, 6, 150, 0.2);
         --button-outline-shadow-color-rgb: 131 6 150;
+
+        --border-color: #e0e0e0;
+        --border-focus-color: var(--color-primary);
+        --border-outline-color: rgba(126, 6, 150, 0.2);
+
+        --toggle-inactive-color: #c7c9cd;
+        --toggle-active-color: var(--color-primary);
       }
     </style>
   </head>

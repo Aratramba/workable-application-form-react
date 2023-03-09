@@ -70,7 +70,7 @@
 
 .button--tertiary {
   outline-color: var(--button-outline-secondary);
-  border: 0.125rem solid #dddee1;
+  border: 0.125rem solid var(--border-color);
   color: var(--button-color-primary);
 }
 

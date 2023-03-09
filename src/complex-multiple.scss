@@ -1,15 +1,16 @@
 .complex-multiple__add {
-  border: 1px solid #ddd;
+  border: 1px solid var(--border-color);
   padding: 16px;
 }
 
 .complex-multiple__entries {
+  padding: 0;
 }
 
 .complex-multiple__entry {
   position: relative;
   padding: 16px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--border-color);
   display: flex;
   gap: 16px;
   border-radius: 3px;

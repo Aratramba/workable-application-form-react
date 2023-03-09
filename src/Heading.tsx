@@ -8,5 +8,5 @@ export const Heading: React.ComponentType<HeadingProps> = ({
   as = "h2",
 }) => {
   const Element = as;
-  return <Element>{children}</Element>;
+  return <Element className={`heading heading--${as}`}>{children}</Element>;
 };

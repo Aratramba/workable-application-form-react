@@ -10,7 +10,7 @@
   transition-property: border-color, outline-color;
   transition-timing-function: cubic-bezier(0.2, 0.07, 0.38, 1);
   background-color: #fff;
-  border: 0.125rem solid #dddee1;
+  border: 0.125rem solid var(--border-color);
   cursor: text;
   position: relative;
   width: 100%;
@@ -33,14 +33,14 @@
 }
 .form-field:focus-within,
 .form-field:hover:not(.form-field--disabled, .form-field--error, :disabled, [disabled]) {
-  border-color: #007a92;
+  border-color: var(--border-focus-color);
 }
 .form-field:focus-within {
-  outline-color: rgba(0, 122, 146, 0.2);
+  outline-color: var(--border-outline-color);
 }
 @supports (-webkit-hyphens: none) {
   .form-field:focus-within {
-    box-shadow: 0 0 0 0.125rem rgba(0, 122, 146, 0.2);
+    box-shadow: 0 0 0 0.125rem var(--border-outline-color);
     outline: none;
   }
 }
@@ -48,7 +48,7 @@
   not all and (min-resolution: 0.001dpcm) {
   @supports (-webkit-appearance: none) and (stroke-color: transparent) {
     .form-field:focus-within {
-      box-shadow: 0 0 0 0.125rem rgba(0, 122, 146, 0.2);
+      box-shadow: 0 0 0 0.125rem var(--border-outline-color);
       outline: none;
     }
   }
