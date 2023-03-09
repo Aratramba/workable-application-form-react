@@ -76,10 +76,10 @@ root.render(
           type: "string",
           required: true,
         },
-        ...form.form_fields,
+        ...(form.form_fields || []),
       ]}
       questions={[
-        ...form.questions,
+        ...(form.questions || []),
 
         // add privacy field
         {
