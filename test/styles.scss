@@ -61,16 +61,30 @@
     font-size: 1rem;
   }
 
+  input[type="checkbox"] {
+    vertical-align: top;
+    border: 1px solid red;
+  }
+
+  input[type="date"] {
+    font-family: inherit;
+  }
+
   textarea {
     height: 250px;
   }
 
   .field-label {
-    display: flex;
   }
 
   .required {
     color: #f00;
+    margin-left: 4px;
+    display: inline-block;
+  }
+
+  .optional {
+    color: #999;
     margin-left: 4px;
     display: inline-block;
   }
