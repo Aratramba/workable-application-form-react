@@ -6,6 +6,8 @@ import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 import { Fieldset } from "./Fieldset";
 import { Button } from "./Button";
 
+import "./complexmultiple.scss";
+
 type ComplexMultipleProps = {
   name: string;
   field: WorkableFormField;
@@ -158,6 +160,7 @@ export const ComplexMultiple: React.ComponentType<ComplexMultipleProps> = ({
                   <Button
                     type="button"
                     theme="ghost"
+                    data-action="remove-entry"
                     onClick={() =>
                       updateEntries({
                         id: entry.id,
@@ -203,17 +206,13 @@ export const ComplexMultiple: React.ComponentType<ComplexMultipleProps> = ({
                 aria-label={config.labelClose}
                 onClick={() => setState("initial")}
                 theme="tertiary"
-                style={{
-                  position: "absolute",
-                  top: 16,
-                  right: 16,
-                }}
+                className="dialog-content__close"
               >
                 {config.iconCancel()}
               </Button>
 
               <form className="complex-multiple__form" ref={formRef}>
-                <Fieldset name={field.label}>
+                <Fieldset name={field.label} displayClearButton={false}>
                   {field.fields.map((subfield) => {
                     const editingEntry = structuredClone(
                       entries.find(({ id }) => id === editingEntryId),

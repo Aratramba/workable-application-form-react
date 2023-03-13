@@ -1,5 +1,4 @@
 .button {
-  all: unset;
   padding: 0 1.5rem;
   font-weight: bold;
   max-width: 100%;
@@ -9,7 +8,6 @@
   grid-auto-flow: column;
   justify-content: center;
   place-items: center;
-  position: relative;
   transition-duration: 200ms;
   transition-property: background-position, border-color, box-shadow, color,
     outline, -webkit-transform, opacity;
@@ -45,8 +43,6 @@
 }
 
 .button--ghost:focus {
-  outline-color: var(--button-outline-secondary);
-  border: 0.125rem solid var(--button-color-primary);
 }
 
 .button--primary {

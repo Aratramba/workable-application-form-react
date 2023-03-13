@@ -1,7 +1,6 @@
 <html>
   <head>
     <title>Workable application form</title>
-    <link rel="stylesheet" href="./form.scss" type="text/css" />
     <meta name="viewport" content="width=device-width" />
     <style>
       :root {
@@ -22,11 +21,31 @@
         --dropzone-label-color: var(--color-primary);
       }
     </style>
+
+    <style>
+      @media only screen and (min-width: 768px) {
+        .form-item:has(input[name="first_name"]) {
+          grid-column: 1;
+        }
+
+        .form-item:has(input[name="last_name"]) {
+          grid-column: 2;
+        }
+
+        .form-item:has(input[name="start_date"]) {
+          grid-column: 1;
+        }
+
+        .form-item:has(input[name="end_date"]) {
+          grid-column: 2;
+        }
+      }
+    </style>
   </head>
   <body>
     <div id="app"></div>
 
     <script src="../src/index.ts" type="module"></script>
-    <script src="./index.tsx" type="module"></script>
+    <script src="./setup.tsx" type="module"></script>
   </body>
 </html>

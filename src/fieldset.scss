@@ -2,8 +2,14 @@
   all: unset;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 32px;
+  gap: 16px;
   padding-top: 16px;
+}
+
+@media only screen and (min-width: 768px) {
+  .form-fieldset {
+    gap: 32px;
+  }
 }
 
 .form-fieldset + .form-fieldset {
@@ -15,6 +21,7 @@
   justify-items: start;
   text-align: left;
   width: 100%;
+  position: relative;
 }
 
 .form-legend__title {
@@ -44,4 +51,11 @@
   line-height: 1.5625rem;
   color: #595d6a;
   display: block;
+}
+
+.form-legend__clear {
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 0;
 }

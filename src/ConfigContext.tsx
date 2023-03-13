@@ -29,6 +29,7 @@ export const DEFAULT_FORM_CONFIG: FormConfigType = {
   labelDelete: "Delete",
   labelClose: "Close",
   labelOptional: "(optional)",
+  labelClear: "Clear",
 
   // icons
   iconCancel: () => (
@@ -83,6 +84,21 @@ export const DEFAULT_FORM_CONFIG: FormConfigType = {
     </svg>
   ),
   iconDelete: () => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      width={24}
+      height={24}
+    >
+      <path
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        d="M7.25 7.75h9.5m-9.5 0v10.5h9.5V7.75m-9.5 0H5m11.75 0H19m-4.75 0v-3h-4.5v3"
+      ></path>
+    </svg>
+  ),
+  iconClear: () => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"

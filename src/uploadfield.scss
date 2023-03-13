@@ -3,6 +3,7 @@
   padding: 10px;
   text-align: center;
   background-color: #fcfcfc;
+  cursor: pointer;
 }
 
 .dropzone__label {
@@ -10,6 +11,10 @@
     text-decoration: underline;
     color: var(--dropzone-label-color);
   }
+}
+
+.dropzone:hover .dropzone__label span {
+  text-decoration: none;
 }
 
 .dropzone__info {

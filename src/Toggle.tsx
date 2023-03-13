@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { Label } from "./Label";
 import { ConfigContext } from "./ConfigContext";
+import "./toggle.scss";
 
 type ToggleProps = {
   label: React.ReactNode;

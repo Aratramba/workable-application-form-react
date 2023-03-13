@@ -1,3 +1,5 @@
+import "./button.scss";
+
 type ButtonProps = {
   onClick?: () => void;
   theme?: "primary" | "secondary" | "tertiary" | "ghost";
@@ -6,6 +8,7 @@ type ButtonProps = {
   style?: React.CSSProperties;
   size?: "md" | "lg";
   disabled?: boolean;
+  className?: string;
 };
 
 export const Button: React.ComponentType<ButtonProps> = ({
@@ -16,6 +19,8 @@ export const Button: React.ComponentType<ButtonProps> = ({
   children,
   style,
   disabled,
+  className = "",
+  ...props
 }) => {
   return (
     <button
@@ -23,9 +28,10 @@ export const Button: React.ComponentType<ButtonProps> = ({
       onClick={onClick}
       className={`button button--${theme} button--${size} button--${
         disabled ? "disabled" : "enabled"
-      }`}
+      } ${className}`}
       style={style}
       disabled={disabled}
+      {...props}
     >
       {children}
     </button>

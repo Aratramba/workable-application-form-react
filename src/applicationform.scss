@@ -1,3 +1,19 @@
+button,
+input,
+optgroup,
+select,
+textarea,
+input[type="submit"],
+fieldset {
+  -webkit-appearance: none;
+  appearance: none;
+  background: none;
+  border: none;
+  margin: 0;
+  outline: none;
+  padding: 0;
+}
+
 .application-form,
 .application-form-dialog {
   max-width: 760px;

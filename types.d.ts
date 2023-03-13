@@ -411,10 +411,12 @@ type FormConfigType = {
   labelDelete?: string;
   labelClose?: string;
   labelOptional?: string;
+  labelClear?: string;
 
   // icons
   iconCancel?: () => JSX.Element;
   iconCheck?: () => JSX.Element;
   iconDelete?: () => JSX.Element;
   iconEdit?: () => JSX.Element;
+  iconClear?: () => JSX.Element;
 };

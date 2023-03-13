@@ -7,9 +7,9 @@ import { FormItem } from "./FormItem";
 import { DateField } from "./DateField";
 import { NumberField } from "./NumberField";
 
-const TelephoneField = React.lazy(() => import("./TelephoneField"));
-const UploadField = React.lazy(() => import("./UploadField"));
-const ComplexMultiple = React.lazy(() => import("./ComplexMultipleField"));
+import { TelephoneField } from "./TelephoneField";
+import { UploadField } from "./UploadField";
+import { ComplexMultiple } from "./ComplexMultipleField";
 
 export type FieldProps = {
   name: string;

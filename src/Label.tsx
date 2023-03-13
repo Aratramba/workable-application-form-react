@@ -1,5 +1,6 @@
 import React = require("react");
 import { ConfigContext } from "./ConfigContext";
+import "./label.scss";
 
 type LabelProps = {
   label: React.ReactElement | React.ReactNode;

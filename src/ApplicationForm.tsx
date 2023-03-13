@@ -1,3 +1,5 @@
+import "./applicationform.scss";
+
 import React = require("react");
 import { ConfigContext, DEFAULT_FORM_CONFIG } from "./ConfigContext";
 import { Field, FieldProps } from "./Field";
