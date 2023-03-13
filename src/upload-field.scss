@@ -4,3 +4,15 @@
   text-align: center;
   background-color: #fcfcfc;
 }
+
+.dropzone__label {
+  span {
+    text-decoration: underline;
+    color: var(--dropzone-label-color);
+  }
+}
+
+.dropzone__info {
+  font-size: 0.85rem;
+  opacity: 0.7;
+}

@@ -30,7 +30,6 @@ export const Form: React.ComponentType<FormProps> = ({
   return (
     <form className={`form--${state}`} onSubmit={handleSubmit}>
       {children}
-      {state}
     </form>
   );
 };

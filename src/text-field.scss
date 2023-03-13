@@ -16,103 +16,13 @@
   width: 100%;
   font-family: inherit;
 }
-@supports (-webkit-hyphens: none) {
-  .form-field {
-    box-shadow: 0 0 0 0.125rem transparent;
-    outline: none;
-  }
-}
-@media not all and (-webkit-min-device-pixel-ratio: 0),
-  not all and (min-resolution: 0.001dpcm) {
-  @supports (-webkit-appearance: none) and (stroke-color: transparent) {
-    .form-field {
-      box-shadow: 0 0 0 0.125rem transparent;
-      outline: none;
-    }
-  }
-}
+
 .form-field:focus-within,
-.form-field:hover:not(.form-field--disabled, .form-field--error, :disabled, [disabled]) {
+.form-field:hover {
   border-color: var(--border-focus-color);
 }
 .form-field:focus-within {
   outline-color: var(--border-outline-color);
-}
-@supports (-webkit-hyphens: none) {
-  .form-field:focus-within {
-    box-shadow: 0 0 0 0.125rem var(--border-outline-color);
-    outline: none;
-  }
-}
-@media not all and (-webkit-min-device-pixel-ratio: 0),
-  not all and (min-resolution: 0.001dpcm) {
-  @supports (-webkit-appearance: none) and (stroke-color: transparent) {
-    .form-field:focus-within {
-      box-shadow: 0 0 0 0.125rem var(--border-outline-color);
-      outline: none;
-    }
-  }
-}
-.form-field--with-custom-dropdown {
-  cursor: pointer;
-}
-.form-field--disabled {
-  background-color: #f3f4f4;
-  border-color: #dddee1;
-  color: #c7c9cd;
-  cursor: not-allowed;
-}
-.form-field--error,
-.form-field--error:active,
-.form-field--error:focus-within,
-.form-field--error:hover:not(.form-field--error--disabled, :disabled, [disabled]) {
-  border-color: #df1654;
-}
-.form-field--error:active,
-.form-field--error:focus-within {
-  outline-color: rgba(223, 22, 84, 0.2);
-}
-
-@supports (-webkit-hyphens: none) {
-  @supports (-webkit-hyphens: none) {
-    .form-field--error:active,
-    .form-field--error:focus-within {
-      box-shadow: 0 0 0 0.125rem rgba(178, 17, 67, 0.2);
-      outline: none;
-    }
-  }
-  @media not all and (-webkit-min-device-pixel-ratio: 0),
-    not all and (min-resolution: 0.001dpcm) {
-    @supports (-webkit-appearance: none) and (stroke-color: transparent) {
-      .form-field--error:active,
-      .form-field--error:focus-within {
-        box-shadow: 0 0 0 0.125rem rgba(178, 17, 67, 0.2);
-        outline: none;
-      }
-    }
-  }
-}
-@media not all and (-webkit-min-device-pixel-ratio: 0),
-  not all and (min-resolution: 0.001dpcm) {
-  @supports (-webkit-appearance: none) and (stroke-color: transparent) {
-    @supports (-webkit-hyphens: none) {
-      .form-field--error:active,
-      .form-field--error:focus-within {
-        box-shadow: 0 0 0 0.125rem rgba(178, 17, 67, 0.2);
-        outline: none;
-      }
-    }
-    @media not all and (-webkit-min-device-pixel-ratio: 0),
-      not all and (min-resolution: 0.001dpcm) {
-      @supports (-webkit-appearance: none) and (stroke-color: transparent) {
-        .form-field--error:active,
-        .form-field--error:focus-within {
-          box-shadow: 0 0 0 0.125rem rgba(178, 17, 67, 0.2);
-          outline: none;
-        }
-      }
-    }
-  }
 }
 
 .form-field__wrapper {
@@ -125,4 +35,5 @@
   height: 2.875rem;
   padding: 0 1rem;
   width: 100%;
+  font-family: inherit;
 }

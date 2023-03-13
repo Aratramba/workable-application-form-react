@@ -63,16 +63,16 @@ export const UploadField: React.ComponentType<UploadFieldProps> = ({
             ))}
           {!IS_IMAGE &&
             acceptedFiles.map((file) => <p key={file.name}>{file.name}</p>)}
-          <p>
+          <p className="dropzone__label">
             <span>Replace file</span> or drag and drop here
           </p>
         </>
       ) : (
         <>
-          <p>
+          <p className="dropzone__label">
             <span>Upload a file</span> or drag and drop here
           </p>
-          <p>
+          <p className="dropzone__info">
             Maximum file size 12Mb. Acceptable file types .
             {field.supported_file_types.join(", .")}.
           </p>
