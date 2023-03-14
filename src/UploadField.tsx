@@ -60,7 +60,7 @@ export const UploadField: React.ComponentType<UploadFieldProps> = ({
         style={{ display: "none" }}
       />
       <div {...getRootProps({ className: "dropzone" })}>
-        <input {...getInputProps()} />
+        <input {...getInputProps()} name={name} />
 
         {acceptedFiles.length > 0 ? (
           <>
