@@ -161,6 +161,7 @@ export default {
       type: "free_text",
       required: false,
       id: "536a78a",
+      max_length: 100,
     },
     {
       body: "Can you answer this question?",

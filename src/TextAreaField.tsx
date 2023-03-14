@@ -1,5 +1,7 @@
+import { useState } from "react";
 import { FormField } from "./FormField";
 import "./textareafield.scss";
+import { MaxLength } from "./MaxLength";
 
 type TextAreaFieldProps = {} & FormFieldType;
 
@@ -10,6 +12,7 @@ export const TextAreaField: React.ComponentType<TextAreaFieldProps> = ({
   defaultValue,
   maxLength,
 }) => {
+  const [value, setValue] = useState<string>(null);
   return (
     <FormField>
       <textarea
@@ -20,7 +23,11 @@ export const TextAreaField: React.ComponentType<TextAreaFieldProps> = ({
         rows={5}
         className="form-field__textarea"
         maxLength={maxLength}
+        onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
+          setValue(e.target.value)
+        }
       />
+      <MaxLength count={value?.length} maxLength={maxLength} />
     </FormField>
   );
 };
