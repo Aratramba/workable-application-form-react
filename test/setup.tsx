@@ -13,12 +13,11 @@ const onSave = (
   cb: (error: string | null) => void,
 ) => {
   console.log("saving");
-  console.log(data);
 
-  setTimeout(() => {
-    cb(null);
-    console.log("redirect");
-  }, 5000);
+  // setTimeout(() => {
+  //   cb(null);
+  //   console.log("redirect");
+  // }, 5000);
 };
 
 root.render(
@@ -40,14 +39,15 @@ root.render(
           if (!input) return;
           if (
             input.nodeName === "INPUT" &&
-            ["text", "tel", "number", "date"].includes(input.type)
+            ["text", "tel", "number", "date", "hidden"].includes(input.type)
           ) {
             (input as any).value = value;
-          }
-          if (input.nodeName === "INPUT" && input.type === "checkbox") {
+          } else if (input.nodeName === "INPUT" && input.type === "checkbox") {
             (input as any).checked = value;
+          } else if (input.nodeName === "TEXTAREA") {
+            (input as any).value = value;
           }
-          console.log(input, value, key);
+          input.dispatchEvent(new Event("change"));
         });
       }}
     >

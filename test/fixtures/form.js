@@ -168,5 +168,11 @@ export default {
       required: false,
       id: "536a78x",
     },
+    {
+      id: "date",
+      body: "Date",
+      type: "date",
+      required: false,
+    },
   ],
 };

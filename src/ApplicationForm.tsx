@@ -54,23 +54,10 @@ export const ApplicationForm: React.ComponentType<ApplicationFormProps> = ({
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const entries: any = Object.fromEntries(formData.entries());
+    const candidate: WorkableCandidate = cleanFormData(entries);
 
-    const candidate: WorkableCandidate = {
-      ...entries,
-    };
+    console.log(candidate);
 
-    // TODO: manually treat lists and checkboxes
-    // education_entries: [], //WorkableEducationEntry[];
-    //   experience_entries: [], //WorkableExperienceEntry[];
-    //   answers: [], //WorkableAnswer[];
-    //   skills: [], //string[];
-    //   tags: [], //string[];
-    //   disqualified: false, //boolean;
-    //   disqualification_reason: "", //string;
-    //   disqualified_at: "", //string;
-    //   social_profiles: [], //WorkableSocialProfile[];
-    //   domain: "", //string;
-    //   recruiter_key: "", //string;
     onSave(candidate, (error) => {
       if (error) {
         cb(error);
@@ -130,7 +117,10 @@ export const ApplicationForm: React.ComponentType<ApplicationFormProps> = ({
           </Heading>
 
           {allFieldsets.map((fieldset) => (
-            <Fieldset name={fieldset.name}>
+            <Fieldset
+              name={fieldset.name}
+              key={fieldset.name || fieldset.fields[0].name}
+            >
               {fieldset.fields.map((field) => (
                 <Field
                   key={field.name}
@@ -152,4 +142,72 @@ export const ApplicationForm: React.ComponentType<ApplicationFormProps> = ({
       </ConfigContext.Provider>
     </div>
   );
+};
+
+const cleanFormData = (data: any) => {
+  const cleanedData: any = {};
+
+  // TODO: manually treat lists and checkboxes
+  // education_entries: [], //WorkableEducationEntry[];
+  //   experience_entries: [], //WorkableExperienceEntry[];
+  //   answers: [], //WorkableAnswer[];
+  //   skills: [], //string[];
+  //   tags: [], //string[];
+  //   disqualified: false, //boolean;
+  //   disqualification_reason: "", //string;
+  //   disqualified_at: "", //string;
+  //   social_profiles: [], //WorkableSocialProfile[];
+  //   domain: "", //string;form
+  //   recruiter_key: "", //string;
+
+  Object.keys(data).forEach((key) => {
+    let value = data[key];
+
+    // parse complex fields that are already stored as json
+    try {
+      value = JSON.parse(value);
+    } catch (e) {}
+
+    // arrays
+    if (Array.isArray(value)) {
+      cleanedData[key] = cleanFormData(value);
+      return;
+    }
+
+    // complex multiple objects
+    if (typeof value === "object" && value !== null) {
+      // reduce complex fields that are objects to values
+      if ("data" in value) {
+        cleanedData[key] = Object.keys(value.data).reduce((acc, key) => {
+          acc[key] = cleanValue(value.data[key].value);
+          return acc;
+        }, {});
+        return;
+      }
+
+      // use value field in complex fields
+      if ("value" in value) {
+        cleanedData[key] = value.value;
+        return;
+      }
+    }
+
+    cleanedData[key] = cleanValue(value);
+  });
+
+  return cleanedData;
+};
+
+const cleanValue = (value: any) => {
+  // empty values
+  if (value === "") {
+    return;
+  }
+
+  // checkboxes
+  if (value === "on" || value === "off") {
+    return value === "on" ? true : false;
+  }
+
+  return value;
 };
