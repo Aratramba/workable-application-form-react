@@ -81,7 +81,7 @@ export const createWorkableCandidate = (
     headline: data.headline,
     summary: data.summary,
     address: data.address,
-    phone: data.phone,
+    phone: `+${data.phone_dialcode}${data.phone}`,
     cover_letter: data.cover_letter,
     education_entries: data.education,
     experience_entries: data.experience,
@@ -223,6 +223,8 @@ export const createWorkableCandidate = (
       }
     }
   });
+
+  console.log(candidate);
 
   // remove undefined values
   Object.keys(candidate).forEach((key) =>
