@@ -2,7 +2,21 @@
 
 This is a React component that renders a workable application form based on fields from https://workable.readme.io/reference/jobsshortcodeapplication_form. It outputs data that can be sent to the Workable Candidate API https://workable.readme.io/reference/job-candidates-create.
 
-It deliberately does not handle the API call itself, so you'll need to handle that yourself. This is so you can handle the API call however you want, and also so you can handle the response however you want.
+This React component deliberately does not handle the API call itself, so you'll need to handle that yourself. This is so you can handle the API call however you want, and also so you can handle the response however you want.
+
+The official Workable application form offers no configurability. This library aims to offer a solution for customizing the application form look and feel. It also aims to offer a solution for adding custom fields and questions to the form.
+The official Workable form renders inside an iframe. This library renders the form in the DOM, so you can style it however you want.
+
+## Demo
+
+- TODO
+
+## Features
+
+The official Workable solution offers some functionality that this library does not. This is a list of the things that this library does not offer.
+
+- Crop images
+- Fill application from local file, Dropbox or Google Drive
 
 ## Installation
 
