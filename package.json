@@ -7,7 +7,7 @@
   "context": "browser",
   "scripts": {
     "build": "parcel build ./src/index.ts --dist-dir output",
-    "dev": "parcel serve test/index.html",
+    "dev": "parcel serve examples/*.html",
     "test": "NODE_ENV=test jest"
   },
   "targets": {

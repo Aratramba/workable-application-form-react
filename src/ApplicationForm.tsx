@@ -3,7 +3,6 @@ import "./applicationform.scss";
 import React = require("react");
 import { ConfigContext, DEFAULT_FORM_CONFIG } from "./ConfigContext";
 import { Field, FieldProps } from "./Field";
-import { Heading } from "./Heading";
 import { Fieldset } from "./Fieldset";
 import { Button } from "./Button";
 import { ButtonRow } from "./ButtonRow";
@@ -62,8 +61,6 @@ export const ApplicationForm: React.ComponentType<ApplicationFormProps> = ({
       questions,
     );
 
-    console.log(workableCandidate);
-
     onSave(workableCandidate, (error) => {
       if (error) {
         cb(error);
@@ -74,6 +71,23 @@ export const ApplicationForm: React.ComponentType<ApplicationFormProps> = ({
 
     return false;
   };
+
+  // if no fieldsets are defined, add all fields to a single fieldset
+  if (!fieldsets.length) {
+    fieldsets.push({
+      name: "",
+      fields: allFormFields.map((field) => field.name),
+    });
+  }
+
+  // if ... is not present in fieldsets add it to the end
+  if (
+    !fieldsets.some((fieldset) =>
+      fieldset.fields.some((field) => field === REST_OF_FIELDS_FLAG),
+    )
+  ) {
+    fieldsets[fieldsets.length - 1].fields.push(REST_OF_FIELDS_FLAG);
+  }
 
   const definedFieldsets = fieldsets.map((fieldset) => {
     return {
@@ -121,22 +135,20 @@ export const ApplicationForm: React.ComponentType<ApplicationFormProps> = ({
     <div className="application-form">
       <ConfigContext.Provider value={{ ...DEFAULT_FORM_CONFIG, ...config }}>
         <Form onSubmit={handleSubmit}>
-          <Heading as="h1">
-            {{ ...DEFAULT_FORM_CONFIG, ...config }.labelForm}
-          </Heading>
-
-          {allFieldsets.map((fieldset) => (
+          {allFieldsets.map((fieldset, index) => (
             <Fieldset
               name={fieldset.name}
               key={fieldset.name || fieldset.fields[0].name}
             >
-              {fieldset.fields.map((field) => (
-                <Field
-                  key={field.name}
-                  name={field.name}
-                  field={field as unknown as FieldProps["field"]}
-                />
-              ))}
+              {fieldset.fields
+                .filter(({ name }) => Boolean(name))
+                .map((field) => (
+                  <Field
+                    key={field.name}
+                    name={field.name}
+                    field={field as unknown as FieldProps["field"]}
+                  />
+                ))}
             </Fieldset>
           ))}
 
