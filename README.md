@@ -55,17 +55,7 @@ root.render(
 
 A list of form fields as they come from https://workable.readme.io/reference/jobsshortcodeapplication_form
 
-```typescript
-key: string;
-label: string;
-type: "string" | "free_text" | "file" | "boolean" | "date" | "complex";
-required: boolean;
-fields?: WorkableFormField[];
-supported_file_types?: string[];
-max_file_size?: number;
-multiple?: boolean;
-max_length?: number;
-```
+https://github.com/Aratramba/workable-application-form-react/blob/dc6f256b44f872791d5d61bd3edaa85bbda04392/types.d.ts#L14-L24
 
 ```typescript
 [
