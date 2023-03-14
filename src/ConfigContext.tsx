@@ -31,6 +31,16 @@ export const DEFAULT_FORM_CONFIG: FormConfigType = {
   labelOptional: "(optional)",
   labelClear: "Clear",
 
+  // dropzone
+  labelDropzoneUpload: "Upload a file",
+  labelDropzoneDragDrop: "or drag and drop here",
+  labelDropzoneMaxSize: "Max file size is ",
+  labelDropzoneAcceptableFileTypes: "Acceptable file types: ",
+  labelDropzoneReplaceFile: "Replace file",
+  labelDropzoneNoFilesAccepted: "No files accepted",
+  labelDropzoneAborted: "File reading was aborted",
+  labelDropzoneError: "File reading has failed",
+
   // icons
   iconCancel: () => (
     <svg

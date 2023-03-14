@@ -416,6 +416,16 @@ type FormConfigType = {
   labelOptional?: string;
   labelClear?: string;
 
+  // dropzone
+  labelDropzoneUpload: string;
+  labelDropzoneDragDrop: string;
+  labelDropzoneMaxSize: string;
+  labelDropzoneAcceptableFileTypes: string;
+  labelDropzoneReplaceFile: string;
+  labelDropzoneNoFilesAccepted: string;
+  labelDropzoneAborted: string;
+  labelDropzoneError: string;
+
   // icons
   iconCancel?: () => JSX.Element;
   iconCheck?: () => JSX.Element;

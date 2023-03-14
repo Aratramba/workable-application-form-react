@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import "./uploadfield.scss";
+import { ConfigContext } from "./ConfigContext";
 
 type UploadFieldProps = {
   name: string;
@@ -11,6 +12,8 @@ export const UploadField: React.ComponentType<UploadFieldProps> = ({
   name,
   field,
 }) => {
+  const config = useContext(ConfigContext);
+
   const IS_IMAGE = Boolean(
     field.supported_file_types.filter((x) =>
       ["jpg", "jpeg", "gif", "png"].includes(x),
@@ -23,6 +26,8 @@ export const UploadField: React.ComponentType<UploadFieldProps> = ({
   const [image, setImage] = useState<null | { preview: string; name: string }>(
     null,
   );
+  const [message, setMessage] = useState<string>("");
+
   const [fileBase64, setFileBase64] = useState<string>("");
   const { acceptedFiles, getRootProps, getInputProps, inputRef } = useDropzone({
     maxFiles: 1,
@@ -37,7 +42,8 @@ export const UploadField: React.ComponentType<UploadFieldProps> = ({
       setState("loading");
 
       if (!acceptedFiles.length) {
-        setState("initial");
+        setMessage(config.labelDropzoneNoFilesAccepted);
+        setState("error");
         return;
       }
 
@@ -46,12 +52,12 @@ export const UploadField: React.ComponentType<UploadFieldProps> = ({
 
         reader.onabort = () => {
           reset();
-          console.log("file reading was aborted");
+          setMessage(config.labelDropzoneAborted);
           setState("error");
         };
         reader.onerror = () => {
           reset();
-          console.log("file reading has failed");
+          setMessage(config.labelDropzoneError);
           setState("error");
         };
         reader.onload = () => {
@@ -88,6 +94,7 @@ export const UploadField: React.ComponentType<UploadFieldProps> = ({
     inputRef.current.value = "";
     setImage(null);
     setState("initial");
+    setMessage("");
   };
 
   return (
@@ -124,17 +131,19 @@ export const UploadField: React.ComponentType<UploadFieldProps> = ({
             {!IS_IMAGE &&
               acceptedFiles.map((file) => <p key={file.name}>{file.name}</p>)}
             <p className="dropzone__label">
-              <span>Replace file</span> or drag and drop here
+              <span>{config.labelDropzoneReplaceFile}</span>{" "}
+              {config.labelDropzoneDragDrop}
             </p>
           </>
         ) : (
           <>
             <p className="dropzone__label">
-              <span>Upload a file</span> or drag and drop here
+              <span>{config.labelDropzoneUpload}</span>{" "}
+              {config.labelDropzoneDragDrop}
             </p>
             <p className="dropzone__info">
               {field.max_file_size &&
-                `Maximum file size ${Math.floor(
+                `${config.labelDropzoneMaxSize} ${Math.floor(
                   field.max_file_size / 1000000,
                 )}Mb. Acceptable file types .
               ${field.supported_file_types.join(", .")}.`}
@@ -170,6 +179,8 @@ export const UploadField: React.ComponentType<UploadFieldProps> = ({
             />
           </svg>
         )}
+
+        {message && <p className="dropzone__message">{message}</p>}
       </div>
     </>
   );
