@@ -62,3 +62,46 @@ export const cleanValue = (value: any) => {
 
   return value;
 };
+
+/**
+ * Create workable candidate from form data
+ * based on field types in formFields and questions
+ */
+
+export const createWorkableCandidate = (
+  data: any,
+  formFields: WorkableFormField[],
+  questions: WorkableQuestion[],
+) => {
+  const obj: WorkableCandidate = {
+    name: data.name,
+    firstname: data.firstname,
+    lastname: data.lastname,
+    email: data.email,
+    headline: data.headline,
+    summary: data.summary,
+    address: data.address,
+    phone: data.phone,
+    cover_letter: data.cover_letter,
+    education_entries: data.education,
+    experience_entries: data.experience,
+    answers: [],
+    skills: data.skills,
+    tags: data.tags,
+    disqualified: data.disqualified,
+    disqualification_reason: data.disqualification_reason,
+    disqualified_at: data.disqualified_at,
+    social_profiles: data.social_profiles,
+    domain: data.domain,
+    recruiter_key: data.recruiter_key,
+  };
+
+  // add answers;
+
+  // remove undefined values
+  Object.keys(obj).forEach((key) =>
+    obj[key] === undefined ? delete obj[key] : {},
+  );
+
+  return obj;
+};

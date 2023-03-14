@@ -56,16 +56,16 @@ root.render(
     <ApplicationForm
       onSave={onSave}
       formFields={[
-        // for some reason the API does not return first_name, last_name and email fields
+        // for some reason the API does not return firstname, lastname and email fields
         {
-          key: "first_name",
+          key: "firstname",
           label: "First Name",
           type: "string",
           required: true,
         },
 
         {
-          key: "last_name",
+          key: "lastname",
           label: "Last Name",
           type: "string",
           required: true,
@@ -107,8 +107,8 @@ root.render(
         {
           name: "Personal information",
           fields: [
-            "first_name",
-            "last_name",
+            "firstname",
+            "lastname",
             "email",
             "headline",
             "phone",

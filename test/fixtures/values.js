@@ -1,6 +1,6 @@
 export default {
-  first_name: "Firstname",
-  last_name: "Lastname",
+  firstname: "Firstname",
+  lastname: "Lastname",
   email: "first_last@email.com",
   headline: "Headline",
   phone: "1234567890",

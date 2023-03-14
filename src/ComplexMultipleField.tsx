@@ -46,7 +46,7 @@ export const ComplexMultiple: React.ComponentType<ComplexMultipleProps> = ({
    *  type: "add",
    *  data: {
    *  "entry-1": {
-   *    key: "first_name",
+   *    key: "firstname",
    *    value: "John",
    *    label: "First Name"
    * }]

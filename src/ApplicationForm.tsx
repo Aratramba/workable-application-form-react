@@ -8,7 +8,7 @@ import { Fieldset } from "./Fieldset";
 import { Button } from "./Button";
 import { ButtonRow } from "./ButtonRow";
 import { Form } from "./Form";
-import { cleanFormData } from "./utils";
+import { cleanFormData, createWorkableCandidate } from "./utils";
 
 type ApplicationFormProps = {
   formFields: WorkableFormField[];
@@ -55,11 +55,16 @@ export const ApplicationForm: React.ComponentType<ApplicationFormProps> = ({
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const entries: any = Object.fromEntries(formData.entries());
-    const candidate: WorkableCandidate = cleanFormData(entries);
+    const cleanData: any = cleanFormData(entries);
+    const workableCandidate: WorkableCandidate = createWorkableCandidate(
+      cleanData,
+      formFields,
+      questions,
+    );
 
-    console.log(candidate);
+    console.log(workableCandidate);
 
-    onSave(candidate, (error) => {
+    onSave(workableCandidate, (error) => {
       if (error) {
         cb(error);
       } else {
@@ -81,8 +86,11 @@ export const ApplicationForm: React.ComponentType<ApplicationFormProps> = ({
           const fieldsetField = allFormFields.find(
             ({ name }) => name === field,
           );
-          allFormFields.splice(allFormFields.indexOf(fieldsetField), 1);
-          return fieldsetField;
+          if (fieldsetField) {
+            allFormFields.splice(allFormFields.indexOf(fieldsetField), 1);
+            return fieldsetField;
+          }
+          return null;
         })
         .flat()
         .filter(Boolean),
