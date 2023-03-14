@@ -80,27 +80,7 @@ https://github.com/Aratramba/workable-application-form-react/blob/dc6f256b44f872
 
 A list of questions as they come from https://workable.readme.io/reference/job-questions.
 
-```typescript
-id: string;
-body: string | React.ReactNode;
-type:
-  | "short_text"
-  | "free_text"
-  | "multiple_choice"
-  | "boolean"
-  | "dropdown"
-  | "numeric"
-  | "date"
-  | "file";
-required?: boolean;
-single_answer?: boolean;
-choices?: {
-  id: string;
-  body: string;
-}[];
-supported_file_types?: string[];
-max_file_size?: number;
-```
+https://github.com/Aratramba/workable-application-form-react/blob/dc6f256b44f872791d5d61bd3edaa85bbda04392/types.d.ts#L40-L60
 
 ```typescript
 [
@@ -152,84 +132,32 @@ If no fieldsets are defined, the fields and questions will be added in the order
 
 The telephone field uses [](https://www.npmjs.com/package/intl-tel-input) under the hood. You can pass the options for that library in the config object.
 
-```typescript
-telephoneInitialCountry?: string;
-telephonePreferredCountries?: string[];
-telephoneAllowDropdown?: boolean;
-telephoneAutoHideDialCode?: boolean;
-telephoneAutoPlaceholder?: "polite" | "aggressive" | "off";
-telephoneCustomContainer?: string;
-telephoneCustomPlaceholder?: (
-selectedCountryPlaceholder,
-selectedCountryData,
-) => string | null;
-telephoneDropdownContainer?: HTMLElement | null;
-telephoneExcludeCountries?: string[];
-telephoneFormatOnDisplay?: boolean;
-telephoneGeoIpLookup?: (success, failure) => string;
-telephoneHiddenInput?: string;
-telephoneLocalizedCountries?: { [key: string]: string };
-telephoneNationalMode?: boolean;
-telephoneOnlyCountries?: string[];
-telephonePlaceholderNumberType?:
-| "FIXED_LINE"
-| "MOBILE"
-| "FIXED_LINE_OR_MOBILE"
-| "TOLL_FREE"
-| "PREMIUM_RATE"
-| "SHARED_COST"
-| "VOIP"
-| "PERSONAL_NUMBER"
-| "PAGER"
-| "UAN"
-| "VOICEMAIL"
-| "UNKNOWN";
-telephoneSeparateDialCode?: boolean;
-```
+https://github.com/Aratramba/workable-application-form-react/blob/dc6f256b44f872791d5d61bd3edaa85bbda04392/types.d.ts#L373-L405
 
 ### Labels
 
 You can override the labels used in the form by passing a config object with the labels you want to override.
+https://github.com/Aratramba/workable-application-form-react/blob/dc6f256b44f872791d5d61bd3edaa85bbda04392/types.d.ts#L408-L417
 
-```typescript
-
-labelForm?: string;
-labelSubmit?: string;
-labelAdd?: string;
-labelSave?: string;
-labelCancel?: string;
-labelEdit?: string;
-labelDelete?: string;
-labelClose?: string;
-labelOptional?: string;
-labelClear?: string;
-
-// dropzone
-labelDropzoneUpload?: string;
-labelDropzoneDragDrop?: string;
-labelDropzoneMaxSize?: string;
-labelDropzoneAcceptableFileTypes?: string;
-labelDropzoneReplaceFile?: string;
-labelDropzoneNoFilesAccepted?: string;
-labelDropzoneAborted?: string;
-labelDropzoneError?: string;
-```
+https://github.com/Aratramba/workable-application-form-react/blob/dc6f256b44f872791d5d61bd3edaa85bbda04392/types.d.ts#L420-L427
 
 ### Icons
 
 You can override the icons used in the form by passing a config object with the icons you want to override.
 
-```typescript
+https://github.com/Aratramba/workable-application-form-react/blob/dc6f256b44f872791d5d61bd3edaa85bbda04392/types.d.ts#L430-L434
 
-// icons
-iconCancel?: () => JSX.Element;
-iconCheck?: () => JSX.Element;
-iconDelete?: () => JSX.Element;
-iconEdit?: () => JSX.Element;
-iconClear?: () => JSX.Element;
-};
+## Output
 
-```
+The output of the form is a Workable candidate object.
+
+https://github.com/Aratramba/workable-application-form-react/blob/dc6f256b44f872791d5d61bd3edaa85bbda04392/types.d.ts#L86-L107
+
+https://github.com/Aratramba/workable-application-form-react/blob/dc6f256b44f872791d5d61bd3edaa85bbda04392/types.d.ts#L122-L130
+
+https://github.com/Aratramba/workable-application-form-react/blob/dc6f256b44f872791d5d61bd3edaa85bbda04392/types.d.ts#L143-L149
+
+https://github.com/Aratramba/workable-application-form-react/blob/dc6f256b44f872791d5d61bd3edaa85bbda04392/types.d.ts#L234-L354
 
 ## Styling
 
