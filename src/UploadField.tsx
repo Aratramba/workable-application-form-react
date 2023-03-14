@@ -17,7 +17,10 @@ export const UploadField: React.ComponentType<UploadFieldProps> = ({
     ).length,
   );
 
-  const [images, setImages] = useState([]);
+  const [image, setImage] = useState<null | { preview: string; name: string }>(
+    null,
+  );
+  const [fileBase64, setFileBase64] = useState<string>("");
   const { acceptedFiles, getRootProps, getInputProps, inputRef } = useDropzone({
     maxFiles: 1,
     multiple: false,
@@ -28,19 +31,41 @@ export const UploadField: React.ComponentType<UploadFieldProps> = ({
       ),
     },
     onDrop: (acceptedFiles) => {
-      setImages(
+      acceptedFiles.forEach((file) => {
+        const reader = new FileReader();
+
+        reader.onabort = () => {
+          reset();
+          console.log("file reading was aborted");
+        };
+        reader.onerror = () => {
+          reset();
+          console.log("file reading has failed");
+        };
+        reader.onload = () => {
+          setFileBase64(reader.result.toString());
+        };
+        reader.readAsDataURL(file);
+      });
+
+      setImage(
         acceptedFiles.map((file) =>
           Object.assign(file, {
             preview: URL.createObjectURL(file),
           }),
-        ),
+        )[0],
       );
     },
   });
 
+  const reset = () => {
+    if (image) URL.revokeObjectURL(image.preview);
+    setFileBase64("");
+  };
+
   useEffect(() => {
     // Make sure to revoke the data uris to avoid memory leaks, will run on unmount
-    return () => images.forEach((file) => URL.revokeObjectURL(file.preview));
+    return () => reset();
   }, []);
 
   const onClear = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -48,7 +73,7 @@ export const UploadField: React.ComponentType<UploadFieldProps> = ({
     acceptedFiles.length = 0;
     acceptedFiles.splice(0, acceptedFiles.length);
     inputRef.current.value = "";
-    setImages([]);
+    setImage(null);
   };
 
   return (
@@ -60,23 +85,28 @@ export const UploadField: React.ComponentType<UploadFieldProps> = ({
         style={{ display: "none" }}
       />
       <div {...getRootProps({ className: "dropzone" })}>
-        <input {...getInputProps()} name={name} />
+        <input {...getInputProps()} />
+        <textarea
+          name={name}
+          style={{ display: "none" }}
+          value={fileBase64}
+          readOnly
+        />
 
         {acceptedFiles.length > 0 ? (
           <>
-            {IS_IMAGE &&
-              images.map((file) => (
-                <img
-                  style={{
-                    maxWidth: 240,
-                  }}
-                  key={file.name}
-                  src={file.preview}
-                  onLoad={() => {
-                    URL.revokeObjectURL(file.preview);
-                  }}
-                />
-              ))}
+            {IS_IMAGE && image && (
+              <img
+                style={{
+                  maxWidth: 240,
+                }}
+                key={image.name}
+                src={image.preview}
+                onLoad={() => {
+                  URL.revokeObjectURL(image.preview);
+                }}
+              />
+            )}
             {!IS_IMAGE &&
               acceptedFiles.map((file) => <p key={file.name}>{file.name}</p>)}
             <p className="dropzone__label">
