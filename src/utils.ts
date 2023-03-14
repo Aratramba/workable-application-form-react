@@ -73,7 +73,7 @@ export const createWorkableCandidate = (
   formFields: WorkableFormField[],
   questions: WorkableQuestion[],
 ) => {
-  const obj: WorkableCandidate = {
+  const candidate: WorkableCandidate = {
     name: data.name,
     firstname: data.firstname,
     lastname: data.lastname,
@@ -96,12 +96,138 @@ export const createWorkableCandidate = (
     recruiter_key: data.recruiter_key,
   };
 
-  // add answers;
-
-  // remove undefined values
-  Object.keys(obj).forEach((key) =>
-    obj[key] === undefined ? delete obj[key] : {},
+  // find form fields that are not yet in the object
+  const missingFields = formFields.filter(
+    (field) => !Object.keys(candidate).includes(field.key),
   );
 
-  return obj;
+  // add answers
+  missingFields.forEach((question) => {
+    const value = data[question.key];
+
+    if (value) {
+      // "string" | "free_text" | "file" | "boolean" | "date" | "complex"
+      switch (question.type) {
+        case "string":
+          const stringAnswer: WorkableAnswerFreeText = {
+            question_key: question.key,
+            body: value,
+          };
+          candidate.answers.push(stringAnswer);
+          break;
+
+        case "free_text":
+          const freetextAnswer: WorkableAnswerFreeText = {
+            question_key: question.key,
+            body: value,
+          };
+          candidate.answers.push(freetextAnswer);
+          break;
+
+        case "boolean":
+          const booleanAnswer: WorkableAnswerBoolean = {
+            question_key: question.key,
+            checked: value,
+          };
+          candidate.answers.push(booleanAnswer);
+          break;
+
+        case "date":
+          const dateAnswer: WorkableAnswerDate = {
+            question_key: question.key,
+            date: value,
+          };
+          candidate.answers.push(dateAnswer);
+          break;
+
+        case "file":
+          const fileAnswer: WorkableAnswerFileData = {
+            question_key: question.key,
+            data: value,
+          };
+          candidate.answers.push(fileAnswer);
+          break;
+
+        // not covering the complex case here, as experience and education are handled separately
+      }
+    }
+  });
+
+  // find questions that are not yet in the object
+  const missingQuestions = questions.filter(
+    (question) => !Object.keys(candidate).includes(question.id),
+  );
+
+  // add answers;
+  missingQuestions.forEach((question) => {
+    const value = data[question.id];
+
+    if (value) {
+      // "free_text" | "multiple_choice" | "boolean" | "dropdown" | "numeric" | "date" | "file";
+      switch (question.type) {
+        case "free_text":
+          const freetextAnswer: WorkableAnswerFreeText = {
+            question_key: question.id,
+            body: value,
+          };
+          candidate.answers.push(freetextAnswer);
+          break;
+
+        case "multiple_choice":
+          const multipleChoiceAnswer: WorkableAnswerMultipleChoice = {
+            question_key: question.id,
+            choices: value,
+          };
+          candidate.answers.push(multipleChoiceAnswer);
+          break;
+
+        case "boolean":
+          const booleanAnswer: WorkableAnswerBoolean = {
+            question_key: question.id,
+            checked: value,
+          };
+          candidate.answers.push(booleanAnswer);
+          break;
+
+        case "dropdown":
+          const dropdownAnswer: WorkableAnswerDropdown = {
+            question_key: question.id,
+            choices: value,
+          };
+          candidate.answers.push(dropdownAnswer);
+          break;
+
+        case "date":
+          const dateAnswer: WorkableAnswerDate = {
+            question_key: question.id,
+            date: value,
+          };
+          candidate.answers.push(dateAnswer);
+          break;
+
+        case "numeric":
+          const numericAnswer: WorkableAnswerNumeric = {
+            question_key: question.id,
+            value: +value,
+          };
+          candidate.answers.push(numericAnswer);
+          break;
+
+        case "file":
+          const fileAnswer: WorkableAnswerFileData = {
+            question_key: question.id,
+            data: value,
+          };
+          candidate.answers.push(fileAnswer);
+          break;
+      }
+    }
+  });
+
+  // remove undefined values
+  Object.keys(candidate).forEach((key) =>
+    candidate[key] === undefined ? delete candidate[key] : {},
+  );
+
+  return candidate;
 };
