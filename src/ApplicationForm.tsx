@@ -17,7 +17,7 @@ type ApplicationFormProps = {
   fieldsets?: FormFieldsetsType;
   onSave?: (
     data: WorkableCandidate,
-    cb: (error: string | null) => void,
+    cb: (error?: string | null) => void,
   ) => void;
 };
 
