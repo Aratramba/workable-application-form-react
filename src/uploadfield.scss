@@ -2,8 +2,15 @@
   border: 1px solid var(--border-color);
   padding: 10px;
   text-align: center;
-  background-color: #fcfcfc;
   cursor: pointer;
+
+  &[data-state="success"] {
+    border-color: var(--dropzone-success-color);
+  }
+
+  &[data-state="error"] {
+    border-color: var(--dropzone-error-color);
+  }
 }
 
 .dropzone__label {

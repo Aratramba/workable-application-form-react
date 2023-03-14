@@ -17,6 +17,9 @@ export const UploadField: React.ComponentType<UploadFieldProps> = ({
     ).length,
   );
 
+  const [state, setState] = useState<
+    "initial" | "loading" | "error" | "success"
+  >("initial");
   const [image, setImage] = useState<null | { preview: string; name: string }>(
     null,
   );
@@ -31,19 +34,29 @@ export const UploadField: React.ComponentType<UploadFieldProps> = ({
       ),
     },
     onDrop: (acceptedFiles) => {
+      setState("loading");
+
+      if (!acceptedFiles.length) {
+        setState("initial");
+        return;
+      }
+
       acceptedFiles.forEach((file) => {
         const reader = new FileReader();
 
         reader.onabort = () => {
           reset();
           console.log("file reading was aborted");
+          setState("error");
         };
         reader.onerror = () => {
           reset();
           console.log("file reading has failed");
+          setState("error");
         };
         reader.onload = () => {
           setFileBase64(reader.result.toString());
+          setState("success");
         };
         reader.readAsDataURL(file);
       });
@@ -74,6 +87,7 @@ export const UploadField: React.ComponentType<UploadFieldProps> = ({
     acceptedFiles.splice(0, acceptedFiles.length);
     inputRef.current.value = "";
     setImage(null);
+    setState("initial");
   };
 
   return (
@@ -84,7 +98,7 @@ export const UploadField: React.ComponentType<UploadFieldProps> = ({
         onClick={onClear}
         style={{ display: "none" }}
       />
-      <div {...getRootProps({ className: "dropzone" })}>
+      <div {...getRootProps({ className: "dropzone" })} data-state={state}>
         <input {...getInputProps()} />
         <textarea
           name={name}
@@ -123,6 +137,35 @@ export const UploadField: React.ComponentType<UploadFieldProps> = ({
               {field.supported_file_types.join(", .")}.
             </p>
           </>
+        )}
+
+        {state === "loading" && (
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <style
+              dangerouslySetInnerHTML={{
+                __html: `
+                .spinner_b2T7{animation:spinner_xe7Q .8s linear infinite}.spinner_YRVV{animation-delay:-.65s}.spinner_c9oY{animation-delay:-.5s}@keyframes spinner_xe7Q{93.75%,100%{r:3px}46.875%{r:.2px}}`,
+              }}
+            />
+            <circle className="spinner_b2T7" cx="4" cy="12" r="3" />
+            <circle
+              className="spinner_b2T7 spinner_YRVV"
+              cx="12"
+              cy="12"
+              r="3"
+            />
+            <circle
+              className="spinner_b2T7 spinner_c9oY"
+              cx="20"
+              cy="12"
+              r="3"
+            />
+          </svg>
         )}
       </div>
     </>
