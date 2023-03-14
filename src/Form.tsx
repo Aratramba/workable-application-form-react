@@ -29,7 +29,11 @@ export const Form: React.ComponentType<FormProps> = ({
   };
 
   return (
-    <form className={`form--${state}`} onSubmit={handleSubmit}>
+    <form
+      className={`form--${state}`}
+      onSubmit={handleSubmit}
+      encType="multipart/form-data"
+    >
       {children}
     </form>
   );
