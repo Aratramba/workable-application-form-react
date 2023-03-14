@@ -7,6 +7,7 @@ export const TextField: React.ComponentType<TextFieldProps> = ({
   required,
   id,
   defaultValue,
+  maxLength,
 }) => {
   return (
     <FormField>
@@ -17,6 +18,7 @@ export const TextField: React.ComponentType<TextFieldProps> = ({
         id={id}
         defaultValue={defaultValue}
         className="form-field__text"
+        maxLength={maxLength}
       />
     </FormField>
   );

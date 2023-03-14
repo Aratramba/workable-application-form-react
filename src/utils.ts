@@ -224,8 +224,6 @@ export const createWorkableCandidate = (
     }
   });
 
-  console.log(candidate);
-
   // remove undefined values
   Object.keys(candidate).forEach((key) =>
     candidate[key] === undefined ? delete candidate[key] : {},

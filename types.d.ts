@@ -20,6 +20,7 @@ type WorkableFormField = {
   supported_file_types?: string[];
   max_file_size?: number;
   multiple?: boolean;
+  max_length?: number;
 };
 
 /*
@@ -38,7 +39,7 @@ max_file_size	integer	Defined only if question type is file. The maximum file si
 
 type WorkableQuestion = {
   id: string;
-  body: string;
+  body: string | React.ReactNode;
   type:
     | "free_text"
     | "multiple_choice"
@@ -47,14 +48,14 @@ type WorkableQuestion = {
     | "numeric"
     | "date"
     | "file";
-  required: boolean;
-  single_answer: boolean;
-  choices: {
+  required?: boolean;
+  single_answer?: boolean;
+  choices?: {
     id: string;
     body: string;
   }[];
-  supported_file_types: string[];
-  max_file_size: number;
+  supported_file_types?: string[];
+  max_file_size?: number;
 };
 
 /*
@@ -343,6 +344,7 @@ type FormFieldType = {
   required: boolean;
   id: string;
   defaultValue?: string;
+  maxLength?: number;
 };
 
 type FormFieldsetsType = {

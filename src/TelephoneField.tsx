@@ -12,6 +12,7 @@ export const TelephoneField: React.ComponentType<TelephoneFieldProps> = ({
   required,
   id,
   defaultValue,
+  maxLength,
 }) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const config = useContext(ConfigContext);
@@ -65,6 +66,7 @@ export const TelephoneField: React.ComponentType<TelephoneFieldProps> = ({
         required={required}
         id={id}
         defaultValue={defaultValue}
+        maxLength={maxLength}
         className="form-field__text form-field__telephone"
       />
       <input

@@ -32,12 +32,17 @@ export const Field: React.ComponentType<FieldProps> = ({ name, field }) => {
     required: boolean;
     id: string;
     defaultValue?: string;
+    maxLength?: number;
   } = {
     name: field.name,
     required: field.required,
     id: `field-${field.slug}`,
     defaultValue: field.value,
   };
+
+  if ("max_length" in field) {
+    inputProps.maxLength = field.max_length;
+  }
 
   let Component;
 

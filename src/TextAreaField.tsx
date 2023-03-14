@@ -8,6 +8,7 @@ export const TextAreaField: React.ComponentType<TextAreaFieldProps> = ({
   required,
   id,
   defaultValue,
+  maxLength,
 }) => {
   return (
     <FormField>
@@ -18,6 +19,7 @@ export const TextAreaField: React.ComponentType<TextAreaFieldProps> = ({
         id={id}
         rows={5}
         className="form-field__textarea"
+        maxLength={maxLength}
       />
     </FormField>
   );

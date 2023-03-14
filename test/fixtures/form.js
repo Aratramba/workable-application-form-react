@@ -146,7 +146,7 @@ export default {
   questions: [
     {
       body: "LinkedIn URL",
-      type: "string",
+      type: "free_text",
       required: false,
       id: "CA_3c25",
     },
@@ -158,7 +158,7 @@ export default {
     },
     {
       body: "Can you answer this question?",
-      type: "string",
+      type: "free_text",
       required: false,
       id: "536a78a",
     },

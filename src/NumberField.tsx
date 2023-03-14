@@ -7,6 +7,7 @@ export const NumberField: React.ComponentType<NumberFieldProps> = ({
   required,
   id,
   defaultValue,
+  maxLength,
 }) => {
   return (
     <FormField>
@@ -17,6 +18,7 @@ export const NumberField: React.ComponentType<NumberFieldProps> = ({
         id={id}
         defaultValue={defaultValue}
         className="form-field__text form-field__number"
+        maxLength={maxLength}
       />
     </FormField>
   );
