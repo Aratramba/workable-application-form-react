@@ -27,7 +27,7 @@ export const UploadField: React.ComponentType<UploadFieldProps> = ({
   const { acceptedFiles, getRootProps, getInputProps, inputRef } = useDropzone({
     maxFiles: 1,
     multiple: false,
-    maxSize: 12000000,
+    maxSize: field.max_file_size,
     accept: {
       "application/octet-stream": field.supported_file_types.map(
         (ext) => `.${ext}`,
@@ -133,8 +133,11 @@ export const UploadField: React.ComponentType<UploadFieldProps> = ({
               <span>Upload a file</span> or drag and drop here
             </p>
             <p className="dropzone__info">
-              Maximum file size 12Mb. Acceptable file types .
-              {field.supported_file_types.join(", .")}.
+              {field.max_file_size &&
+                `Maximum file size ${Math.floor(
+                  field.max_file_size / 1000000,
+                )}Mb. Acceptable file types .
+              ${field.supported_file_types.join(", .")}.`}
             </p>
           </>
         )}
