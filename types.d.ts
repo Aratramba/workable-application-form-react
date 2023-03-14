@@ -41,6 +41,7 @@ type WorkableQuestion = {
   id: string;
   body: string | React.ReactNode;
   type:
+    | "short_text"
     | "free_text"
     | "multiple_choice"
     | "boolean"
@@ -235,6 +236,7 @@ type WorkableAnswerBase = {
 };
 
 type WorkableAnswer =
+  | WorkableAnswerShortText
   | WorkableAnswerFreeText
   | WorkableAnswerBoolean
   | WorkableAnswerMultipleChoice
@@ -243,6 +245,18 @@ type WorkableAnswer =
   | WorkableAnswerNumeric
   | WorkableAnswerFile
   | WorkableAnswerFileData;
+
+/*
+Short text questions
+
+key	type	description
+question_key (required)	string	The question key
+body (required)	string	The candidate's response
+*/
+
+type WorkableAnswerShortText = {
+  body: string;
+} & Required<WorkableAnswerBase>;
 
 /*
 Free text questions

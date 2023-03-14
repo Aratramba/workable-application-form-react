@@ -163,8 +163,15 @@ export const createWorkableCandidate = (
     const value = data[question.id];
 
     if (value) {
-      // "free_text" | "multiple_choice" | "boolean" | "dropdown" | "numeric" | "date" | "file";
+      // "short_text" | "free_text" | "multiple_choice" | "boolean" | "dropdown" | "numeric" | "date" | "file";
       switch (question.type) {
+        case "short_text":
+          const shortTextAnswer: WorkableAnswerShortText = {
+            question_key: question.id,
+            body: value,
+          };
+          candidate.answers.push(shortTextAnswer);
+          break;
         case "free_text":
           const freetextAnswer: WorkableAnswerFreeText = {
             question_key: question.id,
