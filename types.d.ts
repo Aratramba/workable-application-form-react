@@ -235,7 +235,6 @@ type WorkableAnswerBase = {
 
 type WorkableAnswer =
   | WorkableAnswerFreeText
-  | WorkableAnswerShortText
   | WorkableAnswerBoolean
   | WorkableAnswerMultipleChoice
   | WorkableAnswerDropdown
@@ -253,18 +252,6 @@ body (required)	string	The candidate's response
 */
 
 type WorkableAnswerFreeText = {
-  body: string;
-} & Required<WorkableAnswerBase>;
-
-/*
-Short text questions
-
-key	type	description
-question_key (required)	string	The question key
-body (required)	string	The candidate's response (maximum 128 characters)
-*/
-
-type WorkableAnswerShortText = {
   body: string;
 } & Required<WorkableAnswerBase>;
 
