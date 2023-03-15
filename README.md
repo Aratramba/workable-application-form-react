@@ -10,8 +10,14 @@ The official Workable form renders inside an iframe. This library renders the fo
 ## Demo
 
 - TODO
+- TODO
+- TODO
 
 ## Features
+
+- TODO
+- TODO
+- TODO
 
 The official Workable solution offers some functionality that this library does not. This is a list of the things that this library does not offer.
 
@@ -165,6 +171,54 @@ https://github.com/Aratramba/workable-application-form-react/blob/dc6f256b44f872
 
 The output of the form is a Workable candidate object.
 
+````typescript
+{
+  firstname: "Firstname",
+  lastname: "Lastname",
+  email: "first_last@email.com",
+  headline: "Headline",
+  summary: "This is \nmy summary",
+  address: "123 Main St",
+  phone: "+391234567890",
+  cover_letter: "This is \nmy cover\nletter",
+  education_entries: [
+    {
+      school: "My School",
+      degree: "My degree",
+      field_of_study: "My field of study",
+      start_date: "2023-03-09",
+      end_date: "2023-03-16",
+    },
+    {
+      school: "My other school",
+      degree: "My other degree",
+      field_of_study: "My other field of study",
+      start_date: "2019-02-08",
+      end_date: "2023-03-01",
+    },
+  ],
+  experience_entries: [
+    {
+      title: "My Experience",
+      company: "My company",
+      industry: "My industry",
+      summary: "My summary\nis\nvery\nshort",
+      current: true,
+      start_date: "2023-03-23",
+      end_date: "2023-03-30",
+    },
+  ],
+  answers: [
+    { question_key: "CA_3c25", body: "https://www.linkedin.com" },
+    { question_key: "536a78", checked: true },
+    { question_key: "536a78a", body: "yes" },
+    { question_key: "536a78x", body: "no i can't" },
+    { question_key: "date", date: "2023-03-14" },
+    { question_key: "privacy", checked: true },
+  ],
+}
+`
+
 https://github.com/Aratramba/workable-application-form-react/blob/dc6f256b44f872791d5d61bd3edaa85bbda04392/types.d.ts#L86-L107
 
 https://github.com/Aratramba/workable-application-form-react/blob/dc6f256b44f872791d5d61bd3edaa85bbda04392/types.d.ts#L122-L130
@@ -197,7 +251,7 @@ You can override the colours of the form using CSS variables:
   --dropzone-success-color: rgb(111, 209, 111);
   --dropzone-error-color: rgb(245, 119, 119);
 }
-```
+````
 
 More custom styling can be done by overriding the styles through css, e.g.
 
