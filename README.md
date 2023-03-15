@@ -171,7 +171,7 @@ https://github.com/Aratramba/workable-application-form-react/blob/dc6f256b44f872
 
 The output of the form is a Workable candidate object.
 
-````typescript
+```typescript
 {
   firstname: "Firstname",
   lastname: "Lastname",
@@ -217,7 +217,7 @@ The output of the form is a Workable candidate object.
     { question_key: "privacy", checked: true },
   ],
 }
-`
+```
 
 https://github.com/Aratramba/workable-application-form-react/blob/dc6f256b44f872791d5d61bd3edaa85bbda04392/types.d.ts#L86-L107
 
@@ -251,7 +251,7 @@ You can override the colours of the form using CSS variables:
   --dropzone-success-color: rgb(111, 209, 111);
   --dropzone-error-color: rgb(245, 119, 119);
 }
-````
+```
 
 More custom styling can be done by overriding the styles through css, e.g.
 
