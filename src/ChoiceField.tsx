@@ -17,11 +17,11 @@ export const ChoiceField: React.ComponentType<ChoiceFieldProps> = ({
             <input
               type={multiple ? "checkbox" : "radio"}
               name={name}
-              id={`${id}+${choice.id}`}
+              id={`${id}${choice.id}`}
               value={choice.id}
               className="form-field__choice"
             />
-            <label htmlFor={(id = `${id}+${choice.id}`)}>{choice.body}</label>
+            <label htmlFor={`${id}${choice.id}`}>{choice.body}</label>
           </div>
         );
       })}
