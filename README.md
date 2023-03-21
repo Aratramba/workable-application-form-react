@@ -209,12 +209,15 @@ The output of the form is a Workable candidate object.
     },
   ],
   answers: [
-    { question_key: "CA_3c25", body: "https://www.linkedin.com" },
-    { question_key: "536a78", checked: true },
-    { question_key: "536a78a", body: "yes" },
-    { question_key: "536a78x", body: "no i can't" },
-    { question_key: "date", date: "2023-03-14" },
-    { question_key: "privacy", checked: true },
+    { "question_key": "5dc1d4", "body": "I can answer\nthis question" },
+    { "question_key": "5dc1d5", "body": "I can also answer this question" },
+    { "question_key": "5dc1d6", "checked": true },
+    { "question_key": "5dc1d7", "choices": "2c9489" },
+    { "question_key": "5dc1d8", "choices": ["2c948a", "2c948b", "2c948c"] },
+    { "question_key": "5dc1d9", "choices": ["2c948f"] },
+    { "question_key": "5dc1da", "date": "1999-02-01" },
+    { "question_key": "5dc1db", "value": 308 },
+    { "question_key": "privacy", "checked": true }
   ],
 }
 ```
