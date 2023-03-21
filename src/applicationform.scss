@@ -1,5 +1,8 @@
 button,
-input,
+input[type="text"],
+input[type="date"],
+input[type="number"],
+input[type="tel"],
 optgroup,
 textarea,
 input[type="submit"],
@@ -10,7 +13,6 @@ fieldset {
   border: none;
   margin: 0;
   outline: none;
-  padding: 0;
 }
 
 .application-form,

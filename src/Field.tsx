@@ -11,6 +11,7 @@ import { TelephoneField } from "./TelephoneField";
 import { UploadField } from "./UploadField";
 import { ComplexMultiple } from "./ComplexMultipleField";
 import { SelectField } from "./SelectField";
+import { ChoiceField } from "./ChoiceField";
 
 export type FieldProps = {
   name: string;
@@ -35,6 +36,7 @@ export const Field: React.ComponentType<FieldProps> = ({ name, field }) => {
     defaultValue?: string;
     maxLength?: number;
     choices?: { body?: string; id?: string }[];
+    multiple?: boolean;
   } = {
     name: field.name,
     required: field.required,
@@ -48,6 +50,10 @@ export const Field: React.ComponentType<FieldProps> = ({ name, field }) => {
 
   if ("choices" in field) {
     inputProps.choices = field.choices;
+  }
+
+  if ("single_answer" in field) {
+    inputProps.multiple = !field.single_answer;
   }
 
   let Component;
@@ -74,7 +80,7 @@ export const Field: React.ComponentType<FieldProps> = ({ name, field }) => {
       break;
 
     case "multiple_choice":
-      Component = () => <div>multiple choice (not implemented)</div>;
+      Component = () => <ChoiceField {...inputProps} />;
       break;
 
     case "dropdown":

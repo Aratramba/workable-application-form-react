@@ -360,6 +360,7 @@ type FormFieldType = {
   defaultValue?: string;
   maxLength?: number;
   choices?: { body?: string; id?: string }[];
+  single_answer?: boolean;
 };
 
 type FormFieldsetsType = {

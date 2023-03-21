@@ -8,21 +8,17 @@ export const SelectField: React.ComponentType<SelectFieldProps> = ({
   required,
   id,
   defaultValue,
-  maxLength,
   choices,
 }) => {
   return (
     <FormField>
-      {/* <input
-        type="number"
+      <select
+        className="form-field__select"
         name={name}
         required={required}
         id={id}
         defaultValue={defaultValue}
-        className="form-field__text form-field__number"
-        maxLength={maxLength}
-      /> */}
-      <select className="form-field__select">
+      >
         {choices?.map((choice) => {
           return (
             <option key={choice.id} value={choice.id}>
