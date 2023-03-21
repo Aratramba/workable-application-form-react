@@ -63,7 +63,7 @@ export default {
   "5dc1d5": "I can also answer this question",
   "5dc1d6": true,
   "5dc1d7": "2c9489",
-  "5dc1d8": "2c948c",
+  "5dc1d8": ["2c948a", "2c948c", "2c948b"],
   "5dc1d9": "2c948f",
   "5dc1da": "1999-02-01",
   "5dc1db": 308,
