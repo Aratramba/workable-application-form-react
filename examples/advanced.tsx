@@ -12,6 +12,7 @@ const onSave = (
   data: WorkableCandidate,
   cb: (error: string | null) => void,
 ) => {
+  console.log(data);
   const options = {
     method: "POST",
     headers: {
