@@ -13,12 +13,11 @@ export const ChoiceField: React.ComponentType<ChoiceFieldProps> = ({
     <fieldset className="form-field__choice-fieldset">
       {choices?.map((choice) => {
         return (
-          <div className="form-field__choice-wrapper">
+          <div className="form-field__choice-wrapper" key={choice.id}>
             <input
               type={multiple ? "checkbox" : "radio"}
               name={name}
               id={`${id}+${choice.id}`}
-              key={choice.id}
               value={choice.id}
               required={required}
               className="form-field__choice"
