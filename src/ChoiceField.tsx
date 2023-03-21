@@ -19,7 +19,6 @@ export const ChoiceField: React.ComponentType<ChoiceFieldProps> = ({
               name={name}
               id={`${id}+${choice.id}`}
               value={choice.id}
-              required={required}
               className="form-field__choice"
             />
             <label htmlFor={(id = `${id}+${choice.id}`)}>{choice.body}</label>
