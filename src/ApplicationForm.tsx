@@ -151,7 +151,7 @@ export const ApplicationForm: React.ComponentType<ApplicationFormProps> = ({
           {allFieldsets.map((fieldset, index) => (
             <Fieldset
               name={fieldset.name}
-              key={fieldset.name || fieldset.fields[0].name}
+              key={fieldset.name || fieldset.fields[0]?.name || index}
             >
               {fieldset.fields
                 .filter(({ name }) => Boolean(name))
