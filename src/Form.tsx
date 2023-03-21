@@ -19,12 +19,14 @@ export const Form: React.ComponentType<FormProps> = ({
     "initial" | "saving" | "error" | "complete"
   >("initial");
 
+  const [error, setError] = React.useState<string | null>(null);
   const config = React.useContext(ConfigContext);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     setState("saving");
     onSubmit(event, (error: string | null) => {
       if (error) {
+        setError(error);
         setState("error");
       } else {
         setState("complete");
@@ -40,6 +42,7 @@ export const Form: React.ComponentType<FormProps> = ({
     >
       {config.labelForm && <Heading as="h1">{config.labelForm}</Heading>}
       {children}
+      {error && <p className="form__error">{error}</p>}
     </form>
   );
 };

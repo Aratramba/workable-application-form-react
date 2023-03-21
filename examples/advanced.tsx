@@ -12,13 +12,20 @@ const onSave = (
   data: WorkableCandidate,
   cb: (error: string | null) => void,
 ) => {
-  console.log("saving");
-  console.log(data);
+  const options = {
+    method: "POST",
+    headers: {
+      accept: "application/json",
+      "content-type": "application/json",
+    },
+    body: JSON.stringify({ candidate: data }),
+  };
 
-  // setTimeout(() => {
-  //   cb(null);
-  //   console.log("redirect");
-  // }, 5000);
+  // implement a backend API for this, as Workable does not allow CORS
+  fetch(`/your-api/candidate`, options)
+    .then((response) => response.json())
+    .then((response) => cb(null))
+    .catch((err) => cb(err.message));
 };
 
 root.render(
@@ -43,9 +50,29 @@ root.render(
             ["text", "tel", "number", "date", "hidden"].includes(input.type)
           ) {
             (input as any).value = value;
-          } else if (input.nodeName === "INPUT" && input.type === "checkbox") {
-            (input as any).checked = value;
+          } else if (
+            input.nodeName === "INPUT" &&
+            (input.type === "checkbox" || input.type === "radio")
+          ) {
+            if (typeof value === "string") {
+              value = [value];
+            }
+            if (Array.isArray(value)) {
+              value.forEach((v) => {
+                const input: any = document.querySelector(
+                  `[name="${key}"][value="${v}"]`,
+                );
+                if (input) {
+                  input.checked = true;
+                }
+              });
+              (input as any).checked = value.includes(input.value);
+            } else {
+              (input as any).checked = value;
+            }
           } else if (input.nodeName === "TEXTAREA") {
+            (input as any).value = value;
+          } else if (input.nodeName === "SELECT") {
             (input as any).value = value;
           }
           input.dispatchEvent(new Event("change"));

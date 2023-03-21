@@ -12,7 +12,11 @@
 }
 
 .form--error {
-  border: 10px solid red;
+}
+
+.form__error {
+  color: var(--form-error-text-color);
+  margin-top: 20px;
 }
 
 .form--complete {
