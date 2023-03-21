@@ -54,7 +54,20 @@ export const ApplicationForm: React.ComponentType<ApplicationFormProps> = ({
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const entries: any = Object.fromEntries(formData.entries());
-    const cleanData: any = cleanFormData(entries);
+    const allValues: any = {};
+    Object.keys(entries).forEach((key) => {
+      const question = questions.find((q) => q.id === key);
+      if (
+        question?.type === "multiple_choice" ||
+        question?.type === "dropdown"
+      ) {
+        allValues[key] = formData.getAll(key);
+      } else {
+        allValues[key] = formData.get(key);
+      }
+    });
+
+    const cleanData: any = cleanFormData(allValues);
     const workableCandidate: WorkableCandidate = createWorkableCandidate(
       cleanData,
       formFields,
