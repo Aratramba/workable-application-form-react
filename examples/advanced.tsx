@@ -13,6 +13,7 @@ const onSave = (
   cb: (error: string | null) => void,
 ) => {
   console.log(data);
+  console.log(JSON.stringify(data));
   const options = {
     method: "POST",
     headers: {
@@ -26,7 +27,11 @@ const onSave = (
   fetch(`/your-api/candidate`, options)
     .then((response) => response.json())
     .then((response) => cb(null))
-    .catch((err) => cb(err.message));
+    .catch((err) => {
+      const error = err.message;
+      const workableErrorMessage = JSON.parse(error.message)?.error;
+      cb(workableErrorMessage || err.message);
+    });
 };
 
 root.render(
@@ -48,8 +53,10 @@ root.render(
           if (!input) return;
           if (
             input.nodeName === "INPUT" &&
-            ["text", "tel", "number", "date", "hidden"].includes(input.type)
+            ["text", "tel", "number", "hidden"].includes(input.type)
           ) {
+            (input as any).value = JSON.stringify(value);
+          } else if (input.nodeName === "INPUT" && input.type === "date") {
             (input as any).value = value;
           } else if (
             input.nodeName === "INPUT" &&
