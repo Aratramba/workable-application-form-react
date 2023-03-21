@@ -19,6 +19,7 @@ export const SelectField: React.ComponentType<SelectFieldProps> = ({
         id={id}
         defaultValue={defaultValue}
       >
+        <option value={null}></option>
         {choices?.map((choice) => {
           return (
             <option key={choice.id} value={choice.id}>
