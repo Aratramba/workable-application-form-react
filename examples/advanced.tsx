@@ -13,6 +13,7 @@ const onSave = (
   cb: (error: string | null) => void,
 ) => {
   console.log("saving");
+  console.log(data);
 
   // setTimeout(() => {
   //   cb(null);
