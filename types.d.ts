@@ -359,6 +359,7 @@ type FormFieldType = {
   id: string;
   defaultValue?: string;
   maxLength?: number;
+  choices?: { body?: string; id?: string }[];
 };
 
 type FormFieldsetsType = {

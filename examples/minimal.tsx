@@ -1,7 +1,7 @@
 import { createRoot } from "react-dom/client";
 import { ApplicationForm } from "../src";
 
-import form from "./fixtures/form";
+import form from "./fixtures/full-form";
 const domNode = document.getElementById("app");
 const root = createRoot(domNode);
 

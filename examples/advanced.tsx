@@ -3,7 +3,7 @@ import { ApplicationForm } from "../src";
 
 import TEST_VALUES from "./fixtures/values";
 
-import form from "./fixtures/form";
+import form from "./fixtures/full-form";
 import { REST_OF_FIELDS_FLAG } from "../src/ApplicationForm";
 const domNode = document.getElementById("app");
 const root = createRoot(domNode);
