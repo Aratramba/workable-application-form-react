@@ -42,7 +42,12 @@ export const Form: React.ComponentType<FormProps> = ({
     >
       {config.labelForm && <Heading as="h1">{config.labelForm}</Heading>}
       {children}
-      {error && <p className="form__error">{error}</p>}
+      <p
+        className={`form__error ${error ? "enabled" : "disabled"}`}
+        onClick={() => setError(null)}
+      >
+        {error}
+      </p>
     </form>
   );
 };
