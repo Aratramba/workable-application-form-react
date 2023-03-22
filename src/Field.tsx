@@ -15,12 +15,7 @@ import { ChoiceField } from "./ChoiceField";
 
 export type FieldProps = {
   name: string;
-  field: (WorkableFormField | WorkableQuestion) & {
-    name: string;
-    slug: string;
-    label: React.ReactElement | React.ReactNode;
-    value?: string;
-  };
+  field: WorkableField;
 };
 
 export const Field: React.ComponentType<FieldProps> = ({ name, field }) => {
@@ -29,82 +24,47 @@ export const Field: React.ComponentType<FieldProps> = ({ name, field }) => {
     return null;
   }
 
-  const inputProps: {
-    name: string;
-    required: boolean;
-    id: string;
-    defaultValue?: string;
-    maxLength?: number;
-    choices?: { body?: string; id?: string }[];
-    multiple?: boolean;
-  } = {
-    name: field.name,
-    required: field.required,
-    id: `field-${field.slug}`,
-    defaultValue: field.value,
-  };
-
-  if ("max_length" in field) {
-    inputProps.maxLength = field.max_length;
-  }
-
-  if ("choices" in field) {
-    inputProps.choices = field.choices;
-  }
-
-  if ("single_answer" in field) {
-    inputProps.multiple = !field.single_answer;
-  }
-
   let Component;
 
   switch (field.type) {
-    case "free_text":
-      Component = () => <TextAreaField {...inputProps} />;
+    case "paragraph":
+      Component = () => <TextAreaField {...field} />;
       break;
 
     case "file":
-      Component = () => (
-        <UploadField name={field.slug} field={field as WorkableFormField} />
-      );
+      Component = () => <UploadField {...field} />;
       break;
 
     case "boolean":
-      Component = () => (
-        <Toggle {...inputProps} label={field.label} slug={field.slug} />
-      );
+      Component = () => <Toggle {...field} />;
       break;
 
     case "date":
-      Component = () => <DateField {...inputProps} />;
+      Component = () => <DateField {...field} />;
       break;
 
-    case "multiple_choice":
-      Component = () => <ChoiceField {...inputProps} />;
+    case "multiple":
+      Component = () => <ChoiceField {...field} />;
       break;
 
     case "dropdown":
-      Component = () => <SelectField {...inputProps} />;
+      Component = () => <SelectField {...field} />;
       break;
 
-    case "numeric":
-      Component = () => <NumberField {...inputProps} />;
+    case "number":
+      Component = () => <NumberField {...field} />;
       break;
 
-    case "complex":
-      if (field.multiple) {
-        Component = () => <ComplexMultiple name={name} field={field} />;
-      } else {
-        Component = () => <div>complex simple (not implemented)</div>;
-      }
+    case "group":
+      Component = () => <ComplexMultiple {...field} />;
       break;
 
     default:
-      Component = () => <TextField {...inputProps} />;
+      Component = () => <TextField {...field} />;
   }
 
-  if (field.name === "phone") {
-    Component = () => <TelephoneField {...inputProps} />;
+  if (field.id === "phone") {
+    Component = () => <TelephoneField {...field} />;
   }
 
   if (field.type === "boolean") {
@@ -113,8 +73,9 @@ export const Field: React.ComponentType<FieldProps> = ({ name, field }) => {
 
   return (
     <FormItem>
-      <Label label={field.label} slug={field.slug} required={field.required} />
+      <Label label={field.label} id={field.id} required={field.required} />
       {Component && <Component />}
+      {field.helper && <p className="form-helper">{field.helper}</p>}
     </FormItem>
   );
 };

@@ -1,10 +1,12 @@
 # Workable Application Form React (not official)
 
-This is a React component that renders a workable application form based on fields from https://workable.readme.io/reference/jobsshortcodeapplication_form. It outputs data that can be sent to the Workable Candidate API https://workable.readme.io/reference/job-candidates-create.
+This is a React component that renders a workable application form based on fields from (the undocumented endpoint) https://apply.workable.com/api/v1/jobs/<shortcode>/form. It outputs data that can be sent to the Workable Candidate API https://workable.readme.io/reference/job-candidates-create.
+
+It no longer uses https://workable.readme.io/reference/jobsshortcodeapplication_form as that documentation seems to be missing a lot of information and does not return fieldsets or fields like firstname, lastname, email.
 
 This React component deliberately does not handle the API call itself, so you'll need to handle that yourself. This is so you can handle the API call however you want, and also so you can handle the response however you want.
 
-The official Workable application form offers no configurability. This library aims to offer a solution for customizing the application form look and feel. It also aims to offer a solution for adding custom fields and questions to the form.
+The official Workable application form offers no configurability. This library aims to offer a solution for customizing the application form look and feel.
 The official Workable form renders inside an iframe. This library renders the form in the DOM, so you can style it however you want.
 
 ## Demo
@@ -55,93 +57,40 @@ root.render(
       console.log(data);
       cb();
     }}
-    formFields={[]}
-    questions={[[]]}
+    form={[]}
   />,
 );
 ```
 
 ## Props
 
-| Name         | Type       | Description                                                                                                                                                                            |
-| ------------ | ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `onSave`     | `function` | A function that is called when the form is submitted. It is passed the data from the form and a callback function. The callback function must be called when the API call is complete. |
-| `formFields` | `array`    | An array of objects that define the form fields. See [Form Fields](#form-fields) below.                                                                                                |
-| `questions`  | `array`    | An array of arrays of objects that define the questions. See [Questions](#questions) below.                                                                                            |
-| `config`     | `object`   | An object that defines the configuration. See [Config](#config) below.                                                                                                                 |
-| `fieldsets`  | `array`    | An array of objects that define the fieldsets. See [Fieldsets](#fieldsets) below.                                                                                                      |
+| Name     | Type       | Description                                                                                                                                                                            |
+| -------- | ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --- |
+| `onSave` | `function` | A function that is called when the form is submitted. It is passed the data from the form and a callback function. The callback function must be called when the API call is complete. |
+| `form`   | `array`    | An array of objects that define the form fields. See [Form Fields](#form-fields) below.                                                                                                |
+| `config` | `object`   | An object that defines the configuration. See [Config](#config) below.                                                                                                                 |     |
 
 ## Form Fields
 
-A list of form fields as they come from https://workable.readme.io/reference/jobsshortcodeapplication_form
+A list of form fields as they come from https://apply.workable.com/api/v1/jobs/<shortcode>/form
 
 https://github.com/Aratramba/workable-application-form-react/blob/dc6f256b44f872791d5d61bd3edaa85bbda04392/types.d.ts#L14-L24
 
 ```typescript
 [
   {
-    key: "headline",
+    id: "headline",
     label: "Headline",
     type: "string",
     required: false,
-    max_length: 255,
+    maxLength: 255,
   },
   {
-    key: "phone",
+    id: "phone",
     label: "Phone",
     type: "string",
     required: true,
-    max_length: 255,
-  },
-];
-```
-
-### Questions
-
-A list of questions as they come from https://workable.readme.io/reference/job-questions.
-
-https://github.com/Aratramba/workable-application-form-react/blob/dc6f256b44f872791d5d61bd3edaa85bbda04392/types.d.ts#L40-L60
-
-```typescript
-[
-  {
-    body: "LinkedIn URL",
-    type: "short_text",
-    required: false,
-    id: "3c25",
-  },
-  {
-    body: "Can you answer this question?",
-    type: "boolean",
-    required: false,
-    id: "536a78",
-  }
-```
-
-## Fieldsets
-
-The workable API does not return fieldsets, even though you can create them through the interface. This means we'll have to manually define fieldsets. To do this add an array of objects with an optional fieldset name and list of fields.
-
-To let the rest of the fields and questions that you don't manually want to define flow in, a special field `...` can be added. If this special value isn't found, the rest of the fields are added at the end of the fieldset.
-
-If no fieldsets are defined, the fields and questions will be added in the order they come in.
-
-```typescript
-[
-  {
-    name: "Personal information",
-    fields: ["firstname", "lastname", "email", "headline", "phone", "address"],
-  },
-  {
-    name: "Details",
-    fields: ["..."],
-  },
-  {
-    name: "Profile",
-    fields: ["education", "experience", "summary", "resume"],
-  },
-  {
-    fields: ["privacy"],
+    maxLength: 255,
   },
 ];
 ```
@@ -209,17 +158,13 @@ The output of the form is a Workable candidate object.
     },
   ],
   answers: [
-    { "question_key": "5dc1d4", "body": "I can answer\nthis question" },
-    { "question_key": "5dc1d5", "body": "I can also answer this question" },
-    { "question_key": "5dc1d6", "checked": true },
-    { "question_key": "5dc1d7", "choices": "2c9489" },
-    { "question_key": "5dc1d8", "choices": ["2c948a", "2c948b", "2c948c"] },
-    { "question_key": "5dc1d9", "choices": ["2c948f"] },
-    { "question_key": "5dc1da", "date": "1999-02-01" },
-    { "question_key": "5dc1db", "value": 308 },
-    { "question_key": "privacy", "checked": true }
+    { question_key: "CA_3c25", body: "https://www.linkedin.com" },
+    { question_key: "536a78", checked: true },
+    { question_key: "536a78a", body: "yes" },
+    { question_key: "536a78x", body: "no i can't" },
+    { question_key: "date", date: "2023-03-14" },
   ],
-}
+};
 ```
 
 https://github.com/Aratramba/workable-application-form-react/blob/dc6f256b44f872791d5d61bd3edaa85bbda04392/types.d.ts#L86-L107
@@ -253,6 +198,10 @@ You can override the colours of the form using CSS variables:
   --dropzone-label-color: var(--color-primary);
   --dropzone-success-color: rgb(111, 209, 111);
   --dropzone-error-color: rgb(245, 119, 119);
+
+  --form-error-text-color: rgb(255, 55, 55);
+  --form-error-background-color: rgb(255, 239, 239);
+  --form-error-border-color: rgb(255, 216, 216);
 }
 ```
 

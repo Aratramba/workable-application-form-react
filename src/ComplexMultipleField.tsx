@@ -6,11 +6,6 @@ import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 import { Fieldset } from "./Fieldset";
 import { Button } from "./Button";
 
-type ComplexMultipleProps = {
-  name: string;
-  field: WorkableFormField;
-};
-
 type ActionType = {
   id: string;
   type: "add" | "remove" | "edit";
@@ -23,9 +18,11 @@ type FieldValueType = {
   label: string;
 };
 
-export const ComplexMultiple: React.ComponentType<ComplexMultipleProps> = ({
-  name,
-  field,
+export const ComplexMultiple: React.ComponentType<WorkableField> = ({
+  id,
+  required,
+  label,
+  fields,
 }) => {
   const config = useContext(ConfigContext);
   const [state, setState] = useState<"initial" | "dialog">("initial");
@@ -93,7 +90,7 @@ export const ComplexMultiple: React.ComponentType<ComplexMultipleProps> = ({
         };
 
     Object.entries(data).forEach(([key, value]: [string, string]) => {
-      const matchingField = field.fields.find((f) => f.key === key);
+      const matchingField = fields.find((f) => f.id === key);
 
       if (!value.trim().length) return;
       action.data[key] = {
@@ -111,7 +108,7 @@ export const ComplexMultiple: React.ComponentType<ComplexMultipleProps> = ({
     <>
       <input
         type="hidden"
-        name={name}
+        name={id}
         value={JSON.stringify(entries)}
         ref={hiddenValueFieldRef}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -210,23 +207,20 @@ export const ComplexMultiple: React.ComponentType<ComplexMultipleProps> = ({
               </Button>
 
               <form className="complex-multiple__form" ref={formRef}>
-                <Fieldset name={field.label} displayClearButton={false}>
-                  {field.fields.map((subfield) => {
+                <Fieldset name={label} displayClearButton={false}>
+                  {fields.map((subfield) => {
                     const editingEntry = {
                       ...entries.find(({ id }) => id === editingEntryId),
                     };
                     return (
                       <Field
-                        key={subfield.key}
-                        name={subfield.key}
+                        key={subfield.id}
+                        name={subfield.id}
                         field={{
                           ...subfield,
-                          name: subfield.key,
-                          label: subfield.label,
-                          slug: subfield.key,
-                          value:
+                          defaultValue:
                             editingEntryId && editingEntry
-                              ? editingEntry.data[subfield.key]?.value
+                              ? editingEntry.data[subfield.id]?.value
                               : null,
                         }}
                       />

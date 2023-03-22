@@ -1,28 +1,25 @@
 import { FormField } from "./FormField";
 
-type SelectFieldProps = FormFieldType;
-
-export const SelectField: React.ComponentType<SelectFieldProps> = ({
-  name,
+export const SelectField: React.ComponentType<WorkableField> = ({
   required,
   id,
+  options,
   defaultValue,
-  choices,
 }) => {
   return (
     <FormField>
       <select
         className="form-field__select"
-        name={name}
+        name={id}
         required={required}
-        id={id}
+        id={`workable-${id}`}
         defaultValue={defaultValue}
       >
         <option value={null}></option>
-        {choices?.map((choice) => {
+        {options?.map((choice) => {
           return (
-            <option key={choice.id} value={choice.id}>
-              {choice.body}
+            <option key={choice.name} value={choice.name}>
+              {choice.value}
             </option>
           );
         })}

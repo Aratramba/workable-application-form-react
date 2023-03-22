@@ -2,10 +2,7 @@ import { useState } from "react";
 import { FormField } from "./FormField";
 import { MaxLength } from "./MaxLength";
 
-type TextFieldProps = FormFieldType;
-
-export const TextField: React.ComponentType<TextFieldProps> = ({
-  name,
+export const TextField: React.ComponentType<WorkableField> = ({
   required,
   id,
   defaultValue,
@@ -17,9 +14,9 @@ export const TextField: React.ComponentType<TextFieldProps> = ({
     <FormField>
       <input
         type="text"
-        name={name}
+        name={id}
         required={required}
-        id={id}
+        id={`workable-${id}`}
         defaultValue={defaultValue}
         className="form-field__text"
         maxLength={maxLength}

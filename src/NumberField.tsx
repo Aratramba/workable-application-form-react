@@ -1,22 +1,19 @@
 import { FormField } from "./FormField";
 
-type NumberFieldProps = FormFieldType;
-
-export const NumberField: React.ComponentType<NumberFieldProps> = ({
-  name,
+export const NumberField: React.ComponentType<WorkableField> = ({
   required,
   id,
-  defaultValue,
   maxLength,
+  defaultValue,
 }) => {
   return (
     <FormField>
       <input
         type="number"
-        name={name}
-        required={required}
-        id={id}
+        name={id}
         defaultValue={defaultValue}
+        required={required}
+        id={`workable-${id}`}
         className="form-field__text form-field__number"
         maxLength={maxLength}
       />

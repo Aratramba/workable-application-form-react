@@ -2,18 +2,11 @@ import { useContext } from "react";
 import { Label } from "./Label";
 import { ConfigContext } from "./ConfigContext";
 
-type ToggleProps = {
-  label: React.ReactNode;
-  slug: string;
-} & FormFieldType;
-
-export const Toggle: React.ComponentType<ToggleProps> = ({
-  name,
+export const Toggle: React.ComponentType<WorkableField> = ({
   required,
   id,
-  defaultValue,
   label,
-  slug,
+  defaultValue,
 }) => {
   const config = useContext(ConfigContext);
   return (
@@ -21,16 +14,16 @@ export const Toggle: React.ComponentType<ToggleProps> = ({
       <div className="toggle">
         <input
           type="checkbox"
-          name={name}
+          name={id}
           required={required}
-          id={id}
-          defaultChecked={Boolean(defaultValue)}
+          id={`workable-${id}`}
           className="toggle__input"
+          defaultChecked={Boolean(defaultValue)}
         />
         <span className="toggle__check">{config.iconCheck()}</span>
       </div>
 
-      <Label label={label} slug={slug} required={required} />
+      <Label label={label} id={id} required={required} />
     </div>
   );
 };

@@ -1,25 +1,27 @@
-type ChoiceFieldProps = { multiple?: boolean } & FormFieldType;
-
-export const ChoiceField: React.ComponentType<ChoiceFieldProps> = ({
-  name,
-  required,
+export const ChoiceField: React.ComponentType<WorkableField> = ({
   id,
-  choices,
-  multiple,
+  options,
+  singleOption,
+  defaultValue,
 }) => {
   return (
     <fieldset className="form-field__choice-fieldset">
-      {choices?.map((choice) => {
+      {options?.map((choice) => {
         return (
-          <div className="form-field__choice-wrapper" key={choice.id}>
+          <div className="form-field__choice-wrapper" key={choice.name}>
             <input
-              type={multiple ? "checkbox" : "radio"}
-              name={name}
-              id={`${id}${choice.id}`}
-              value={choice.id}
+              type={singleOption ? "radio" : "checkbox"}
+              name={id}
+              id={`${id}${choice.name}`}
+              value={choice.name}
               className="form-field__choice"
+              defaultChecked={
+                Array.isArray(defaultValue)
+                  ? defaultValue.includes(choice.name)
+                  : defaultValue === choice.name
+              }
             />
-            <label htmlFor={`${id}${choice.id}`}>{choice.body}</label>
+            <label htmlFor={`${id}${choice.name}`}>{choice.value}</label>
           </div>
         );
       })}

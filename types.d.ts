@@ -1,5 +1,37 @@
 /* https://workable.readme.io/reference/jobsshortcodeapplication_form */
 
+type WorkableField = {
+  id: string;
+  required?: boolean;
+  label?: string;
+  type?:
+    | "email"
+    | "phone"
+    | "text"
+    | "file"
+    | "group"
+    | "date"
+    | "paragraph"
+    | "boolean"
+    | "dropdown"
+    | "multiple"
+    | "number";
+  options?: { name?: string; value?: string }[];
+  singleOption?: boolean;
+  supportedFileTypes?: string[];
+  supportedMimeTypes?: string[];
+  maxFileSize?: number;
+  maxLength?: number;
+  helper?: string;
+  fields?: WorkableField[];
+  defaultValue?: any;
+};
+
+type WorkableFieldset = {
+  name: string;
+  fields: WorkableField[];
+};
+
 /*
 key	type	description
 key	string	The application form's field key. This key matches with the candidate attribute as well

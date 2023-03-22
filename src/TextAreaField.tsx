@@ -3,23 +3,20 @@ import { FormField } from "./FormField";
 
 import { MaxLength } from "./MaxLength";
 
-type TextAreaFieldProps = {} & FormFieldType;
-
-export const TextAreaField: React.ComponentType<TextAreaFieldProps> = ({
-  name,
-  required,
+export const TextAreaField: React.ComponentType<WorkableField> = ({
   id,
-  defaultValue,
+  required,
   maxLength,
+  defaultValue,
 }) => {
   const [value, setValue] = useState<string>(null);
   return (
     <FormField>
       <textarea
-        name={name}
+        name={id}
         required={required}
+        id={`workable-${id}`}
         defaultValue={defaultValue}
-        id={id}
         rows={5}
         className="form-field__textarea"
         maxLength={maxLength}

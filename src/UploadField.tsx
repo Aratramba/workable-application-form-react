@@ -3,21 +3,16 @@ import { useDropzone } from "react-dropzone";
 
 import { ConfigContext } from "./ConfigContext";
 
-type UploadFieldProps = {
-  name: string;
-  field: WorkableFormField;
-};
-
-export const UploadField: React.ComponentType<UploadFieldProps> = ({
-  name,
-  field,
+export const UploadField: React.ComponentType<WorkableField> = ({
+  id,
+  supportedFileTypes,
+  maxFileSize,
 }) => {
   const config = useContext(ConfigContext);
 
   const IS_IMAGE = Boolean(
-    field.supported_file_types.filter((x) =>
-      ["jpg", "jpeg", "gif", "png"].includes(x),
-    ).length,
+    supportedFileTypes.filter((x) => ["jpg", "jpeg", "gif", "png"].includes(x))
+      .length,
   );
 
   const [state, setState] = useState<
@@ -32,11 +27,9 @@ export const UploadField: React.ComponentType<UploadFieldProps> = ({
   const { acceptedFiles, getRootProps, getInputProps, inputRef } = useDropzone({
     maxFiles: 1,
     multiple: false,
-    maxSize: field.max_file_size,
+    maxSize: maxFileSize,
     accept: {
-      "application/octet-stream": field.supported_file_types.map(
-        (ext) => `.${ext}`,
-      ),
+      "application/octet-stream": supportedFileTypes.map((ext) => `.${ext}`),
     },
     onDrop: (acceptedFiles) => {
       setState("loading");
@@ -108,7 +101,7 @@ export const UploadField: React.ComponentType<UploadFieldProps> = ({
       <div {...getRootProps({ className: "dropzone" })} data-state={state}>
         <input {...getInputProps()} />
         <textarea
-          name={name}
+          name={id}
           style={{ display: "none" }}
           data-filename={acceptedFiles?.[0]?.name}
           value={fileBase64}
@@ -143,11 +136,11 @@ export const UploadField: React.ComponentType<UploadFieldProps> = ({
               {config.labelDropzoneDragDrop}
             </p>
             <p className="dropzone__info">
-              {field.max_file_size &&
+              {maxFileSize &&
                 `${config.labelDropzoneMaxSize} ${Math.floor(
-                  field.max_file_size / 1000000,
+                  maxFileSize / 1000000,
                 )}Mb. Acceptable file types .
-              ${field.supported_file_types.join(", .")}.`}
+              ${supportedFileTypes.join(", .")}.`}
             </p>
           </>
         )}

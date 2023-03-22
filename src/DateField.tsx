@@ -1,9 +1,6 @@
 import { FormField } from "./FormField";
 
-type DateFieldProps = FormFieldType;
-
-export const DateField: React.ComponentType<DateFieldProps> = ({
-  name,
+export const DateField: React.ComponentType<WorkableField> = ({
   required,
   id,
   defaultValue,
@@ -12,10 +9,10 @@ export const DateField: React.ComponentType<DateFieldProps> = ({
     <FormField>
       <input
         type="date"
-        name={name}
-        required={required}
-        id={id}
+        name={id}
         defaultValue={defaultValue}
+        required={required}
+        id={`workable-${id}`}
         className="form-field__text form-field__date"
       />
     </FormField>

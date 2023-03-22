@@ -1,16 +1,13 @@
-type TelephoneFieldProps = {} & FormFieldType;
-
 import intlTelInput from "intl-tel-input";
 import { useContext, useEffect, useRef, useState } from "react";
 import { ConfigContext } from "./ConfigContext";
 import { FormField } from "./FormField";
 
-export const TelephoneField: React.ComponentType<TelephoneFieldProps> = ({
-  name,
+export const TelephoneField: React.ComponentType<WorkableField> = ({
   required,
   id,
-  defaultValue,
   maxLength,
+  defaultValue,
 }) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const config = useContext(ConfigContext);
@@ -60,19 +57,14 @@ export const TelephoneField: React.ComponentType<TelephoneFieldProps> = ({
       <input
         type="tel"
         ref={inputRef}
-        name={name}
-        required={required}
-        id={id}
+        name={id}
         defaultValue={defaultValue}
+        required={required}
+        id={`workable-${id}`}
         maxLength={maxLength}
         className="form-field__text form-field__telephone"
       />
-      <input
-        type="hidden"
-        name={`${name}_dialcode`}
-        value={dialCode}
-        readOnly
-      />
+      <input type="hidden" name={`${id}_dialcode`} value={dialCode} readOnly />
     </FormField>
   );
 };

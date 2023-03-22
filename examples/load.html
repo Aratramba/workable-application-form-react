@@ -26,12 +26,31 @@
         --form-error-background-color: rgb(255, 239, 239);
         --form-error-border-color: rgb(255, 216, 216);
       }
+
+      @media only screen and (min-width: 768px) {
+        .form-item:has(input[name="firstname"]) {
+          grid-column: 1;
+        }
+
+        .form-item:has(input[name="lastname"]) {
+          grid-column: 2;
+        }
+
+        .form-item:has(input[name="start_date"]) {
+          grid-column: 1;
+        }
+
+        .form-item:has(input[name="end_date"]) {
+          grid-column: 2;
+        }
+      }
     </style>
+
     <link rel="stylesheet" href="../output/styles.css" />
   </head>
   <body>
     <div id="app"></div>
 
-    <script src="./minimal.tsx" type="module"></script>
+    <script src="./load.tsx" type="module"></script>
   </body>
 </html>

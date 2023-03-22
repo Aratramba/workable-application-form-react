@@ -70,8 +70,7 @@ export const cleanValue = (value: any) => {
 
 export const createWorkableCandidate = (
   data: any,
-  formFields: WorkableFormField[],
-  questions: WorkableQuestion[],
+  allFields: WorkableField[],
 ) => {
   const candidate: WorkableCandidate = {
     name: data.name,
@@ -96,69 +95,8 @@ export const createWorkableCandidate = (
     recruiter_key: data.recruiter_key,
   };
 
-  // find form fields that are not yet in the object
-  const missingFields = formFields.filter(
-    (field) => !Object.keys(candidate).includes(field.key),
-  );
-
-  // add answers
-  missingFields.forEach((question) => {
-    const value = data[question.key];
-
-    if (value) {
-      // "string" | "free_text" | "file" | "boolean" | "date" | "complex"
-      switch (question.type) {
-        case "string":
-          const stringAnswer: WorkableAnswerFreeText = {
-            question_key: question.key,
-            body: value,
-          };
-          candidate.answers.push(stringAnswer);
-          break;
-
-        case "free_text":
-          const freetextAnswer: WorkableAnswerFreeText = {
-            question_key: question.key,
-            body: value,
-          };
-          candidate.answers.push(freetextAnswer);
-          break;
-
-        case "boolean":
-          const booleanAnswer: WorkableAnswerBoolean = {
-            question_key: question.key,
-            checked: value,
-          };
-          candidate.answers.push(booleanAnswer);
-          break;
-
-        case "date":
-          const dateAnswer: WorkableAnswerDate = {
-            question_key: question.key,
-            date: value,
-          };
-          candidate.answers.push(dateAnswer);
-          break;
-
-        case "file":
-          const fileAnswer: WorkableAnswerFileData = {
-            question_key: question.key,
-            name: question.key,
-            file: {
-              name: question.key,
-              data: value,
-            },
-          };
-          candidate.answers.push(fileAnswer);
-          break;
-
-        // not covering the complex case here, as experience and education are handled separately
-      }
-    }
-  });
-
   // find questions that are not yet in the object
-  const missingQuestions = questions.filter(
+  const missingQuestions = allFields.filter(
     (question) => !Object.keys(candidate).includes(question.id),
   );
 
@@ -167,27 +105,22 @@ export const createWorkableCandidate = (
     const value = data[question.id];
 
     if (value) {
-      // "short_text" | "free_text" | "multiple_choice" | "boolean" | "dropdown" | "numeric" | "date" | "file";
       switch (question.type) {
-        case "short_text":
+        case "text":
+        case "email":
+        case "phone":
+        case "paragraph":
           const shortTextAnswer: WorkableAnswerShortText = {
             question_key: question.id,
             body: value,
           };
           candidate.answers.push(shortTextAnswer);
           break;
-        case "free_text":
-          const freetextAnswer: WorkableAnswerFreeText = {
-            question_key: question.id,
-            body: value,
-          };
-          candidate.answers.push(freetextAnswer);
-          break;
 
-        case "multiple_choice":
+        case "multiple":
           const multipleChoiceAnswer: WorkableAnswerMultipleChoice = {
             question_key: question.id,
-            choices: value,
+            choices: [value],
           };
           candidate.answers.push(multipleChoiceAnswer);
           break;
@@ -203,7 +136,7 @@ export const createWorkableCandidate = (
         case "dropdown":
           const dropdownAnswer: WorkableAnswerDropdown = {
             question_key: question.id,
-            choices: value,
+            choices: [value],
           };
           candidate.answers.push(dropdownAnswer);
           break;
@@ -216,7 +149,7 @@ export const createWorkableCandidate = (
           candidate.answers.push(dateAnswer);
           break;
 
-        case "numeric":
+        case "number":
           const numericAnswer: WorkableAnswerNumeric = {
             question_key: question.id,
             value: +value,
