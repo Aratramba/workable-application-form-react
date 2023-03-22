@@ -24,6 +24,7 @@ export const Form: React.ComponentType<FormProps> = ({
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     setState("saving");
+    setError(null);
     onSubmit(event, (error: string | null) => {
       if (error) {
         setError(error);
