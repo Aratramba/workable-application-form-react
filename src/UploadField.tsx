@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
-import "./uploadfield.scss";
+
 import { ConfigContext } from "./ConfigContext";
 
 type UploadFieldProps = {
@@ -61,7 +61,7 @@ export const UploadField: React.ComponentType<UploadFieldProps> = ({
           setState("error");
         };
         reader.onload = () => {
-          setFileBase64(reader.result.toString());
+          setFileBase64(reader.result.toString().split("base64,")[1]);
           setState("success");
         };
         reader.readAsDataURL(file);
