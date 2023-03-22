@@ -32,7 +32,6 @@ export const ApplicationForm: React.ComponentType<ApplicationFormProps> = ({
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const entries: any = Object.fromEntries(formData.entries());
-    console.log(entries);
     const allValues: any = {};
     Object.keys(entries).forEach((key) => {
       const question = allFields.find((q) => q.id === key);
@@ -43,23 +42,20 @@ export const ApplicationForm: React.ComponentType<ApplicationFormProps> = ({
       }
     });
 
-    console.log(allValues);
-
     const cleanData: any = cleanFormData(allValues);
-    console.log(cleanData);
+
     const workableCandidate: WorkableCandidate = createWorkableCandidate(
       cleanData,
       allFields,
     );
-    console.log(workableCandidate);
 
-    // onSave(workableCandidate, (error) => {
-    //   if (error) {
-    //     cb(error);
-    //   } else {
-    //     cb();
-    //   }
-    // });
+    onSave(workableCandidate, (error) => {
+      if (error) {
+        cb(error);
+      } else {
+        cb();
+      }
+    });
 
     return false;
   };
