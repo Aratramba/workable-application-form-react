@@ -376,6 +376,10 @@ fieldset {
   position: fixed;
   bottom: 20px;
   margin: 0;
+  max-width: 70%;
+  width: 400px;
+  font-size: 1rem;
+  line-height: 1.5;
   right: 20px;
   border-radius: 5px;
   transform: translateY(calc(100% + 30px));

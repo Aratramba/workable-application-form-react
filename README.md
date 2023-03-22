@@ -9,7 +9,6 @@ This React component deliberately does not handle the API call itself, so you'll
 The official Workable application form offers no configurability. This library aims to offer a solution for customizing the application form look and feel.
 The official Workable form renders inside an iframe. This library renders the form in the DOM, so you can style it however you want.
 
-
 ![image](https://user-images.githubusercontent.com/580312/226919055-526f7f5d-1aff-455f-9b97-c64a255fe7f5.png)
 
 ## Features
@@ -27,11 +26,6 @@ The official Workable solution offers some functionality that this library does 
 
 ```bash
 npm install workable-application-form-react
-```
-
-or
-
-```bash
 yarn add workable-application-form-react
 ```
 
@@ -155,11 +149,11 @@ The output of the form is a Workable candidate object.
     },
   ],
   answers: [
-    { question_key: "CA_3c25", body: "https://www.linkedin.com" },
-    { question_key: "536a78", checked: true },
-    { question_key: "536a78a", body: "yes" },
-    { question_key: "536a78x", body: "no i can't" },
-    { question_key: "date", date: "2023-03-14" },
+    { label: "My question", question_key: "CA_3c25", body: "https://www.linkedin.com" },
+    { label: "My question", question_key: "536a78", checked: true },
+    { label: "My question", question_key: "536a78a", body: "yes" },
+    { label: "My question", question_key: "536a78x", body: "no i can't" },
+    { label: "My question", question_key: "date", date: "2023-03-14" },
   ],
 };
 ```

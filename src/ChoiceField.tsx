@@ -13,15 +13,15 @@ export const ChoiceField: React.ComponentType<WorkableField> = ({
               type={singleOption ? "radio" : "checkbox"}
               name={id}
               id={`${id}${choice.name}`}
-              value={choice.name}
+              value={choice.value}
               className="form-field__choice"
               defaultChecked={
                 Array.isArray(defaultValue)
-                  ? defaultValue.includes(choice.name)
-                  : defaultValue === choice.name
+                  ? defaultValue.includes(choice.value)
+                  : defaultValue === choice.value
               }
             />
-            <label htmlFor={`${id}${choice.name}`}>{choice.value}</label>
+            <label htmlFor={`${id}${choice.value}`}>{choice.value}</label>
           </div>
         );
       })}

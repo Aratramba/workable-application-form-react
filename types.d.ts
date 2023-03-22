@@ -205,6 +205,7 @@ type WorkableResume = {
  */
 
 type WorkableAnswerBase = {
+  label: string;
   question_key: string;
 };
 

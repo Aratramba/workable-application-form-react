@@ -18,7 +18,7 @@ export const SelectField: React.ComponentType<WorkableField> = ({
         <option value={null}></option>
         {options?.map((choice) => {
           return (
-            <option key={choice.name} value={choice.name}>
+            <option key={choice.name} value={choice.value}>
               {choice.value}
             </option>
           );

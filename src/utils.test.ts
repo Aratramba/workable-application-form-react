@@ -324,11 +324,27 @@ test("workable candidate output", () => {
       },
     ],
     answers: [
-      { question_key: "CA_3c25", body: "https://www.linkedin.com" },
-      { question_key: "536a78", checked: true },
-      { question_key: "536a78a", body: "yes" },
-      { question_key: "536a78x", body: "no i can't" },
-      { question_key: "date", date: "2023-03-14" },
+      {
+        label: "LinkedIn URL",
+        question_key: "CA_3c25",
+        body: "https://www.linkedin.com",
+      },
+      {
+        label: "Can you answer this question?",
+        question_key: "536a78",
+        checked: true,
+      },
+      {
+        label: "Can you answer this question?",
+        question_key: "536a78a",
+        body: "yes",
+      },
+      {
+        label: "Can you answer this question?",
+        question_key: "536a78x",
+        body: "no i can't",
+      },
+      { label: "Date", question_key: "date", date: "2023-03-14" },
     ],
   };
 

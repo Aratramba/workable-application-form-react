@@ -111,6 +111,7 @@ export const createWorkableCandidate = (
         case "phone":
         case "paragraph":
           const shortTextAnswer: WorkableAnswerShortText = {
+            label: question.label,
             question_key: question.id,
             body: value,
           };
@@ -119,14 +120,16 @@ export const createWorkableCandidate = (
 
         case "multiple":
           const multipleChoiceAnswer: WorkableAnswerMultipleChoice = {
+            label: question.label,
             question_key: question.id,
-            choices: [value],
+            choices: value,
           };
           candidate.answers.push(multipleChoiceAnswer);
           break;
 
         case "boolean":
           const booleanAnswer: WorkableAnswerBoolean = {
+            label: question.label,
             question_key: question.id,
             checked: value,
           };
@@ -135,14 +138,16 @@ export const createWorkableCandidate = (
 
         case "dropdown":
           const dropdownAnswer: WorkableAnswerDropdown = {
+            label: question.label,
             question_key: question.id,
-            choices: [value],
+            choices: value,
           };
           candidate.answers.push(dropdownAnswer);
           break;
 
         case "date":
           const dateAnswer: WorkableAnswerDate = {
+            label: question.label,
             question_key: question.id,
             date: value,
           };
@@ -151,6 +156,7 @@ export const createWorkableCandidate = (
 
         case "number":
           const numericAnswer: WorkableAnswerNumeric = {
+            label: question.label,
             question_key: question.id,
             value: +value,
           };
@@ -159,6 +165,7 @@ export const createWorkableCandidate = (
 
         case "file":
           const fileAnswer: WorkableAnswerFileData = {
+            label: question.label,
             question_key: question.id,
             file: {
               name: question.id,

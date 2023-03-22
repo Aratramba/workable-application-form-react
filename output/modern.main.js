@@ -872,7 +872,7 @@ const $0143f6c1ceb5f8e3$export$d55b50a564d0b931 = ({ required: required , id: id
                 }),
                 options?.map((choice)=>{
                     return /*#__PURE__*/ (0, $kAGeC$jsx)("option", {
-                        value: choice.name,
+                        value: choice.value,
                         children: choice.value
                     }, choice.name);
                 })
@@ -894,12 +894,12 @@ const $4281023bca8fc1fc$export$fc4f3719f31d1e79 = ({ id: id , options: options ,
                         type: singleOption ? "radio" : "checkbox",
                         name: id,
                         id: `${id}${choice.name}`,
-                        value: choice.name,
+                        value: choice.value,
                         className: "form-field__choice",
-                        defaultChecked: Array.isArray(defaultValue) ? defaultValue.includes(choice.name) : defaultValue === choice.name
+                        defaultChecked: Array.isArray(defaultValue) ? defaultValue.includes(choice.value) : defaultValue === choice.value
                     }),
                     /*#__PURE__*/ (0, $kAGeC$jsx)("label", {
-                        htmlFor: `${id}${choice.name}`,
+                        htmlFor: `${id}${choice.value}`,
                         children: choice.value
                     })
                 ]
@@ -1118,6 +1118,7 @@ const $fab42eb3dee39b5b$export$7a4712243be385f2 = (data, allFields)=>{
             case "phone":
             case "paragraph":
                 const shortTextAnswer = {
+                    label: question.label,
                     question_key: question.id,
                     body: value
                 };
@@ -1125,15 +1126,15 @@ const $fab42eb3dee39b5b$export$7a4712243be385f2 = (data, allFields)=>{
                 break;
             case "multiple":
                 const multipleChoiceAnswer = {
+                    label: question.label,
                     question_key: question.id,
-                    choices: [
-                        value
-                    ]
+                    choices: value
                 };
                 candidate.answers.push(multipleChoiceAnswer);
                 break;
             case "boolean":
                 const booleanAnswer = {
+                    label: question.label,
                     question_key: question.id,
                     checked: value
                 };
@@ -1141,15 +1142,15 @@ const $fab42eb3dee39b5b$export$7a4712243be385f2 = (data, allFields)=>{
                 break;
             case "dropdown":
                 const dropdownAnswer = {
+                    label: question.label,
                     question_key: question.id,
-                    choices: [
-                        value
-                    ]
+                    choices: value
                 };
                 candidate.answers.push(dropdownAnswer);
                 break;
             case "date":
                 const dateAnswer = {
+                    label: question.label,
                     question_key: question.id,
                     date: value
                 };
@@ -1157,6 +1158,7 @@ const $fab42eb3dee39b5b$export$7a4712243be385f2 = (data, allFields)=>{
                 break;
             case "number":
                 const numericAnswer = {
+                    label: question.label,
                     question_key: question.id,
                     value: +value
                 };
@@ -1164,6 +1166,7 @@ const $fab42eb3dee39b5b$export$7a4712243be385f2 = (data, allFields)=>{
                 break;
             case "file":
                 const fileAnswer = {
+                    label: question.label,
                     question_key: question.id,
                     file: {
                         name: question.id,
