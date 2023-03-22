@@ -9,11 +9,8 @@ This React component deliberately does not handle the API call itself, so you'll
 The official Workable application form offers no configurability. This library aims to offer a solution for customizing the application form look and feel.
 The official Workable form renders inside an iframe. This library renders the form in the DOM, so you can style it however you want.
 
-## Demo
 
-- TODO
-- TODO
-- TODO
+![image](https://user-images.githubusercontent.com/580312/226919055-526f7f5d-1aff-455f-9b97-c64a255fe7f5.png)
 
 ## Features
 
