@@ -81,7 +81,7 @@ export const createWorkableCandidate = (
     headline: data.headline,
     summary: data.summary,
     address: data.address,
-    phone: `+${data.phone_dialcode}${data.phone}`,
+    phone: data.phone ? `+${data.phone_dialcode}${data.phone}` : undefined,
     cover_letter: data.cover_letter,
     education_entries: data.education,
     experience_entries: data.experience,
@@ -143,7 +143,11 @@ export const createWorkableCandidate = (
         case "file":
           const fileAnswer: WorkableAnswerFileData = {
             question_key: question.key,
-            data: value,
+            name: question.key,
+            file: {
+              name: question.key,
+              data: value,
+            },
           };
           candidate.answers.push(fileAnswer);
           break;
@@ -223,7 +227,10 @@ export const createWorkableCandidate = (
         case "file":
           const fileAnswer: WorkableAnswerFileData = {
             question_key: question.id,
-            data: value,
+            file: {
+              name: question.id,
+              data: value,
+            },
           };
           candidate.answers.push(fileAnswer);
           break;
