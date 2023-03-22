@@ -1,5 +1,3 @@
-import "./choicefield.scss";
-
 type ChoiceFieldProps = { multiple?: boolean } & FormFieldType;
 
 export const ChoiceField: React.ComponentType<ChoiceFieldProps> = ({

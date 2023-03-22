@@ -1,5 +1,3 @@
-import "./buttonrow.scss";
-
 type ButtonRowProps = {
   children?: React.ReactNode;
 };

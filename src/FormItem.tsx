@@ -1,5 +1,3 @@
-import "./formitem.scss";
-
 type FormItemProps = {
   children: React.ReactNode;
 };

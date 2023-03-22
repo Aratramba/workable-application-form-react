@@ -122,21 +122,21 @@ root.render(
         ...(form.questions || []),
 
         // add privacy field
-        // {
-        //   id: "privacy",
-        //   type: "boolean",
-        //   required: true,
-        //   body: (
-        //     <span>
-        //       I have read, understand and accept the content of the{" "}
-        //       <a href="https://google.com" target="_blank">
-        //         Privacy Notice
-        //       </a>{" "}
-        //       and consent to the processing of my data as part of this
-        //       application.
-        //     </span>
-        //   ),
-        // },
+        {
+          id: "privacy",
+          type: "boolean",
+          required: true,
+          body: (
+            <span>
+              I have read, understand and accept the content of the{" "}
+              <a href="https://google.com" target="_blank">
+                Privacy Notice
+              </a>{" "}
+              and consent to the processing of my data as part of this
+              application.
+            </span>
+          ),
+        },
       ]}
       config={{
         telephoneInitialCountry: "IT",

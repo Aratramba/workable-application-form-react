@@ -6,8 +6,6 @@ import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 import { Fieldset } from "./Fieldset";
 import { Button } from "./Button";
 
-import "./complexmultiple.scss";
-
 type ComplexMultipleProps = {
   name: string;
   field: WorkableFormField;
@@ -214,10 +212,9 @@ export const ComplexMultiple: React.ComponentType<ComplexMultipleProps> = ({
               <form className="complex-multiple__form" ref={formRef}>
                 <Fieldset name={field.label} displayClearButton={false}>
                   {field.fields.map((subfield) => {
-                    const editingEntry = structuredClone(
-                      entries.find(({ id }) => id === editingEntryId),
-                    );
-
+                    const editingEntry = {
+                      ...entries.find(({ id }) => id === editingEntryId),
+                    };
                     return (
                       <Field
                         key={subfield.key}

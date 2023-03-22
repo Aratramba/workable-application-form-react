@@ -1,5 +1,5 @@
 import React = require("react");
-import "./form.scss";
+
 import { ConfigContext } from "./ConfigContext";
 import { Heading } from "./Heading";
 

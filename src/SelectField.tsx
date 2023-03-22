@@ -1,5 +1,4 @@
 import { FormField } from "./FormField";
-import "./selectfield.scss";
 
 type SelectFieldProps = FormFieldType;
 

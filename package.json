@@ -3,17 +3,17 @@
   "version": "0.0.0",
   "description": "Workable application form React renderer",
   "source": "src/index.ts",
-  "main": "dist/main.js",
+  "main": "output/main.js",
+  "module": "output/modern.main.js",
   "context": "browser",
   "scripts": {
-    "build": "parcel build ./src/index.ts --dist-dir output",
+    "build": "parcel build",
     "dev": "parcel serve examples/*.html",
     "test": "NODE_ENV=test jest"
   },
   "targets": {
     "main": {
-      "optimize": true,
-      "includeNodeModules": true
+      "optimize": true
     }
   },
   "repository": {

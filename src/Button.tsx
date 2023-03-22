@@ -1,5 +1,3 @@
-import "./button.scss";
-
 type ButtonProps = {
   onClick?: () => void;
   theme?: "primary" | "secondary" | "tertiary" | "ghost";

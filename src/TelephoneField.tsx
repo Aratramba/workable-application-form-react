@@ -1,7 +1,5 @@
 type TelephoneFieldProps = {} & FormFieldType;
-import "./telephonefield.scss";
 
-import "intl-tel-input/build/css/intlTelInput.css";
 import intlTelInput from "intl-tel-input";
 import { useContext, useEffect, useRef, useState } from "react";
 import { ConfigContext } from "./ConfigContext";

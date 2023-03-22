@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { FormField } from "./FormField";
-import "./textareafield.scss";
+
 import { MaxLength } from "./MaxLength";
 
 type TextAreaFieldProps = {} & FormFieldType;

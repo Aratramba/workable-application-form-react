@@ -1,7 +1,6 @@
 import { useContext, useRef } from "react";
 import { Button } from "./Button";
 import { ConfigContext } from "./ConfigContext";
-import "./fieldset.scss";
 
 type FieldsetProps = {
   name?: string;

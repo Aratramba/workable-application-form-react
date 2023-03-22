@@ -1,5 +1,3 @@
-import "./applicationform.scss";
-
 import React = require("react");
 import { ConfigContext, DEFAULT_FORM_CONFIG } from "./ConfigContext";
 import { Field, FieldProps } from "./Field";
@@ -24,8 +22,8 @@ type ApplicationFormProps = {
 export const REST_OF_FIELDS_FLAG = "...";
 
 export const ApplicationForm: React.ComponentType<ApplicationFormProps> = ({
-  formFields,
-  questions,
+  formFields = [],
+  questions = [],
   config = {},
   fieldsets = [],
   onSave = () => {},

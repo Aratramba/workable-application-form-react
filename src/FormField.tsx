@@ -1,5 +1,3 @@
-import "./formfield.scss";
-
 type FormFieldProps = {
   children: React.ReactNode;
 };
