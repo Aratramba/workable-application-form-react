@@ -8,7 +8,6 @@ root.render(
   <ApplicationForm
     onSave={(data, cb) => {
       console.log(data);
-      console.log(JSON.stringify(data));
 
       const options = {
         method: "POST",
