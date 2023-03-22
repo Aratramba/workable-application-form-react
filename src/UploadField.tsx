@@ -110,6 +110,7 @@ export const UploadField: React.ComponentType<UploadFieldProps> = ({
         <textarea
           name={name}
           style={{ display: "none" }}
+          data-filename={acceptedFiles?.[0]?.name}
           value={fileBase64}
           readOnly
         />
