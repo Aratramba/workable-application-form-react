@@ -1,13 +1,15 @@
 # Workable Application Form React (not official)
 
-This is a React component that renders a workable application form based on fields from (the undocumented endpoint) https://apply.workable.com/api/v1/jobs/<shortcode>/form. It outputs data that can be sent to the Workable Candidate API https://workable.readme.io/reference/job-candidates-create.
-
-It no longer uses https://workable.readme.io/reference/jobsshortcodeapplication_form as that documentation seems to be missing a lot of information and does not return fieldsets or fields like firstname, lastname, email.
-
-This React component deliberately does not handle the API call itself, so you'll need to handle that yourself. This is so you can handle the API call however you want, and also so you can handle the response however you want.
+This is a React component that renders a workable application form based on fields from (the undocumented endpoint) https://apply.workable.com/api/v1/jobs/<shortcode>/form.
 
 The official Workable application form offers no configurability. This library aims to offer a solution for customizing the application form look and feel.
 The official Workable form renders inside an iframe. This library renders the form in the DOM, so you can style it however you want.
+
+This React component deliberately does not handle any API calls, so you'll need to handle those yourself.
+
+**Output**: When the form is submitted data comes out that can (almost) be sent to the Workable Candidate API https://workable.readme.io/reference/job-candidates-create. However questions and multiple choice field ids are different from what is expected in the /candidate POST endpoint. This needs to be fixed in your own middleware using the workable /questions endpoint.
+
+It no longer uses https://workable.readme.io/reference/jobsshortcodeapplication_form as that documentation seems to be missing a lot of information and does not return fieldsets or fields like firstname, lastname, email.
 
 ![image](https://user-images.githubusercontent.com/580312/226919055-526f7f5d-1aff-455f-9b97-c64a255fe7f5.png)
 
@@ -19,8 +21,8 @@ The official Workable form renders inside an iframe. This library renders the fo
 
 The official Workable solution offers some functionality that this library does not. This is a list of the things that this library does not offer.
 
-- Crop images
-- Fill application from local file, Dropbox or Google Drive
+- Image crop
+- Resume parser: Fill application from local file, Dropbox or Google Drive
 
 ## Installation
 
