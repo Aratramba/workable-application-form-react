@@ -350,7 +350,10 @@ data	string	The candidate’s answer encoded in base64
 
 type WorkableAnswerFileData = {
   name?: string;
-  data?: string;
+  file?: {
+    name?: string;
+    data?: string;
+  };
 } & Required<WorkableAnswerBase>;
 
 type FormFieldType = {
