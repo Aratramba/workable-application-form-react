@@ -34,65 +34,6 @@ type WorkableFieldset = {
 
 /*
 key	type	description
-key	string	The application form's field key. This key matches with the candidate attribute as well
-label	string	The fields name.
-type	string	The fields type. Possible values are: string, free_text, file, boolean, date, complex
-required	boolean	Indicates if this field is mandatory
-fields	array	Defined in fields of type complex
-supported_file_types	array	Defined in fields of type file
-max_file_size	integer	Defined in fields of type file
-*/
-
-type WorkableFormField = {
-  key: string;
-  label: string;
-  type: "string" | "free_text" | "file" | "boolean" | "date" | "complex";
-  required: boolean;
-  fields?: WorkableFormField[];
-  supported_file_types?: string[];
-  max_file_size?: number;
-  multiple?: boolean;
-  max_length?: number;
-};
-
-/*
-key	type	description
-id	string	The question's id
-body	string	The question's body
-type	string	The question's type. Possible values are free_text, multiple_choice, boolean, dropdown, numeric, date, file
-required	boolean	Specifies whether providing an answer for this question is required
-single_answer	boolean	Defined only if question's type is multiple_choice
-choices	array	Defined only if question's type is multiple_choice or dropdown. An array specifying the possible answers.
-choices/id	string	The choice's id
-choices/body	string	The choice's text
-supported_file_types	array	Defined only if question type is file. An array specifying the accepted file types for this question.
-max_file_size	integer	Defined only if question type is file. The maximum file size in bytes.
-*/
-
-type WorkableQuestion = {
-  id: string;
-  body: string | React.ReactNode;
-  type:
-    | "short_text"
-    | "free_text"
-    | "multiple_choice"
-    | "boolean"
-    | "dropdown"
-    | "numeric"
-    | "date"
-    | "file";
-  required?: boolean;
-  single_answer?: boolean;
-  choices?: {
-    id: string;
-    body: string;
-  }[];
-  supported_file_types?: string[];
-  max_file_size?: number;
-};
-
-/*
-key	type	description
 name (required)	string	This field is optional if firstname and lastname are provided
 firstname (required)	string	The candidate's first name, It's optional if name is provided
 lastname (required)	string	The candidate's last name, it's optional if name is provided
@@ -387,21 +328,6 @@ type WorkableAnswerFileData = {
     data?: string;
   };
 } & Required<WorkableAnswerBase>;
-
-type FormFieldType = {
-  name: string;
-  required: boolean;
-  id: string;
-  defaultValue?: string;
-  maxLength?: number;
-  choices?: { body?: string; id?: string }[];
-  single_answer?: boolean;
-};
-
-type FormFieldsetsType = {
-  name?: string;
-  fields: string[];
-}[];
 
 /**
  * Configuration
