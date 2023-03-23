@@ -377,7 +377,7 @@ var $567d79d65fd789f9$export$2e2bcd8739ae039 = $567d79d65fd789f9$export$bbb9a9f0
 
 
 
-const $d25602dc633d5238$export$d61c19f03375c53e = ({ id: id , supportedFileTypes: supportedFileTypes , maxFileSize: maxFileSize  })=>{
+const $d25602dc633d5238$export$d61c19f03375c53e = ({ id: id , supportedFileTypes: supportedFileTypes , maxFileSize: maxFileSize , onAvatarUpload: onAvatarUpload = ()=>"" , onFileUpload: onFileUpload = ()=>""  })=>{
     const config = (0, $kAGeC$useContext)((0, $85a82239aebedd0d$export$a92f85ab3e9ad68b));
     const IS_IMAGE = Boolean(supportedFileTypes.filter((x)=>[
             "jpg",
@@ -388,13 +388,13 @@ const $d25602dc633d5238$export$d61c19f03375c53e = ({ id: id , supportedFileTypes
     const [state, setState] = (0, $kAGeC$useState)("initial");
     const [image, setImage] = (0, $kAGeC$useState)(null);
     const [message, setMessage] = (0, $kAGeC$useState)("");
-    const [fileBase64, setFileBase64] = (0, $kAGeC$useState)("");
+    const [fileURL, setFileURL] = (0, $kAGeC$useState)("");
     const { acceptedFiles: acceptedFiles , getRootProps: getRootProps , getInputProps: getInputProps , inputRef: inputRef  } = (0, $kAGeC$useDropzone)({
         maxFiles: 1,
         multiple: false,
         maxSize: maxFileSize,
         accept: {
-            "application/octet-stream": supportedFileTypes.map((ext)=>`.${ext}`)
+            "application/octet-stream": supportedFileTypes.map((ext)=>ext)
         },
         onDrop: (acceptedFiles)=>{
             setState("loading");
@@ -415,9 +415,15 @@ const $d25602dc633d5238$export$d61c19f03375c53e = ({ id: id , supportedFileTypes
                     setMessage(config.labelDropzoneError);
                     setState("error");
                 };
-                reader.onload = ()=>{
-                    setFileBase64(reader.result.toString().split("base64,")[1]);
-                    setState("success");
+                reader.onload = async ()=>{
+                    const uploadedFile = id === "avatar" ? await onAvatarUpload(file) : await onFileUpload(file);
+                    if (typeof uploadedFile !== "string" && "error" in uploadedFile) {
+                        setMessage(uploadedFile.error);
+                        setState("error");
+                    } else {
+                        setFileURL(uploadedFile);
+                        setState("success");
+                    }
                 };
                 reader.readAsDataURL(file);
             });
@@ -428,7 +434,7 @@ const $d25602dc633d5238$export$d61c19f03375c53e = ({ id: id , supportedFileTypes
     });
     const reset = ()=>{
         if (image) URL.revokeObjectURL(image.preview);
-        setFileBase64("");
+        setFileURL("");
     };
     (0, $kAGeC$useEffect)(()=>{
         // Make sure to revoke the data uris to avoid memory leaks, will run on unmount
@@ -462,13 +468,10 @@ const $d25602dc633d5238$export$d61c19f03375c53e = ({ id: id , supportedFileTypes
                     /*#__PURE__*/ (0, $kAGeC$jsx)("input", {
                         ...getInputProps()
                     }),
-                    /*#__PURE__*/ (0, $kAGeC$jsx)("textarea", {
+                    /*#__PURE__*/ (0, $kAGeC$jsx)("input", {
                         name: id,
-                        style: {
-                            display: "none"
-                        },
-                        "data-filename": acceptedFiles?.[0]?.name,
-                        value: fileBase64,
+                        type: "hidden",
+                        value: fileURL,
                         readOnly: true
                     }),
                     acceptedFiles.length > 0 ? /*#__PURE__*/ (0, $kAGeC$jsxs)((0, $kAGeC$Fragment), {
@@ -511,7 +514,7 @@ const $d25602dc633d5238$export$d61c19f03375c53e = ({ id: id , supportedFileTypes
                             /*#__PURE__*/ (0, $kAGeC$jsx)("p", {
                                 className: "dropzone__info",
                                 children: maxFileSize && `${config.labelDropzoneMaxSize} ${Math.floor(maxFileSize / 1000000)}Mb. Acceptable file types .
-              ${supportedFileTypes.join(", .")}.`
+              ${supportedFileTypes.join(", ")}.`
                             })
                         ]
                     }),
@@ -520,6 +523,7 @@ const $d25602dc633d5238$export$d61c19f03375c53e = ({ id: id , supportedFileTypes
                         height: "24",
                         viewBox: "0 0 24 24",
                         xmlns: "http://www.w3.org/2000/svg",
+                        className: "dropzone__loading-icon",
                         children: [
                             /*#__PURE__*/ (0, $kAGeC$jsx)("style", {
                                 dangerouslySetInnerHTML: {
@@ -546,6 +550,10 @@ const $d25602dc633d5238$export$d61c19f03375c53e = ({ id: id , supportedFileTypes
                                 r: "3"
                             })
                         ]
+                    }),
+                    state === "success" && /*#__PURE__*/ (0, $kAGeC$jsx)("span", {
+                        className: "dropzone__success-icon",
+                        children: config.iconCheck()
                     }),
                     message && /*#__PURE__*/ (0, $kAGeC$jsx)("p", {
                         className: "dropzone__message",
@@ -910,7 +918,7 @@ const $4281023bca8fc1fc$export$fc4f3719f31d1e79 = ({ id: id , options: options ,
 
 
 
-const $5f97fa913381518e$export$a455218a85c89869 = ({ name: name , field: field  })=>{
+const $5f97fa913381518e$export$a455218a85c89869 = ({ name: name , field: field , onAvatarUpload: onAvatarUpload , onFileUpload: onFileUpload  })=>{
     if (!field) {
         console.log(`Missing field: ${name}`);
         return null;
@@ -924,7 +932,9 @@ const $5f97fa913381518e$export$a455218a85c89869 = ({ name: name , field: field  
             break;
         case "file":
             Component = ()=>/*#__PURE__*/ (0, $kAGeC$jsx)((0, $d25602dc633d5238$export$d61c19f03375c53e), {
-                    ...field
+                    ...field,
+                    onAvatarUpload: onAvatarUpload,
+                    onFileUpload: onFileUpload
                 });
             break;
         case "boolean":
@@ -1184,7 +1194,7 @@ const $fab42eb3dee39b5b$export$7a4712243be385f2 = (data, allFields)=>{
 
 
 
-const $e29047879edbebee$export$60413e28724d3abd = ({ config: config = {} , form: form = [] , onSave: onSave = ()=>{}  })=>{
+const $e29047879edbebee$export$60413e28724d3abd = ({ config: config = {} , form: form = [] , onAvatarUpload: onAvatarUpload , onFileUpload: onFileUpload , onSave: onSave = ()=>{}  })=>{
     const allFields = form.reduce((acc, fieldset)=>{
         return [
             ...acc,
@@ -1223,7 +1233,9 @@ const $e29047879edbebee$export$60413e28724d3abd = ({ config: config = {} , form:
                             name: fieldset.name,
                             children: fieldset.fields.map((field)=>/*#__PURE__*/ (0, $kAGeC$jsx)((0, $5f97fa913381518e$export$a455218a85c89869), {
                                     name: field.id,
-                                    field: field
+                                    field: field,
+                                    onAvatarUpload: onAvatarUpload,
+                                    onFileUpload: onFileUpload
                                 }, field.id))
                         }, fieldset.name)),
                     /*#__PURE__*/ (0, $kAGeC$jsx)((0, $c9252567ca2cc175$export$e154be390aa0e14), {
