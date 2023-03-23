@@ -12,7 +12,7 @@ export const ChoiceField: React.ComponentType<WorkableField> = ({
             <input
               type={singleOption ? "radio" : "checkbox"}
               name={id}
-              id={`${id}${choice.name}`}
+              id={`${id}${choice.value}`}
               value={choice.value}
               className="form-field__choice"
               defaultChecked={
