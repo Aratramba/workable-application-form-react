@@ -8,7 +8,7 @@ import { DateField } from "./DateField";
 import { NumberField } from "./NumberField";
 
 import { TelephoneField } from "./TelephoneField";
-import { UploadField } from "./UploadField";
+import { UploadField, UploadFieldProps } from "./UploadField";
 import { ComplexMultiple } from "./ComplexMultipleField";
 import { SelectField } from "./SelectField";
 import { ChoiceField } from "./ChoiceField";
@@ -16,9 +16,16 @@ import { ChoiceField } from "./ChoiceField";
 export type FieldProps = {
   name: string;
   field: WorkableField;
+  onAvatarUpload?: UploadFieldProps["onAvatarUpload"];
+  onFileUpload?: UploadFieldProps["onFileUpload"];
 };
 
-export const Field: React.ComponentType<FieldProps> = ({ name, field }) => {
+export const Field: React.ComponentType<FieldProps> = ({
+  name,
+  field,
+  onAvatarUpload,
+  onFileUpload,
+}) => {
   if (!field) {
     console.log(`Missing field: ${name}`);
     return null;
@@ -32,7 +39,13 @@ export const Field: React.ComponentType<FieldProps> = ({ name, field }) => {
       break;
 
     case "file":
-      Component = () => <UploadField {...field} />;
+      Component = () => (
+        <UploadField
+          {...field}
+          onAvatarUpload={onAvatarUpload}
+          onFileUpload={onFileUpload}
+        />
+      );
       break;
 
     case "boolean":

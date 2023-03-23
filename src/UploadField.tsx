@@ -3,10 +3,17 @@ import { useDropzone } from "react-dropzone";
 
 import { ConfigContext } from "./ConfigContext";
 
-export const UploadField: React.ComponentType<WorkableField> = ({
+export type UploadFieldProps = {
+  onAvatarUpload?: (file: File) => Promise<string | { error: string }>;
+  onFileUpload?: (file: File) => Promise<string | { error: string }>;
+} & WorkableField;
+
+export const UploadField: React.ComponentType<UploadFieldProps> = ({
   id,
   supportedFileTypes,
   maxFileSize,
+  onAvatarUpload = () => "",
+  onFileUpload = () => "",
 }) => {
   const config = useContext(ConfigContext);
 
@@ -23,13 +30,13 @@ export const UploadField: React.ComponentType<WorkableField> = ({
   );
   const [message, setMessage] = useState<string>("");
 
-  const [fileBase64, setFileBase64] = useState<string>("");
+  const [fileURL, setFileURL] = useState<string>("");
   const { acceptedFiles, getRootProps, getInputProps, inputRef } = useDropzone({
     maxFiles: 1,
     multiple: false,
     maxSize: maxFileSize,
     accept: {
-      "application/octet-stream": supportedFileTypes.map((ext) => `.${ext}`),
+      "application/octet-stream": supportedFileTypes.map((ext) => ext),
     },
     onDrop: (acceptedFiles) => {
       setState("loading");
@@ -53,9 +60,19 @@ export const UploadField: React.ComponentType<WorkableField> = ({
           setMessage(config.labelDropzoneError);
           setState("error");
         };
-        reader.onload = () => {
-          setFileBase64(reader.result.toString().split("base64,")[1]);
-          setState("success");
+        reader.onload = async () => {
+          const uploadedFile =
+            id === "avatar"
+              ? await onAvatarUpload(file)
+              : await onFileUpload(file);
+
+          if (typeof uploadedFile !== "string" && "error" in uploadedFile) {
+            setMessage(uploadedFile.error);
+            setState("error");
+          } else {
+            setFileURL(uploadedFile);
+            setState("success");
+          }
         };
         reader.readAsDataURL(file);
       });
@@ -72,7 +89,7 @@ export const UploadField: React.ComponentType<WorkableField> = ({
 
   const reset = () => {
     if (image) URL.revokeObjectURL(image.preview);
-    setFileBase64("");
+    setFileURL("");
   };
 
   useEffect(() => {
@@ -103,8 +120,7 @@ export const UploadField: React.ComponentType<WorkableField> = ({
         <textarea
           name={id}
           style={{ display: "none" }}
-          data-filename={acceptedFiles?.[0]?.name}
-          value={fileBase64}
+          value={fileURL}
           readOnly
         />
 
@@ -140,7 +156,7 @@ export const UploadField: React.ComponentType<WorkableField> = ({
                 `${config.labelDropzoneMaxSize} ${Math.floor(
                   maxFileSize / 1000000,
                 )}Mb. Acceptable file types .
-              ${supportedFileTypes.join(", .")}.`}
+              ${supportedFileTypes.join(", ")}.`}
             </p>
           </>
         )}
@@ -151,6 +167,7 @@ export const UploadField: React.ComponentType<WorkableField> = ({
             height="24"
             viewBox="0 0 24 24"
             xmlns="http://www.w3.org/2000/svg"
+            className="dropzone__loading-icon"
           >
             <style
               dangerouslySetInnerHTML={{
@@ -172,6 +189,10 @@ export const UploadField: React.ComponentType<WorkableField> = ({
               r="3"
             />
           </svg>
+        )}
+
+        {state === "success" && (
+          <span className="dropzone__success-icon">{config.iconCheck()}</span>
         )}
 
         {message && <p className="dropzone__message">{message}</p>}

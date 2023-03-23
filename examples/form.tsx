@@ -31,6 +31,16 @@ root.render(
           cb(errorMessage);
         });
     }}
+    onAvatarUpload={async (file) => {
+      console.log(file);
+      await new Promise((r) => setTimeout(r, 2000));
+      return `https://faces-img.xcdn.link/image-lorem-face-4053.jpg`;
+    }}
+    onFileUpload={async (file) => {
+      console.log(file);
+      await new Promise((r) => setTimeout(r, 2000));
+      return `https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf`;
+    }}
     form={[
       {
         name: "Personal information",

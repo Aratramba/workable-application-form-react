@@ -735,6 +735,7 @@ fieldset {
   padding: 10px;
   text-align: center;
   cursor: pointer;
+  position: relative;
 }
 
 .dropzone[data-state="success"] {
@@ -743,6 +744,10 @@ fieldset {
 
 .dropzone[data-state="error"] {
   border-color: var(--dropzone-error-color);
+}
+
+.dropzone[data-state="loading"] {
+  opacity: 0.5;
 }
 
 .dropzone__label span {
@@ -757,6 +762,19 @@ fieldset {
 .dropzone__info {
   font-size: 0.85rem;
   opacity: 0.7;
+}
+
+.dropzone__loading-icon {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+
+.dropzone__success-icon {
+  position: absolute;
+  right: 0;
+  top: 0;
+  background-color: var(--dropzone-success-color);
 }
 
 .iti {

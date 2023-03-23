@@ -6,6 +6,7 @@ import { Button } from "./Button";
 import { ButtonRow } from "./ButtonRow";
 import { Form } from "./Form";
 import { cleanFormData, createWorkableCandidate } from "./utils";
+import { UploadFieldProps } from "./UploadField";
 
 type ApplicationFormProps = {
   config?: FormConfigType;
@@ -14,11 +15,15 @@ type ApplicationFormProps = {
     data: WorkableCandidate,
     cb: (error?: string | null) => void,
   ) => void;
+  onAvatarUpload?: UploadFieldProps["onAvatarUpload"];
+  onFileUpload?: UploadFieldProps["onFileUpload"];
 };
 
 export const ApplicationForm: React.ComponentType<ApplicationFormProps> = ({
   config = {},
   form = [],
+  onAvatarUpload,
+  onFileUpload,
   onSave = () => {},
 }) => {
   const allFields: WorkableField[] = form.reduce((acc, fieldset) => {
@@ -67,7 +72,13 @@ export const ApplicationForm: React.ComponentType<ApplicationFormProps> = ({
           {form.map((fieldset) => (
             <Fieldset name={fieldset.name} key={fieldset.name}>
               {fieldset.fields.map((field) => (
-                <Field key={field.id} name={field.id} field={field} />
+                <Field
+                  key={field.id}
+                  name={field.id}
+                  field={field}
+                  onAvatarUpload={onAvatarUpload}
+                  onFileUpload={onFileUpload}
+                />
               ))}
             </Fieldset>
           ))}
