@@ -1,6 +1,6 @@
 {
   "name": "workable-application-form-react",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Workable application form React renderer",
   "source": "src/index.ts",
   "main": "output/main.js",
