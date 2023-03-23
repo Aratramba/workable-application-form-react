@@ -44,6 +44,11 @@ fieldset {
   --dropzone-error-color: rgb(245, 119, 119);
 }
 
+.heading--h1 {
+  font-size: 2rem;
+  line-height: 2.375rem;
+}
+
 .button {
   padding: 0 1.5rem;
   font-weight: bold;
