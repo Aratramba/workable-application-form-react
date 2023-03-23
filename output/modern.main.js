@@ -377,6 +377,20 @@ var $567d79d65fd789f9$export$2e2bcd8739ae039 = $567d79d65fd789f9$export$bbb9a9f0
 
 
 
+
+const $44aa9bf139b40f61$export$353f5b6fc5456de1 = ({ onClick: onClick , theme: theme = "primary" , type: type = "button" , size: size = "md" , children: children , style: style , disabled: disabled , className: className = "" , ...props })=>{
+    return /*#__PURE__*/ (0, $kAGeC$jsx)("button", {
+        type: type,
+        onClick: onClick,
+        className: `button button--${theme} button--${size} button--${disabled ? "disabled" : "enabled"} ${className}`,
+        style: style,
+        disabled: disabled,
+        ...props,
+        children: children
+    });
+};
+
+
 const $d25602dc633d5238$export$d61c19f03375c53e = ({ id: id , supportedFileTypes: supportedFileTypes , maxFileSize: maxFileSize , onAvatarUpload: onAvatarUpload = ()=>"" , onFileUpload: onFileUpload = ()=>""  })=>{
     const config = (0, $kAGeC$useContext)((0, $85a82239aebedd0d$export$a92f85ab3e9ad68b));
     const IS_IMAGE = Boolean(supportedFileTypes.filter((x)=>[
@@ -396,6 +410,7 @@ const $d25602dc633d5238$export$d61c19f03375c53e = ({ id: id , supportedFileTypes
         accept: {
             "application/octet-stream": supportedFileTypes.map((ext)=>ext)
         },
+        onFileDialogCancel: ()=>reset(),
         onDrop: (acceptedFiles)=>{
             setState("loading");
             if (!acceptedFiles.length) {
@@ -434,7 +449,9 @@ const $d25602dc633d5238$export$d61c19f03375c53e = ({ id: id , supportedFileTypes
     });
     const reset = ()=>{
         if (image) URL.revokeObjectURL(image.preview);
+        setState("initial");
         setFileURL("");
+        setMessage("");
     };
     (0, $kAGeC$useEffect)(()=>{
         // Make sure to revoke the data uris to avoid memory leaks, will run on unmount
@@ -449,15 +466,13 @@ const $d25602dc633d5238$export$d61c19f03375c53e = ({ id: id , supportedFileTypes
         setState("initial");
         setMessage("");
     };
-    return /*#__PURE__*/ (0, $kAGeC$jsxs)((0, $kAGeC$Fragment), {
+    return /*#__PURE__*/ (0, $kAGeC$jsxs)("div", {
+        className: "dropzone-wrapper",
         children: [
             /*#__PURE__*/ (0, $kAGeC$jsx)("button", {
                 type: "button",
                 "data-action": "remove-entry",
-                onClick: onClear,
-                style: {
-                    display: "none"
-                }
+                onClick: onClear
             }),
             /*#__PURE__*/ (0, $kAGeC$jsxs)("div", {
                 ...getRootProps({
@@ -474,7 +489,7 @@ const $d25602dc633d5238$export$d61c19f03375c53e = ({ id: id , supportedFileTypes
                         value: fileURL,
                         readOnly: true
                     }),
-                    acceptedFiles.length > 0 ? /*#__PURE__*/ (0, $kAGeC$jsxs)((0, $kAGeC$Fragment), {
+                    fileURL && acceptedFiles.length > 0 ? /*#__PURE__*/ (0, $kAGeC$jsxs)((0, $kAGeC$Fragment), {
                         children: [
                             IS_IMAGE && image && /*#__PURE__*/ (0, $kAGeC$jsx)("img", {
                                 style: {
@@ -560,6 +575,16 @@ const $d25602dc633d5238$export$d61c19f03375c53e = ({ id: id , supportedFileTypes
                         children: message
                     })
                 ]
+            }),
+            state === "success" && /*#__PURE__*/ (0, $kAGeC$jsxs)((0, $44aa9bf139b40f61$export$353f5b6fc5456de1), {
+                type: "button",
+                theme: "ghost",
+                onClick: onClear,
+                className: "dropzone__clear",
+                children: [
+                    config.iconClear(),
+                    config.labelClear
+                ]
             })
         ]
     });
@@ -574,19 +599,6 @@ var $d25602dc633d5238$export$2e2bcd8739ae039 = $d25602dc633d5238$export$d61c19f0
 
 
 
-
-
-const $44aa9bf139b40f61$export$353f5b6fc5456de1 = ({ onClick: onClick , theme: theme = "primary" , type: type = "button" , size: size = "md" , children: children , style: style , disabled: disabled , className: className = "" , ...props })=>{
-    return /*#__PURE__*/ (0, $kAGeC$jsx)("button", {
-        type: type,
-        onClick: onClick,
-        className: `button button--${theme} button--${size} button--${disabled ? "disabled" : "enabled"} ${className}`,
-        style: style,
-        disabled: disabled,
-        ...props,
-        children: children
-    });
-};
 
 
 

@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 
 import { ConfigContext } from "./ConfigContext";
+import { Button } from "./Button";
 
 export type UploadFieldProps = {
   onAvatarUpload?: (file: File) => Promise<string | { error: string }>;
@@ -38,6 +39,7 @@ export const UploadField: React.ComponentType<UploadFieldProps> = ({
     accept: {
       "application/octet-stream": supportedFileTypes.map((ext) => ext),
     },
+    onFileDialogCancel: () => reset(),
     onDrop: (acceptedFiles) => {
       setState("loading");
 
@@ -89,7 +91,9 @@ export const UploadField: React.ComponentType<UploadFieldProps> = ({
 
   const reset = () => {
     if (image) URL.revokeObjectURL(image.preview);
+    setState("initial");
     setFileURL("");
+    setMessage("");
   };
 
   useEffect(() => {
@@ -108,18 +112,18 @@ export const UploadField: React.ComponentType<UploadFieldProps> = ({
   };
 
   return (
-    <>
+    <div className="dropzone-wrapper">
       <button
         type="button"
         data-action="remove-entry"
         onClick={onClear}
-        style={{ display: "none" }}
+        // style={{ display: "none" }}
       />
       <div {...getRootProps({ className: "dropzone" })} data-state={state}>
         <input {...getInputProps()} />
         <input name={id} type="hidden" value={fileURL} readOnly />
 
-        {acceptedFiles.length > 0 ? (
+        {fileURL && acceptedFiles.length > 0 ? (
           <>
             {IS_IMAGE && image && (
               <img
@@ -192,7 +196,18 @@ export const UploadField: React.ComponentType<UploadFieldProps> = ({
 
         {message && <p className="dropzone__message">{message}</p>}
       </div>
-    </>
+      {state === "success" && (
+        <Button
+          type="button"
+          theme="ghost"
+          onClick={onClear}
+          className="dropzone__clear"
+        >
+          {config.iconClear()}
+          {config.labelClear}
+        </Button>
+      )}
+    </div>
   );
 };
 
