@@ -77,6 +77,7 @@ type WorkableCandidate = {
   social_profiles: WorkableSocialProfile[];
   domain: string;
   recruiter_key?: string;
+  image_url?: string;
 };
 
 /* 
