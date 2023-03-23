@@ -117,12 +117,7 @@ export const UploadField: React.ComponentType<UploadFieldProps> = ({
       />
       <div {...getRootProps({ className: "dropzone" })} data-state={state}>
         <input {...getInputProps()} />
-        <textarea
-          name={id}
-          style={{ display: "none" }}
-          value={fileURL}
-          readOnly
-        />
+        <input name={id} type="hidden" value={fileURL} readOnly />
 
         {acceptedFiles.length > 0 ? (
           <>
