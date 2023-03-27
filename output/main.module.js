@@ -913,7 +913,7 @@ const $4281023bca8fc1fc$export$fc4f3719f31d1e79 = ({ id: id , options: options ,
                     /*#__PURE__*/ (0, $kAGeC$jsx)("input", {
                         type: singleOption ? "radio" : "checkbox",
                         name: id,
-                        id: `${id}${choice.name}`,
+                        id: `${id}${choice.value}`,
                         value: choice.value,
                         className: "form-field__choice",
                         defaultChecked: Array.isArray(defaultValue) ? defaultValue.includes(choice.value) : defaultValue === choice.value
@@ -1127,10 +1127,12 @@ const $fab42eb3dee39b5b$export$7a4712243be385f2 = (data, allFields)=>{
         disqualified_at: data.disqualified_at,
         social_profiles: data.social_profiles,
         domain: data.domain,
-        recruiter_key: data.recruiter_key
+        recruiter_key: data.recruiter_key,
+        image_url: data.avatar,
+        resume_url: data.resume
     };
     // find questions that are not yet in the object
-    const missingQuestions = allFields.filter((question)=>!Object.keys(candidate).includes(question.id));
+    const missingQuestions = allFields.filter((question)=>question.id !== "avatar").filter((question)=>question.id !== "resume").filter((question)=>!Object.keys(candidate).includes(question.id));
     // add answers;
     missingQuestions.forEach((question)=>{
         const value = data[question.id];
@@ -1190,10 +1192,7 @@ const $fab42eb3dee39b5b$export$7a4712243be385f2 = (data, allFields)=>{
                 const fileAnswer = {
                     label: question.label,
                     question_key: question.id,
-                    file: {
-                        name: question.id,
-                        data: value
-                    }
+                    file_url: value
                 };
                 candidate.answers.push(fileAnswer);
                 break;
@@ -1241,7 +1240,7 @@ const $e29047879edbebee$export$60413e28724d3abd = ({ config: config = {} , form:
             children: /*#__PURE__*/ (0, $kAGeC$jsxs)((0, $163a5ab7286b1d28$export$a7fed597f4b8afd8), {
                 onSubmit: handleSubmit,
                 children: [
-                    form.map((fieldset)=>/*#__PURE__*/ (0, $kAGeC$jsx)((0, $c9252567ca2cc175$export$e154be390aa0e14), {
+                    form.filter((fieldset)=>Boolean(fieldset.fields.length)).map((fieldset, index)=>/*#__PURE__*/ (0, $kAGeC$jsx)((0, $c9252567ca2cc175$export$e154be390aa0e14), {
                             name: fieldset.name,
                             children: fieldset.fields.map((field)=>/*#__PURE__*/ (0, $kAGeC$jsx)((0, $5f97fa913381518e$export$a455218a85c89869), {
                                     name: field.id,
@@ -1249,7 +1248,7 @@ const $e29047879edbebee$export$60413e28724d3abd = ({ config: config = {} , form:
                                     onAvatarUpload: onAvatarUpload,
                                     onFileUpload: onFileUpload
                                 }, field.id))
-                        }, fieldset.name)),
+                        }, fieldset.name || fieldset?.fields[0].id || index)),
                     /*#__PURE__*/ (0, $kAGeC$jsx)((0, $c9252567ca2cc175$export$e154be390aa0e14), {
                         children: /*#__PURE__*/ (0, $kAGeC$jsx)((0, $0f0ded933cb6fec6$export$564cbe3426fc093a), {
                             children: /*#__PURE__*/ (0, $kAGeC$jsx)((0, $44aa9bf139b40f61$export$353f5b6fc5456de1), {

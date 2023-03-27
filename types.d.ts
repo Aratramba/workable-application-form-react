@@ -78,6 +78,7 @@ type WorkableCandidate = {
   domain: string;
   recruiter_key?: string;
   image_url?: string;
+  resume_url?: string;
 };
 
 /* 

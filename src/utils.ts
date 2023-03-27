@@ -94,11 +94,13 @@ export const createWorkableCandidate = (
     domain: data.domain,
     recruiter_key: data.recruiter_key,
     image_url: data.avatar,
+    resume_url: data.resume,
   };
 
   // find questions that are not yet in the object
   const missingQuestions = allFields
     .filter((question) => question.id !== "avatar")
+    .filter((question) => question.id !== "resume")
     .filter((question) => !Object.keys(candidate).includes(question.id));
 
   // add answers;
@@ -165,10 +167,10 @@ export const createWorkableCandidate = (
           break;
 
         case "file":
-          const fileAnswer: WorkableAnswerFileData = {
+          const fileAnswer: WorkableAnswerFile = {
             label: question.label,
             question_key: question.id,
-            file: value,
+            file_url: value,
           };
           candidate.answers.push(fileAnswer);
           break;

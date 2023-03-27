@@ -69,19 +69,24 @@ export const ApplicationForm: React.ComponentType<ApplicationFormProps> = ({
     <div className="application-form">
       <ConfigContext.Provider value={{ ...DEFAULT_FORM_CONFIG, ...config }}>
         <Form onSubmit={handleSubmit}>
-          {form.map((fieldset) => (
-            <Fieldset name={fieldset.name} key={fieldset.name}>
-              {fieldset.fields.map((field) => (
-                <Field
-                  key={field.id}
-                  name={field.id}
-                  field={field}
-                  onAvatarUpload={onAvatarUpload}
-                  onFileUpload={onFileUpload}
-                />
-              ))}
-            </Fieldset>
-          ))}
+          {form
+            .filter((fieldset) => Boolean(fieldset.fields.length))
+            .map((fieldset, index) => (
+              <Fieldset
+                name={fieldset.name}
+                key={fieldset.name || fieldset?.fields[0].id || index}
+              >
+                {fieldset.fields.map((field) => (
+                  <Field
+                    key={field.id}
+                    name={field.id}
+                    field={field}
+                    onAvatarUpload={onAvatarUpload}
+                    onFileUpload={onFileUpload}
+                  />
+                ))}
+              </Fieldset>
+            ))}
           <Fieldset>
             <ButtonRow>
               <Button type="submit" size="lg" style={{ width: "100%" }}>
